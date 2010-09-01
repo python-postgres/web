@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="ISO-8859-1"?><!DOCTYPE document PUBLIC "-//APACHE//DTD Documentation V1.3//EN" "document-v13.dtd">
+<document>
+ <header>
+  <title>pg_proboscis</title>
+  <subtitle>Programmer's Client</subtitle>
+  <abstract>This project creates a GreenTrunk Interface implementation for
+  programmers using 
+  <link href="pg_pqueue.html">pg_pqueue</link>. It also provides a DB-API 2.0
+  module.</abstract>
+ </header>
+ <body>
+  <table>
+   <tr>
+    <th colspan="1" rowspan="1">Version</th>
+    <th colspan="1" rowspan="1">Download</th>
+    <th colspan="1" rowspan="1">Documentation</th>
+    <th colspan="1" rowspan="1">Description</th>
+   </tr>
+   <tr>
+    <td colspan="1" rowspan="1">1.0.5</td>
+    <td colspan="1" rowspan="1">
+     <link href="/files/pg_proboscis-1.0.5.tar.gz">Source.tgz</link>
+    </td>
+    <td colspan="1" rowspan="1">
+     <link href="/doc/pg_proboscis-1.0.html">HTML</link>,
+     (<link href="/doc/pg_greentrunk-1.0.html">GreenTrunk APIs HTML</link>)
+    </td>
+    <td colspan="1" rowspan="1">Latest Stable</td>
+   </tr>
+  </table>
+  <section>
+   <title>Features</title>
+   <ul>
+    <li>Green Trunk interface implementation using PQueue</li>
+    <li>Direct function interface</li>
+    <li>Protocol level prepared queries</li>
+    <li>file-like Large Object interface</li>
+    <li>COPY support</li>
+    <li>SSL support (using ssl or socket.ssl)</li>
+    <li>Subprocess support</li>
+    <li>Structured arrays and records</li>
+    <li>DB-API 2.0 Interface class and module</li>
+   </ul>
+  </section>
+  <section>
+   <title>SCM</title>
+   <p>
+    <code>cvs -d :pserver:anonymous:@cvs.pgfoundry.org:/cvsroot/python co
+    fe</code>
+   </p>
+   <p>
+    <link href="http://cvs.pgfoundry.org/cgi-bin/cvsweb.cgi/python/fe">Web
+    Interface</link>
+   </p>
+  </section>
+ </body>
+</document><!--
+ ! vim: ts=1:sw=1:et:
+ !-->

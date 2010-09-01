@@ -1,0 +1,186 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>pg_tin-1.0dev</title>
+    <link rel="stylesheet" type="text/css" href="xhtml.css" />
+  </head>
+  <body>
+    <h2 class="title"><span class="keyword">project</span> pg_tin 1.0dev</h2>
+    <div class="content">
+      <div class="description">PostgreSQL Test INfrastructure</div>
+      <div id="long_description" class="doc">
+        <div class="rst-root">
+          <div class="rst-document">
+<p>pg_tin, Test INfrastructure, is a project to provide testing facilities for
+PostgreSQL applications. It is intended to automate the initialization of the
+database, and provide the capacity to seemlessly manage the various
+clusters and the configuration options thereof.</p>
+<div class="rst-section">
+<h1><a id="-tin-commands" name="tin-commands">tin commands</a></h1>
+<pre class="rst-literal-block">
+help     Print this help menu
+list     Print paths and version information to selected clusters [ls]
+environ  Print standard PostgreSQL environment variable for connectivity [env]
+string   Print standard PostgreSQL connectivity options [str]
+path     Print path to selected clusters
+create   Create a cluster using the given pg_config
+drop     Drop the selected database clusters
+recreate Recreate the selected clusters (configuration is lost)
+stop     Signal the selected clusters to shutdown
+start    Start the selected clusters
+reload   Run pg_ctl reload on the selected clusters
+command  Run the specified command with the current cluster's environment
+set      Set the specified server parameters in each selected cluster
+show     Show the specified server parameters in each selected cluster
+readlogs Read the selected cluster's log file
+logs     Print absolute paths to the selected cluster's log file
+</pre>
+</div>
+<div class="rst-section">
+<h1><a id="-sample-invocations" name="sample-invocations">sample invocations</a></h1>
+<pre class="rst-literal-block">
+pg_tin create /usr/local/pgsql/bin/pg_config
+pg_tin list
+pg_tin set "search_path=public,utils" "shared_buffers=5000"
+pg_tin -V 8.2 start
+pg_tin -V 8.1 com psql -f sql
+</pre>
+</div>
+</div>
+        </div>
+      </div>
+      <br />
+      <div class="package" id="postgresql.backend.tin">
+        <h3 class="title"><span class="keyword">package</span> postgresql.backend.tin</h3>
+        <div class="doc">
+          <pre>Test infrastructure space</pre>
+        </div>
+      </div>
+      <br />
+      <div class="module" id="postgresql.backend.tin.control">
+        <h3 class="title"><span class="keyword">module</span> postgresql.backend.tin.control</h3>
+        <div class="doc">
+          <pre>Cup o' clusters interface</pre>
+        </div>
+        <div class="content">
+          <div class="imports">
+            <div class="head">
+              <span class="title">imports</span>
+            </div>
+            <div class="import"><span class="keyword">import</span> <a class="import" href="//os"><span class="path">os</span></a></div>
+            <div class="import"><span class="keyword">import</span> <a class="import" href="//postgresql.utility.config"><span class="path">postgresql.utility.config</span> as <span class="name">pg_config</span></a></div>
+            <div class="import"><span class="keyword">import</span> <a class="import" href="//postgresql.utility.version"><span class="path">postgresql.utility.version</span> as <span class="name">pg_version</span></a></div>
+            <div class="import"><span class="keyword">import</span> <a class="import" href="//sys"><span class="path">sys</span></a></div>
+            <div class="import"><span class="keyword">import</span> <a class="import" href="//warnings"><span class="path">warnings</span></a></div>
+          </div>
+          <div class="classes">
+            <div class="head">
+              <span class="title">classes</span>
+            </div>
+            <div class="class" id="postgresql.backend.tin.control.TinError">
+              <div class="title"><span class="keyword">class</span> <span class="title">TinError</span>(<a class="super" title="exceptions.Exception" href="//exceptions.Exception">Exception</a>):</div>
+              <div class="content"></div>
+            </div>
+            <div class="class" id="postgresql.backend.tin.control.UnresolvablePgConfig">
+              <div class="title"><span class="keyword">class</span> <span class="title">UnresolvablePgConfig</span>(<a class="super" title="postgresql.backend.tin.control.TinError" href="#postgresql.backend.tin.control.TinError">TinError</a>):</div>
+              <div class="content"></div>
+            </div>
+            <div class="class" id="postgresql.backend.tin.control.Cup">
+              <div class="title"><span class="keyword">class</span> <span class="title">Cup</span>(<a class="super" title="__builtin__.object" href="//__builtin__.object">object</a>):</div>
+              <div class="doc">
+                <pre>The cup of clusters.</pre>
+              </div>
+              <div class="content">
+                <div class="methods">
+                  <div class="head">
+                    <span class="title">methods</span>
+                  </div>
+                  <div class="method">
+                    <div class="title"><span class="keyword">def</span> <span class="title">__init__</span><span class="args">(<span class="block"><span class="argname">self</span><span class="argsep">,</span> <span class="argname">path</span><span class="argsep">,</span> <span class="argname">parallels = <a class="objref" href="//__builtin__.int"><pre>0</pre></a></span></span>):</span></div>
+                  </div>
+                  <div class="method">
+                    <div class="title"><span class="keyword">def</span> <span class="title">add</span><span class="args">(<span class="block"><span class="argname">self</span><span class="argsep">,</span> <span class="argname">pg_config_path</span></span>):</span></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="functions">
+            <div class="head">
+              <span class="title">functions</span>
+            </div>
+            <div class="function">
+              <div class="title"><span class="keyword">def</span> <span class="title">genport</span><span class="args">(<span class="block"><span class="argname">exceptions = <a class="objref" href="//__builtin__.tuple"><pre>()</pre></a></span><span class="argsep">,</span> <span class="argname">limit = <a class="objref" href="//__builtin__.int"><pre>100</pre></a></span></span>):</span></div>
+            </div>
+          </div>
+          <div class="datas">
+            <div class="head">
+              <span class="title">data</span>
+            </div>
+            <div class="data" title="__builtin__.str" id="postgresql.backend.tin.control.CONFIG_FILENAME"><span class="name">CONFIG_FILENAME</span> = <a class="objref" href="//__builtin__.str"><pre>'pg_tin.conf'</pre></a></div>
+            <div class="data" title="__builtin__.type" id="postgresql.backend.tin.control.pg_cluster"><span class="name">pg_cluster</span> = <a class="objref" href="//postgresql.backend.boss.cluster.Cluster"><pre>postgresql.backend.boss.cluster.Cluster</pre></a></div>
+            <div class="data" title="__builtin__.builtin_function_or_method" id="postgresql.backend.tin.control.random"><span class="name">random</span> = <a class="objref" href="//__builtin__.builtin_function_or_method"><pre>&lt;built-in method random of Random object at 0x8c5810&gt;</pre></a></div>
+          </div>
+        </div>
+      </div>
+      <br />
+      <div class="module" id="postgresql.backend.tin.command">
+        <h3 class="title"><span class="keyword">module</span> postgresql.backend.tin.command</h3>
+        <div class="doc">
+          <pre>tin command line interface</pre>
+        </div>
+        <div class="content">
+          <div class="imports">
+            <div class="head">
+              <span class="title">imports</span>
+            </div>
+            <div class="import"><span class="keyword">import</span> <a class="import" href="//postgresql.backend.boss.control"><span class="path">postgresql.backend.boss.control</span> as <span class="name">boss_control</span></a></div>
+            <div class="import"><span class="keyword">import</span> <a class="import" href="//optparse"><span class="path">optparse</span></a></div>
+            <div class="import"><span class="keyword">import</span> <a class="import" href="//os"><span class="path">os</span></a></div>
+            <div class="import"><span class="keyword">import</span> <a class="import" href="//postgresql.utility.version"><span class="path">postgresql.utility.version</span> as <span class="name">pg_version</span></a></div>
+            <div class="import"><span class="keyword">import</span> <a class="import" href="//signal"><span class="path">signal</span></a></div>
+            <div class="import"><span class="keyword">import</span> <a class="import" href="//subprocess"><span class="path">subprocess</span></a></div>
+            <div class="import"><span class="keyword">import</span> <a class="import" href="//sys"><span class="path">sys</span></a></div>
+            <div class="import"><span class="keyword">import</span> <a class="import" href="//jwp_terminfo/1.0.4#name.jwp.terminfo"><span class="path">name.jwp.terminfo</span> as <span class="name">ti</span></a></div>
+            <div class="import"><span class="keyword">import</span> <a class="import" href="#postgresql.backend.tin.control"><span class="path">postgresql.backend.tin.control</span> as <span class="name">tin_control</span></a></div>
+            <div class="import"><span class="keyword">import</span> <a class="import" href="//traceback"><span class="path">traceback</span></a></div>
+          </div>
+          <div class="functions">
+            <div class="head">
+              <span class="title">functions</span>
+            </div>
+            <div class="function">
+              <div class="title"><span class="keyword">def</span> <span class="title">isin</span><span class="args">(<span class="block"><span class="argname">txt</span><span class="argsep">,</span> <span class="argname">vals</span></span>):</span></div>
+            </div>
+            <div class="function">
+              <div class="title"><span class="keyword">def</span> <span class="title">exit_message</span><span class="args">(<span class="block"><span class="argname">c</span><span class="argsep">,</span> <span class="argname">r</span></span>):</span></div>
+            </div>
+            <div class="function">
+              <div class="title"><span class="keyword">def</span> <span class="title">tin</span><span class="args">(<span class="block"><span class="argname">args</span></span>):</span></div>
+            </div>
+            <div class="function">
+              <div class="title"><span class="keyword">def</span> <span class="title">main</span><span class="args">(<span class="block"></span>):</span></div>
+            </div>
+          </div>
+          <div class="datas">
+            <div class="head">
+              <span class="title">data</span>
+            </div>
+            <div class="data" title="__builtin__.str" id="postgresql.backend.tin.command.COMMAND_HELP"><span class="name">COMMAND_HELP</span> = <a class="objref" href="//__builtin__.str"><pre>'%prog [options] command [args]\n\nCommands:\n  help     Print this help menu\n  list     Print paths and version information to selected clusters [ls]\n  environ  Print standard PostgreSQL environment variable for connectivity [env]\n  string   Print standard PostgreSQL connectivity options [str]\n  path     Print path to selected clusters\n  create   Create a cluster using the given pg_config\n  drop     Drop the selected database clusters\n  recreate Recreate the selected clusters (configuration is lost)\n  stop     Signal the selected clusters to shutdown\n  start    Start the selected clusters\n  reload   Run pg_ctl reload on the selected clusters\n  command  Run the specified command with the current cluster\'s environment\n  set      Set the specified server parameters in each selected cluster\n  show     Show the specified server parameters in each selected cluster\n  readlogs Read the selected cluster\'s log file using $PAGER\n  logs     Print absolute paths to the selected cluster\'s log file\n\nExamples:\n  %prog create /usr/local/pgsql/bin/pg_config\n  %prog list\n  %prog set "search_path=public,utils" "shared_buffers=5000"\n  %prog -V 8.2 start\n  %prog -V 8.1 com psql -f sql'</pre></a></div>
+            <div class="data" title="__builtin__.function" id="postgresql.backend.tin.command._"><span class="name">_</span> = <a class="objref" href="//gettext.gettext"><pre>gettext.gettext</pre></a></div>
+            <div class="data" title="__builtin__.instance" id="postgresql.backend.tin.command.select_all"><span class="name">select_all</span> = <a class="objref" href="//__builtin__.instance"><pre>&lt;Option at 0x1298828: -A/--all&gt;</pre></a></div>
+            <div class="data" title="__builtin__.instance" id="postgresql.backend.tin.command.select_cluster"><span class="name">select_cluster</span> = <a class="objref" href="//__builtin__.instance"><pre>&lt;Option at 0x128abc0: -c/--cluster&gt;</pre></a></div>
+            <div class="data" title="__builtin__.instance" id="postgresql.backend.tin.command.select_configure"><span class="name">select_configure</span> = <a class="objref" href="//__builtin__.instance"><pre>&lt;Option at 0x128a328: --configure&gt;</pre></a></div>
+            <div class="data" title="__builtin__.instance" id="postgresql.backend.tin.command.select_pg_config"><span class="name">select_pg_config</span> = <a class="objref" href="//__builtin__.instance"><pre>&lt;Option at 0x1291b70: --pg-config&gt;</pre></a></div>
+            <div class="data" title="__builtin__.instance" id="postgresql.backend.tin.command.select_type"><span class="name">select_type</span> = <a class="objref" href="//__builtin__.instance"><pre>&lt;Option at 0x1298c38: -t/--type&gt;</pre></a></div>
+            <div class="data" title="__builtin__.instance" id="postgresql.backend.tin.command.select_version"><span class="name">select_version</span> = <a class="objref" href="//__builtin__.instance"><pre>&lt;Option at 0x128ab48: -V/--pg-version&gt;</pre></a></div>
+            <div class="data" title="__builtin__.list" id="postgresql.backend.tin.command.selection_options"><span class="name">selection_options</span> = <a class="objref" href="//__builtin__.list"><pre>[&lt;Option at 0x128ab48: -V/--pg-version&gt;, &lt;Option at 0x128abc0: -c/--cluster&gt;, &lt;Option at 0x1291b70: --pg-config&gt;, &lt;Option at 0x128a328: --configure&gt;, &lt;Option at 0x1298828: -A/--all&gt;]</pre></a></div>
+            <div class="data" title="__builtin__.instance" id="postgresql.backend.tin.command.tincup_path"><span class="name">tincup_path</span> = <a class="objref" href="//__builtin__.instance"><pre>&lt;Option at 0x128a378: -D/--set-directory&gt;</pre></a></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

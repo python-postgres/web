@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="ISO-8859-1"?><!DOCTYPE document PUBLIC "-//APACHE//DTD Documentation V1.3//EN" "document-v13.dtd">
+<document>
+ <header>
+  <title>pg_teop</title>
+  <subtitle>Procedural Language &amp; Backend Interfaces</subtitle>
+  <abstract>The backend project provides a Python extension module specifying
+  the interfaces to PostgreSQL data structures, and a procedural language
+  extension to allow you to make use of the wonders of that module.</abstract>
+ </header>
+ <body>
+   <table>
+   <tr>
+    <th colspan="1" rowspan="1">Version</th>
+    <th colspan="1" rowspan="1">Download</th>
+    <th colspan="1" rowspan="1">Documentation</th>
+    <th colspan="1" rowspan="1">Description</th>
+   </tr>
+   <tr>
+    <td colspan="1" rowspan="1">1.0dev</td>
+    <td colspan="1" rowspan="1"><link href="/files/pg_teop-1.0dev.tar.gz">Source.tgz</link></td>
+    <td colspan="1" rowspan="1"><link href="/doc/pg_teop-1.0dev.html">HTML</link></td>
+    <td colspan="1" rowspan="1">Coming Soon</td>
+   </tr>
+  </table>
+  <section>
+   <title>Features</title>
+   <ul>
+    <li>Native Postgres objects</li>
+    <li>Direct function calls</li>
+    <li>Full tracebacks included in error details</li>
+    <li>Procedure validator(Syntax check on CREATE)</li>
+    <li>GreenTrunk interface</li>
+    <li>DB-API 2.0 interface</li>
+    <li>Internal subtransaction support(procedure "savepoints")</li>
+    <li>Set returning function support</li>
+    <li>State keeping functions(think generators across a result set)</li>
+    <li>Multi-dimensional array support</li>
+    <li>Cached Queries(Postgres.cquery())</li>
+    <li>IN/OUT Parameters</li>
+   </ul>
+  </section>
+  <section>
+   <title>SCM</title>
+   <p>
+    <code>cvs -d :pserver:anonymous:@cvs.pgfoundry.org:/cvsroot/python co
+    be</code>
+   </p>
+   <p>
+    <link href="http://cvs.pgfoundry.org/cgi-bin/cvsweb.cgi/python/be">Web
+    Interface</link>
+   </p>
+  </section>
+ </body>
+</document><!--
+ ! vim: ts=1:sw=1:et:
+ !-->

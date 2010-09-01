@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   width="64px"
+   height="64px"
+   id="svg3216"
+   sodipodi:version="0.32"
+   inkscape:version="0.46"
+   sodipodi:docname="docicon.svg"
+   inkscape:output_extension="org.inkscape.output.svg.inkscape"
+   inkscape:export-filename="/src/org/pgfoundry/python/py-postgresql-web/src/docicon.png"
+   inkscape:export-xdpi="90"
+   inkscape:export-ydpi="90">
+  <defs
+     id="defs3218">
+    <inkscape:perspective
+       sodipodi:type="inkscape:persp3d"
+       inkscape:vp_x="0 : 32 : 1"
+       inkscape:vp_y="0 : 1000 : 0"
+       inkscape:vp_z="64 : 32 : 1"
+       inkscape:persp3d-origin="32 : 21.333333 : 1"
+       id="perspective3224" />
+  </defs>
+  <sodipodi:namedview
+     id="base"
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1.0"
+     inkscape:pageopacity="0.0"
+     inkscape:pageshadow="2"
+     inkscape:zoom="5.5"
+     inkscape:cx="2"
+     inkscape:cy="32"
+     inkscape:current-layer="layer1"
+     showgrid="true"
+     inkscape:document-units="px"
+     inkscape:grid-bbox="true"
+     inkscape:window-width="1096"
+     inkscape:window-height="732"
+     inkscape:window-x="281"
+     inkscape:window-y="83" />
+  <metadata
+     id="metadata3221">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <g
+     id="layer1"
+     inkscape:label="Layer 1"
+     inkscape:groupmode="layer">
+    <rect
+       style="fill:#f0f0f0;fill-opacity:0.88235294;stroke:#000000;stroke-width:1.49804354;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+       id="rect3226"
+       width="38.465504"
+       height="51.556419"
+       x="15.40361"
+       y="7.2217917" />
+    <rect
+       style="fill:#004534;fill-opacity:1;stroke:none;stroke-width:4;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+       id="rect3737"
+       width="7.2727275"
+       height="48.545452"
+       x="16.181818"
+       y="9.454546" />
+    <rect
+       style="fill:#003e1f;fill-opacity:1;stroke:none;stroke-width:4;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+       id="rect3741"
+       width="36.909092"
+       height="1.6363637"
+       x="16.181818"
+       y="8" />
+    <flowRoot
+       xml:space="preserve"
+       id="flowRoot3743"
+       style="font-size:2px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:start;line-height:100%;writing-mode:lr-tb;text-anchor:start;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;font-family:Bitstream Vera Sans;-inkscape-font-specification:Bitstream Vera Sans"><flowRegion
+         id="flowRegion3745"><rect
+           id="rect3747"
+           width="25.09091"
+           height="16.545452"
+           x="25.818182"
+           y="12.181818"
+           style="font-size:2px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:start;line-height:100%;writing-mode:lr-tb;text-anchor:start;font-family:Bitstream Vera Sans;-inkscape-font-specification:Bitstream Vera Sans" /></flowRegion><flowPara
+         id="flowPara3749">This is very</flowPara><flowPara
+         id="flowPara3751">small writing. In order to convey text writing that would be found in Documentation.</flowPara><flowPara
+         id="flowPara3753" /><flowPara
+         id="flowPara3755">Another paragraph here followed by an example.</flowPara></flowRoot>    <rect
+       style="fill:#c7d766;fill-opacity:1;stroke:#fc0000;stroke-width:0.17211479;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+       id="rect3757"
+       width="26.391521"
+       height="4.5733395"
+       x="24.349693"
+       y="30.349693" />
+    <flowRoot
+       xml:space="preserve"
+       id="flowRoot3767"
+       style="font-size:2px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:start;line-height:100%;writing-mode:lr-tb;text-anchor:start;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;font-family:Bitstream Vera Sans Mono;-inkscape-font-specification:Bitstream Vera Sans Mono"
+       transform="matrix(0.7152135,0,0,0.7690052,57.99073,34.745562)"><flowRegion
+         id="flowRegion3769"><rect
+           id="rect3771"
+           width="45.272728"
+           height="69.090912"
+           x="-46"
+           y="-4.7272725"
+           style="font-size:2px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:start;line-height:100%;writing-mode:lr-tb;text-anchor:start;font-family:Bitstream Vera Sans Mono;-inkscape-font-specification:Bitstream Vera Sans Mono" /></flowRegion><flowPara
+         id="flowPara3773">def foo(*bar):</flowPara><flowPara
+         id="flowPara3775"> return map(next, cycle(bar))</flowPara></flowRoot>    <flowRoot
+       xml:space="preserve"
+       id="flowRoot3777"
+       style="font-size:2px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:start;line-height:100%;writing-mode:lr-tb;text-anchor:start;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;font-family:Bitstream Vera Sans;-inkscape-font-specification:Bitstream Vera Sans"
+       transform="matrix(1,0,0,1.1026864,-0.2941232,23.782967)"><flowRegion
+         id="flowRegion3779"><rect
+           id="rect3781"
+           width="25.09091"
+           height="16.545452"
+           x="25.818182"
+           y="12.181818"
+           style="font-size:2px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:start;line-height:100%;writing-mode:lr-tb;text-anchor:start;font-family:Bitstream Vera Sans;-inkscape-font-specification:Bitstream Vera Sans" /></flowRegion><flowPara
+         id="flowPara3789">And some more very small text. This should look like it's describing the above example even though it isn't.</flowPara><flowPara
+         id="flowPara3800" /><flowPara
+         id="flowPara3802">Lame ending.</flowPara></flowRoot>  </g>
+</svg>

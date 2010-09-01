@@ -1,0 +1,153 @@
+a, a:visited { color: #000000; text-decoration: none; }
+a:hover { color: blue; }
+html { background-color: #F0F0F0; }
+
+body > div.content {
+ max-width: 8.5in;
+}
+
+span.indent {
+ margin-left: 1.75em;
+}
+span.argname {
+ overflow: hidden;
+}
+
+span.keyword {
+ color: #000088;
+}
+
+/* Data Name */
+span.name {
+ font-family: monospace;
+}
+
+div.title {
+ background-color: inherit;
+}
+div.title {
+ font-size: 1.2em;
+}
+
+h1, h2, h3, h4, h5 {
+ font-family: Georgia, "Bitstream Vera Serif", "New York", Palatino, serif;
+ font-weight: normal;
+ color: #164D7C;
+ margin-bottom: 0.3em;
+ margin-top: 0.5em;
+}
+
+div.rst-root h1 {
+ font-size: large;
+}
+div.rst-root h2 {
+ font-size: medium;
+ font-weight: bold;
+}
+div.rst-root h3 {
+ font-size: small;
+ font-weight: bold;
+}
+div.rst-root h4 {
+ font-size: small;
+ font-variant: small-caps;
+}
+div.rst-root h5 {
+ font-size: small;
+}
+
+
+
+div.package>div.title, div.module>div.title {
+ padding: 2px;
+ font-size: large;
+}
+
+div.functions,
+div.classes,
+div.class_methods,
+div.methods,
+div.static_methods,
+div.properties,
+div.datas,
+div.imports {
+ margin-top: 1em;
+}
+
+div.functions>div.function,
+div.classes>div.class,
+div.class_methods>div.method,
+div.methods>div.method,
+div.static_methods>div.method,
+div.properties>div.property,
+div.datas>div.data,
+div.imports>div.import {
+ margin-left: 1.2em;
+}
+
+div.classes>div.class {
+ margin-bottom: 1.5em;
+}
+
+div.head>span.title {
+ font-variant: small-caps;
+ letter-spacing: 0.2em;
+ font-size: 0.9em;
+}
+
+a.objref > pre {
+	display: inline;
+	max-width: 8in;
+}
+
+pre.literal-block {
+ margin-left: 2em;
+}
+
+div.class, div.method, div.function, div.property {
+ margin-top: 0.7em;
+}
+
+div.title, div.data {
+ font-family: monospace;
+}
+
+div.doc {
+ margin-left: 2em;
+ padding-left: 0.5em;
+ background-color: white;
+ border-width: 1px;
+ border-color: black;
+ border-style: solid;
+}
+
+div.description {
+ padding-left: 0.5em;
+ background-color: #ffffdd;
+ border-width: 1px;
+ border-color: black;
+ border-style: solid;
+ margin-bottom: -1px;
+ font-family: monospace;
+}
+
+div.content {
+ margin-bottom: 1em;
+}
+
+a.block:hover {
+ color: lightgray;
+ background-color: darkred;
+}
+a.block:active {
+ border-color: white;
+ color: darkred;
+ background-color: black;
+}
+
+#navigation {
+ position: fixed;
+ right: 0;
+ top: 2px;
+ max-width: 2.5in;
+}

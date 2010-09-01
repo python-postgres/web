@@ -1,0 +1,356 @@
+a {
+ text-decoration: none;
+}
+img {
+ border-width: 0;
+}
+html {
+ background-color: #999999;
+}
+
+div#backend_link {
+ position: fixed;
+ z-index: 2;
+ right: 12px;
+ bottom: 12px;
+ font-size: small;
+}
+
+div#undertabs {
+ user-select: none;
+ -moz-user-select: none;
+ -khtml-user-select: none;
+ position: fixed;
+ z-index: -1;
+ border-color: black;
+ border-width: 1px;
+ border-style: outset;
+ background-color: #404040;
+ top: 16px;
+ left: -134px;
+ width: 122px;
+ height: 100%;
+ font-style: monospace;
+ font-size: small;
+ color: lightgray;
+ padding-left: 10px;
+ padding-right: 4px;
+ scroll: none;
+ white-space: nowrap;
+ overflow: hidden;
+}
+div#undertabs pre {
+ position: absolute;
+ top: -32em;
+}
+
+div#retabs {
+ z-index: 15;
+ position: fixed;
+ left: -138px;
+ top: 30px;
+ background-color: none;
+ border-style: none;
+ border-width: 0px;
+ padding-top: 4px;
+ width: 272px;
+ white-space: nowrap;
+}
+
+div#retabs div {
+ user-select: none;
+ -moz-user-select: none;
+ -khtml-user-select: none;
+ padding: 4px;
+ padding-left: 6px;
+ margin-bottom: 4px;
+ width: 50%;
+ text-align: left;
+ background-color: lightyellow;
+ border-width: 1px;
+ border-color: #eeee11;
+ border-style: solid;
+ font-family: sans-serif;
+ font-size: small;
+ scroll: hidden;
+}
+
+div#retabs div img {
+ height: 1.5em;
+ width: 1.5em;
+ margin-right: 5px;
+ vertical-align: middle;
+}
+
+div#retabs div:hover img {
+ filter:alpha(opacity=50);
+ -moz-opacity:0.5;
+ -khtml-opacity: 0.5;
+ opacity: 0.5;
+}
+
+div#retabs div:hover {
+ border-color: lightgray;
+ background-color: white;
+ cursor: pointer;
+ font-weight: bold;
+ border-right-width: 4px;
+}
+
+div#reveals {
+ z-index: 10;
+ position: fixed;
+ left:166px;
+ top:0px;
+ background-color: none;
+ max-width: 80%;
+ min-width: 0.5in;
+}
+
+div#reveals div div.rtitle {
+ display: none;
+}
+div#reveals div div.ricon {
+ display: none;
+}
+div#reveals div {
+ position: relative;
+ margin: auto;
+}
+div#reveals div div.rbody div.vbar {
+ position: absolute;
+ top: 0px;
+ background-color: #eeeeee;
+ width: 1px;
+ height: 100%;
+ border-width: 0px;
+ border-style: solid;
+ border-right-width: 1px;
+ border-right-color: darkgray;
+}
+
+div#reveals div div.rbody {
+ background-color: #e0e0e0;
+ border-style: solid;
+ border-color: black;
+ border-width: 1px;
+ border-top: 0px;
+ display: none;
+ padding: 10px;
+ padding-left: 32px;
+ font-size: small;
+ scroll: auto;
+}
+div#reveals div div.rbody div.border {
+ border-style: solid;
+ border-color: #f1f1f1;
+ border-top-color: #cccccc;
+ border-left-color: #cccccc;
+ border-width: 1px;
+ background-color: #999999;
+ padding: 0px;
+ padding-left: 1px;
+ padding-top: 1px;
+}
+div#reveals div div.rbody div.border div.inner {
+ background-color: white;
+ border-style: solid;
+ border-color: black;
+ border-width: 1px;
+ padding: 4px;
+ overflow: auto;
+}
+div#reveals div div.rbody div.border div.inner pre {
+ margin-left: 32px;
+}
+
+div#body {
+ margin-top: 0.5in;
+ margin-left: auto;
+ margin-right: auto;
+ margin-bottom: auto;
+ width: 8.05in;
+ position: relative;
+ background-color: white;
+ border-style: solid;
+ border-width: 1px;
+ border-color: black;
+}
+
+div#releases {
+ display: none;
+ position: fixed;
+ border-style: solid;
+ border-width: 4px;
+ border-color: gray;
+ background-color: darkgray;
+ width: 4in;
+ margin-left: auto;
+ margin-right: auto;
+}
+
+div#header {
+ position: fixed;
+ top: 1em; right: 1em;
+ color: #eeeeee;
+ font-weight: bold;
+ font-size: small;
+}
+
+div#content {
+ padding: 1em;
+ position: relative;
+}
+div#footer {
+ margin-top: 0.05in;
+ padding: 0;
+ border-width: 0;
+}
+div#footer table {
+ padding: 0;
+ margin: 0;
+ border-width: 0;
+ border-top-style: solid;
+ border-top-width: 1px;
+ border-top-color: gray;
+ border-spacing: 0;
+}
+div#footer table tr {
+	background-color: lightyellow;
+	padding: 0;
+	margin: 0;
+	font-size: small;
+}
+div#footer table tr td {
+ text-align: center;
+ width: 12.6%; /* :( */
+ padding-top: 2px;
+ padding-bottom: 2px;
+ border-right-style: solid;
+ border-right-width: 1px;
+ border-right-color: gray;
+ text-size: small;
+}
+div#footer table tr td:hover {
+	background-color: white;
+}
+div#footer table tr td:last-child {
+	border-right-width: 0px;
+}
+
+div#ticker {
+ left: 0px; bottom: 0px;
+ max-height: 3.2in;
+ max-width: 2in;
+ margin-left: 100%;
+}
+div#ticker iframe {
+ overflow: hidden;
+ border-width: 0px;
+ height: 100%;
+}
+
+img#postgresql {
+	width: 1in;
+	height: 1in;
+}
+img#python {
+	width: 3in;
+	height: 1in;
+}
+
+div#project_description {
+	background-color: lightyellow;
+	border-style: ridge;
+	border-color: gray;
+	border-width: 1px;
+	padding: 4px;
+	margin-top: 1em;
+	margin-bottom: 2em;
+	font-size: small;
+	text-align: center;
+}
+pre#example {
+	background-color: lightgray;
+	border-style: ridge;
+	border-color: black;
+	border-width: 1px;
+	padding: 4px;
+}
+img.actions {
+	width: 2.5in;
+	height: 0.7in;
+}
+div.actions_sep {
+	background-color: #4a7aAa;
+	border-style: solid;
+	border-width: 1px;
+	border-color: black;
+	margin-left: auto;
+	margin-right: auto;
+	margin-bottom: 0.25em;
+	height: 6px;
+	width: 6px;
+}
+
+div#features_frame {
+	border-style: solid;
+	border-color: gray;
+	border-width: 1px;
+	border-top-width: 0;
+}
+table#features {
+	font-size: small;
+	margin-left: 1em;
+	margin-right: 1em;
+	padding-top: 0.5em;
+}
+table#features tr td {
+	padding-bottom: 0.5em;
+}
+table#features tr td:first-child {
+	white-space: nowrap;
+	vertical-align: top;
+	font-weight: bold;
+}
+table#features tr td:last-child {
+	padding-left: 12px;
+}
+
+td.Fident {
+ font-variant: small-caps;
+}
+
+td.Rident {
+ font-weight: bold;
+ font-size: small;
+ text-align: center;
+ vertical-align: middle;
+ border-width: 1px;
+ border-style: solid;
+ border-color: lightgray;
+ border-left-width: 0px;
+}
+td.Rident img {
+}
+td.Rspec {
+ padding-left: 0.5em;
+}
+
+table.release_files tr td.Rfiles {
+ padding-left: 0.5em;
+ padding-bottom: 2px;
+}
+#rereleases a {
+ margin-right: 4px;
+}
+#rereleases table {
+ border-width: 1px;
+ border-style: solid;
+ border-color: lightgray;
+ border-right-width: 0px;
+ padding: 2px;
+ padding-left: 0px;
+ margin-top: 2px;
+ margin-bottom: 2px;
+}

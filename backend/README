@@ -1,0 +1,24 @@
+When making a release the following steps should be taken:
+
+1. Add the new version to src/index.xml
+
+ The order of the releases and branches is significant. The first element is
+ identified as the primary release or branch. So new releases should
+ be *prepended* to a <branch/> element.
+
+2. Collect the new (release) snapshots
+
+ After the new release has been registered(src/index.xml), the
+ collect_source_snapshots.py script will read that file to collect new source
+ snapshots from github.
+
+ $ python3 ./collect_source_snapshots.py
+
+ This grabs the new tag's snapshot and creates the source
+ distributions(zip, tbz2, tgz).
+
+3. Add new distribution archives and commit changes.
+
+ $ git add static/files
+ $ git commit -a
+ $ git push

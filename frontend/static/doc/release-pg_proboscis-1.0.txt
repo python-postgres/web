@@ -1,0 +1,295 @@
+pg_proboscis 1.0 has been released. pg_proboscis is a Python programmer's
+client for PostgreSQL(driver/interface). See [far] below for code examples.
+
+Project Site:
+ http://python.projects.postgresql.org/?utm_source=release&utm_medium=email&utm_campaign=pg_proboscis-1.0
+
+It distinguishes itself from other drivers by the following:
+
+ - BSD/MIT licensed (from some drivers ;)
+ - Pure-Python (Optional C-extension for some speed-ups =)
+ - Binary type transmission (no need to escape bytea, for instance)
+ - Protocol level prepared statements (parameter types are dictated by the server)
+ - Protocol level cursors (You can even use cursors created on the server via GT)
+ - Alternate database APIs (GreenTrunk, for those that aren't fond of DB-API 2.0)
+ - Composite type support
+ - Structured Arrays (including arrays of composite types for some versions of PG)
+ - COPY interfaces that work with arbitrary iterators (See examples further down)
+ - with_statement support for managing transactions, savepoints, and setting contexts
+ - executemany()/query.load() takes advantage of PQ 3.0's extended protocol
+ - So many unittests. Really. And more to come.
+ - Obsessive dedication to creating *great* software.
+
+The GreenTrunk API is defined using the ``postgresql.protocol.greentrunk.api`` module.
+Getting help() on this module or using the included ``pg_greentrunk`` console script
+yields reference material for using GreenTrunk connections. However, pg_proboscis is
+not exclusively GreenTrunk, it includes a DB-API 2.0 compliant module as well.
+[('pyformat' paramstyle) postgresql.interface.proboscis.dbapi2]
+
+pg_proboscis is not a monolithic project. It isolates components to encourage targeted
+packaging and re-usability without unwanted side-code. These packages are at 1.0
+as well:
+
+ pg_foundation
+  Basics. Exception hierarchy, optparse options, SQL string splitter, and much
+  more.
+
+ pg_typical
+  Binary type I/O routines. Arrays, composite types, geo types, primitives.
+  Uses pg_foundation to instantiate some types.
+
+ pg_pqueue
+  PQ protocol basics. What pg_proboscis uses to do PQ 3.0.
+
+ pg_greentrunk
+  The GreenTrunk connection APIs are specified in a module herein.
+
+
+Downloading
+===========
+
+http://python.projects.postgresql.org/files/?utm_source=release&utm_medium=email&utm_campaign=pg_proboscis-1.0
+
+However, it is suggested to just use easy_install:
+
+ $ easy_install pg_proboscis
+
+
+Documentation
+=============
+
+The places you will likely want to visit:
+
+ http://python.projects.postgresql.org/doc/pg_proboscis-1.0.html?utm_source=release&utm_medium=email&utm_campaign=pg_proboscis-1.0
+  (How to make a connection, and the pb_python command)
+
+ http://python.projects.postgresql.org/doc/pg_greentrunk-1.0.html?utm_source=release&utm_medium=email&utm_campaign=pg_proboscis-1.0
+  (Connection APIs)
+
+ http://python.projects.postgresql.org/doc/pg_foundation-1.0.html?utm_source=release&utm_medium=email&utm_campaign=pg_proboscis-1.0
+  (optparse options, pgpass parser, all sorts of things postgres)
+
+
+GreenTrunk Examples
+===================
+
+The use of the '~'-operation is exhibited quite freely here. When invoked,
+query objects return a cursor object, so in order to provide more convenient
+access to simple data, the '~' can be used to quickly get the first column of
+the first row of a single-column result set.
+
+``gtx`` is the connection object. These examples come from a ``pb_python`` run.
+``pb_python`` is a console script that establishes a connection, binds it to the
+``__builtins__`` module as ``gtx``, and then runs the "python command"(provides a
+Python command with a database connection; ie, interactive console if no script
+is given).
+
+Protocol Level Prepared Statements by Default
+---------------------------------------------
+
+::
+
+	# Create a prepared statement.
+	>>> q = gtx.query('select * from pg_type where typname = $1')
+	>>> q
+	<postgresql.interface.proboscis.tracenull.ClientPreparedStatement[pq://jwp@localhost:5432]>
+	>>> dir(q)
+	['__call__', '__class__', '__del__', '__delattr__', '__dict__', '__doc__', '__getattribute__', '__hash__', '__init__', '__invert__', '__iter__', '__lshift__', '__module__', '__new__', '__reduce__', '__reduce_ex__', '__repr__', '__setattr__', '__str__', '__weakref__', '_input_io', '_output_attmap', '_output_io', '_rformats', 'close', 'closed', 'connection', 'defaults', 'finish', 'first', 'input', 'load', 'output', 'portal', 'prepare', 'prime', 'reprepare', 'statement_id', 'string', 'title']
+
+	# Bind a cursor. (typname = 'text')
+	>>> r = q('text')
+	>>> r
+	<postgresql.interface.proboscis.tracenull.ClientStatementCursor object at 0x2861790c>
+	>>> r.query
+	<postgresql.interface.proboscis.tracenull.ClientPreparedStatement[pq://jwp@localhost:5432]>
+	>>> dir(r)
+	['__class__', '__del__', '__delattr__', '__dict__', '__doc__', '__getattribute__', '__getitem__', '__hash__', '__init__', '__iter__', '__module__', '__new__', '__next__', '__reduce__', '__reduce_ex__', '__repr__', '__setattr__', '__str__', '__weakref__', '_contract', '_expand', '_mktuple', '_output_attmap', '_output_io', '_rformats', '_state', '_xp_fetchmore', '_xp_move', 'close', 'closed', 'connection', 'fetchcount', 'move', 'next', 'output', 'portal_id', 'query', 'read', 'scroll', 'seek', 'whence_map']
+
+	# Grab a row.
+	>>> row1 = r.next()
+	>>> row1
+	(u'text', 11, 10, -1, False, 'b', True, ',', 0, 0, 1009, u'textin', u'textout', u'textrecv', u'textsend', u'-', u'-', u'-', 'i', 'x', False, 0, -1, 0, None, None)
+	>>> row1.keys()
+	['typmodin', 'typnamespace', 'typbyval', 'typsend', 'typdelim', 'typnotnull', 'typndims', 'typinput', 'typtypmod', 'typarray', 'typdefault', 'typdefaultbin', 'typtype', 'typisdefined', 'typlen', 'typelem', 'typrelid', 'typreceive', 'typbasetype', 'typalign', 'typname', 'typstorage', 'typanalyze', 'typmodout', 'typowner', 'typoutput']
+	>>> row1['typlen']
+	-1
+
+Primitive Types
+---------------
+
+::
+
+	>>> q=gtx.query('select $1::bytea, $2::int, $3::bigint, $4::text')
+	>>> r=q('\x00\x01', 123, 2**34, u'ƒoobar').next()
+	>>> r
+	('\x00\x01', 123, 17179869184L, u'\u0192oobar')
+
+
+Arrays
+------
+
+::
+
+	>>> ~gtx.query("select ARRAY[1::int, 2, 3, 256]")
+	postgresql.types.array([1, 2, 3, 256])
+	>>> a=~gtx.query("select ARRAY[1::int, 2, 3, 256]")
+	>>> a[0]
+	1
+	>>> a[-1]
+	256
+	>>> for x in a:
+	...  print x
+	...
+	1
+	2
+	3
+	256
+	>>>
+
+Composite Types
+---------------
+
+::
+
+	>>> gtx.execute('create type test as (i int, t text)')
+	>>> cto = ~gtx.query("select (123, 'foo')::test")
+	>>> cto
+	(123, u'foo')
+	>>> cto['t']
+	u'foo'
+	>>> cto[-1]
+	u'foo'
+	>>> for x in cto:
+	...  print x
+	...
+	123
+	foo
+
+COPY TO STDOUT
+--------------
+
+::
+
+	>>> copy=gtx.query('copy (select i from generate_series(1,10) g(i)) to stdout')()
+	>>> copy
+	<postgresql.interface.proboscis.tracenull.ResultHandle object at 0x2874dc6c>
+	>>> copy.next()
+	'1\n'
+	>>> copy.next()
+	'2\n'
+	>>> copy.read(10)
+	['3\n', '4\n', '5\n', '6\n', '7\n', '8\n', '9\n', '10\n']
+
+
+COPY FROM STDIN
+---------------
+
+::
+
+	>>> gtx.execute('create temp table t (i int, t text)')
+	>>> copy_t = gtx.query('copy t from stdin')
+	>>> copy_t(['%d\t%s\n'%(x,str(x) + 'text') for x in xrange(1, 100)])
+	<postgresql.interface.proboscis.tracenull.ResultHandle object at 0x28617d0c>
+	>>> ~gtx.query('select count(*) FROM t')
+	99
+	>>> for i, t in gtx.query('select * from t where random() < 0.1'):
+	...  print i, t
+	... 
+	8 8text
+	9 9text
+	16 16text
+	17 17text
+	27 27text
+	48 48text
+	50 50text
+	62 62text
+	73 73text
+	76 76text
+
+Incremental COPY FROM STDIN
+---------------------------
+
+::
+
+	>>> gtx.execute('create temp table t (i int, t text)')
+	>>> copy_t = gtx.query('copy t from stdin')
+	>>> ict = copy_t()
+	>>> ict
+	<postgresql.interface.proboscis.tracenull.ResultHandle object at 0x28617dac>
+	>>> dir(ict)
+	['__call__', '__class__', '__delattr__', '__dict__', '__doc__', '__getattribute__', '__hash__', '__init__', '__iter__', '__module__', '__new__', '__reduce__', '__reduce_ex__', '__repr__', '__setattr__', '__str__', '__weakref__', '_contract', '_discover_type', '_expand', '_expect_types', '_lastcopy', '_result_types', 'close', 'closed', 'command', 'complete', 'connection', 'count', 'next', 'query', 'read', 'type', 'write', 'xact']
+	>>> ict.write('3\tjust text\n')
+	>>> ict.close()
+	>>> ~gtx.query("select * from t where t.t = 'just text'")
+	(3, u'just text')
+
+	# Again, but use the faster __call__ interface that works on an iterator.
+	>>> ict = copy_t()
+	>>> ict(['3\ttext and %d\n' %(x,) for x in xrange(10)])
+	>>> ict.close()
+	>>> ~gtx.query("select count(*) from t where t.t ~ 'text and '")
+	10
+
+Transactions
+------------
+
+::
+
+	# Error Recovery
+	>>> with gtx.xact:
+	...  gtx.execute('selekt 1')
+	... 
+	Traceback (most recent call last):
+	  File "<console>", line 2, in <module>
+	  File "build/bdist.freebsd-7.0-RELEASE-i386/egg/postgresql/interface/proboscis/tracenull.py", line 1845, in execute
+		 self._complete()
+	  File "build/bdist.freebsd-7.0-RELEASE-i386/egg/postgresql/interface/proboscis/tracenull.py", line 2378, in _complete
+		 self._pop()
+	  File "build/bdist.freebsd-7.0-RELEASE-i386/egg/postgresql/interface/proboscis/tracenull.py", line 2408, in _pop
+		 raise xact_error
+	SyntaxError: syntax error at or near "selekt"
+	CODE: 42601
+	POSITION: 1
+	LOCATION: File 'scan.l', line 807, in base_yyerror
+	>>> gtx.xact.failed
+	>>> gtx.state
+	'I'
+
+	# State difference
+	>>> with gtx.xact:
+	...  try:
+	...   gtx.execute('selekt 1')
+	...  except:
+	...   print 'state: ', gtx.state
+	...   print 'failed: ', str(gtx.xact.failed)
+	... 
+	state:  E
+	failed:  True
+	>>> gtx.state
+	'I'
+
+	# Transaction manager details
+	>>> import sys
+	>>> gtx.tracer = sys.stderr.write
+	>>> with gtx.xact:
+	...  with gtx.xact:
+	...   gtx.execute('select 1')
+	... 
+	↑ 'Q'(18): 'START TRANSACTION\x00'
+	↓ 'C'(18): 'START TRANSACTION\x00'
+	↓ 'Z'(1): 'T'
+	↑ 'Q'(20): 'SAVEPOINT "xact(1)"\x00'
+	↓ 'C'(10): 'SAVEPOINT\x00'
+	↓ 'Z'(1): 'T'
+	↑ 'Q'(9): 'select 1\x00'
+	↓ 'T'(29): '\x00\x01?column?\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x17\x00\x04\xff\xff\xff\xff\x00\x00'
+	↓ 'D'(7): '\x00\x01\x00\x00\x00\x011'
+	↓ 'C'(7): 'SELECT\x00'
+	↓ 'Z'(1): 'T'
+	↑ 'Q'(18): 'RELEASE "xact(1)"\x00'
+	↓ 'C'(8): 'RELEASE\x00'
+	↓ 'Z'(1): 'T'
+	↑ 'Q'(7): 'COMMIT\x00'
+	↓ 'C'(7): 'COMMIT\x00'
+	↓ 'Z'(1): 'I'
+	>>> del gtx.tracer

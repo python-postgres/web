@@ -1,0 +1,1738 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>pg_proboscis-1.0</title>
+    <link rel="stylesheet" type="text/css" href="xhtml.css" />
+  </head>
+  <body>
+    <h2 class="title"><span class="keyword">project</span> pg_proboscis 1.0</h2>
+    <div class="content">
+      <div class="description">pg_pqueue based GreenTrunk (API) and DB-API 2.0 implementation for PostgreSQL</div>
+      <div id="long_description" class="doc">
+        <div class="rst-root">
+          <div class="rst-document">
+<p>pg_proboscis is a pg_pqueue based driver for PostgreSQL. It provides a GreenTrunk and
+a DB-API 2.0 interface to PostgreSQL databases.</p>
+<div class="rst-section">
+<h1><a id="-contents" name="contents">contents</a></h1>
+<ul class="rst-simple">
+<li><tt class="rst-docutils literal"><span class="rst-pre">postgresql.interface.proboscis.tracenull</span></tt></li>
+<li><tt class="rst-docutils literal"><span class="rst-pre">postgresql.interface.proboscis.greentrunk</span></tt></li>
+<li><tt class="rst-docutils literal"><span class="rst-pre">postgresql.interface.proboscis.dbapi2</span></tt></li>
+<li><tt class="rst-docutils literal"><span class="rst-pre">postgresql.interface.proboscis.python</span></tt></li>
+<li><tt class="rst-docutils literal"><span class="rst-pre">pb_python</span></tt> (console script for postgresql.interface.proboscis.python)</li>
+</ul>
+</div>
+<div class="rst-section">
+<h1><a id="-examples" name="examples">examples</a></h1>
+<p>Run a console with a connection:</p>
+<pre class="rst-literal-block">
+$ pb_python -h localhost -U pgsql -d postgres
+Python 2.5.1 (r251:54863, Dec  8 2007, 09:22:18)
+[GCC 4.0.1 (Apple Inc. build 5465)] on darwin
+Type "help", "copyright", "credits" or "license" for more information.
+(SavingConsole)
+&gt;&gt;&gt; gtx
+&lt;postgresql.interface.proboscis.tracenull.GreenTrunk_Connection[pq://pgsql@localhost:5432/postgres] T.0&gt;
+&gt;&gt;&gt;
+</pre>
+<p>Make a GreenTrunk connection manually:</p>
+<pre class="rst-literal-block">
+&gt;&gt;&gt; import postgresql.interface.proboscis.greentrunk as gt
+&gt;&gt;&gt; con = gt.connector(user = 'pgsql', host = 'localhost', port = 5432, database = 'postgres')
+&gt;&gt;&gt; c=con()
+</pre>
+<p>Make a DB-API 2.0 connection manually:</p>
+<pre class="rst-literal-block">
+&gt;&gt;&gt; import postgresql.interface.proboscis.dbapi2 as db
+&gt;&gt;&gt; c=db.connect(user = 'pgsql', host = 'localhost', port = 5432, database = 'postgres')
+</pre>
+<p>Notably, DSN strings are <em>not</em> directly supported. However, if you want connection
+strings, the <tt class="rst-docutils literal"><span class="rst-pre">postgresql.utility.client.iri</span></tt> module has means for parsing PQ
+IRIs and the <tt class="rst-docutils literal"><span class="rst-pre">postgresql.utility.client.dsn</span></tt> module has means for parsing DSNs.</p>
+</div>
+</div>
+        </div>
+      </div>
+      <br />
+      <div class="chapter" id="chapter_connecting.txt">
+        <h3 class="title"><span class="keyword">chapter</span> connecting.txt</h3>
+        <div class="doc">
+          <div class="rst-root">
+            <div class="rst-document" id="-connecting-to-postgresql-with-pg-proboscis">
+<h1 class="rst-title">Connecting to PostgreSQL with pg_proboscis</h1>
+<div class="rst-section">
+<h1><a id="-making-a-greentrunk-connection" name="making-a-greentrunk-connection">Making a greentrunk connection</a></h1>
+<p><tt class="rst-docutils literal"><span class="rst-pre">pg_proboscis</span></tt> conforms to <cite>postgresql.protocol.greentrunk.api</cite>, but the
+specification does not discuss how connections are made. Connecting to the
+database is a matter for the implementation to handle as how communication
+should occur is <em>not</em> for the specification to define.</p>
+<p>The <cite>postgresql.interface.proboscis.greentrunk</cite> module provides <tt class="rst-docutils literal"><span class="rst-pre">connect</span></tt>,
+<tt class="rst-docutils literal"><span class="rst-pre">connector</span></tt>, and <tt class="rst-docutils literal"><span class="rst-pre">connection</span></tt> attributes. They provide the following
+capabilities:</p>
+<blockquote>
+<dl class="rst-docutils">
+<dt><tt class="rst-docutils literal"><span class="rst-pre">connector</span></tt></dt>
+<dd><p class="rst-first">The connector is a usual mechanism to create a new connection. A connector is
+actually a "bookmark" object that creates the connection:</p>
+<pre class="rst-literal-block">
+import postgresql.interface.proboscis.greentrunk as gt
+con = gt.connector(host = 'localhost', user = 'postgres', port = 5432)
+gtx = con()
+</pre>
+<p class="rst-last">Calling the created connector objects creates the connection to the database.
+The connector provides a channel for pg_proboscis to share information
+across connections.</p>
+</dd>
+<dt><tt class="rst-docutils literal"><span class="rst-pre">connect</span></tt></dt>
+<dd><p class="rst-first">A simple function that returns a new connection. It provides a more convenient
+mechanism for simple systems. It implies the creation of the connector and
+<em>just</em> returns a new connection:</p>
+<pre class="rst-last literal-block">
+import postgresql.interface.proboscis.greentrunk as gt
+gtx = gt.connect(host = 'localhost', user = 'postgres', port = 5432)
+</pre>
+</dd>
+<dt><tt class="rst-docutils literal"><span class="rst-pre">connection</span></tt></dt>
+<dd><p class="rst-first">The class that will be instantiated when a connection is made. <tt class="rst-docutils literal"><span class="rst-pre">connect</span></tt>
+will return an instance of this class. Normally, if this object is to be
+subclassed, the <tt class="rst-docutils literal"><span class="rst-pre">connector</span></tt> would also be subclassed and its
+<tt class="rst-docutils literal"><span class="rst-pre">connection_class</span></tt> would be set to the newly created <tt class="rst-docutils literal"><span class="rst-pre">connector</span></tt> class:</p>
+<pre class="rst-last literal-block">
+import postgresql.interface.proboscis.greentrunk as gt
+
+class my_connection(gt.connection):
+        def aNewHandyMethod(self):
+                raise NotImplementedError
+
+class my_connector(gt.connector):
+        connection_class = my_connection
+</pre>
+</dd>
+</dl>
+</blockquote>
+</div>
+<div class="rst-section">
+<h1><a id="-making-a-connection-using-pq-iris" name="making-a-connection-using-pq-iris">Making a connection using PQ IRIs</a></h1>
+<p>pg_proboscis doesn't support <tt class="rst-docutils literal"><span class="rst-pre">iri</span></tt> or <tt class="rst-docutils literal"><span class="rst-pre">dsn</span></tt> keyword arguments. So, in
+order to use these, a parser must be used to transform an IRI or DSN string into
+a dictionary with the necessary mappings to make the desired connection.</p>
+<p>The pg_foundation projects provides an IRI parser. It can be used to construct
+the necessary dictionary for a connection:</p>
+<pre class="rst-literal-block">
+import postgresql.interface.proboscis.greentrunk as gt
+import postgresql.utility.client.iri as pg_iri
+gtx = gt.connect(**pg_iri.parse('pq://postgres@localhost:5432/dbname'))
+</pre>
+<p>Notably, IRI parsing will <em>not</em> fill in defaults. The <tt class="rst-docutils literal"><span class="rst-pre">port</span></tt> and <tt class="rst-docutils literal"><span class="rst-pre">user</span></tt>
+fields are not filled in if they are not specified within the string.</p>
+</div>
+<div class="rst-section">
+<h1><a id="-keyword-parameters" name="keyword-parameters">Keyword Parameters</a></h1>
+<p>Connection interfaces only use keyword parameters. DSN or IRI strings are not
+directly supported--that is a matter for a parser or another interface to handle.</p>
+<blockquote>
+<dl class="rst-docutils">
+<dt><tt class="rst-docutils literal"><span class="rst-pre">user</span></tt></dt>
+<dd>The user to connect and authenticate as.</dd>
+<dt><tt class="rst-docutils literal"><span class="rst-pre">password</span></tt></dt>
+<dd>The password for the user.</dd>
+<dt><tt class="rst-docutils literal"><span class="rst-pre">host</span></tt></dt>
+<dd>The IP host to connect to.</dd>
+<dt><tt class="rst-docutils literal"><span class="rst-pre">port</span></tt></dt>
+<dd>The port on the host to connect to. This is required iff <tt class="rst-docutils literal"><span class="rst-pre">host</span></tt> is the
+method.</dd>
+<dt><tt class="rst-docutils literal"><span class="rst-pre">database</span></tt></dt>
+<dd>The name of the database to connect to.</dd>
+<dt><tt class="rst-docutils literal"><span class="rst-pre">sslmode</span></tt></dt>
+<dd><p class="rst-first">Under what condition should the connection be secured using SSL. Can be one
+of:</p>
+<blockquote class="rst-last">
+<dl class="rst-docutils">
+<dt><tt class="rst-docutils literal"><span class="rst-pre">"prefer"</span></tt></dt>
+<dd>If SSL is available, use it, otherwise fall back to an unsecured connection.</dd>
+<dt><tt class="rst-docutils literal"><span class="rst-pre">"allow"</span></tt></dt>
+<dd>By default, use an unsecured connection, but if only a secure connection is
+available, allow it.</dd>
+<dt><tt class="rst-docutils literal"><span class="rst-pre">"require"</span></tt></dt>
+<dd>SSL connection must be used.</dd>
+<dt><tt class="rst-docutils literal"><span class="rst-pre">"disallow"</span></tt></dt>
+<dd>SSL connection cannot be used.</dd>
+</dl>
+</blockquote>
+</dd>
+<dt><tt class="rst-docutils literal"><span class="rst-pre">unix</span></tt></dt>
+<dd>Connect to the database via a file system socket. The file system path to the
+socket file.</dd>
+<dt><tt class="rst-docutils literal"><span class="rst-pre">process</span></tt></dt>
+<dd><p class="rst-first">A tuple stating the subprocess to facilitate the connection using the
+process's standard input and output. This can be used make a connection
+via ssh. For example:</p>
+<pre class="rst-last literal-block">
+import postgresql.interface.proboscis.greentrunk as gt
+gt.connect(user='postgres', process=(
+                'ssh', 'remotehost.tld', 'nc localhost 5432'
+        )
+)
+</pre>
+</dd>
+<dt><tt class="rst-docutils literal"><span class="rst-pre">options</span></tt></dt>
+<dd>Extra command line options for the server.</dd>
+<dt><tt class="rst-docutils literal"><span class="rst-pre">tracer</span></tt></dt>
+<dd><p class="rst-first">This option provides a means to log PQ transmission. The representation of every
+message that was sent and received is sent to the function given as the
+<tt class="rst-docutils literal"><span class="rst-pre">tracer</span></tt> keyword's value. For example:</p>
+<pre class="rst-last literal-block">
+import postgresql.interface.proboscis.greentrunk as gt
+gtx = gt.connect(
+        user='postgres',
+        host='localhost',
+        port=5432,
+        tracer=sys.stderr.write
+)
+</pre>
+</dd>
+<dt><em>other</em></dt>
+<dd>Any other parameter passed in is used as a setting and value to initiate the
+connection with. This can be used to set the <tt class="rst-docutils literal"><span class="rst-pre">search_path</span></tt>, or other GUC
+parameter.</dd>
+</dl>
+</blockquote>
+</div>
+</div>
+          </div>
+        </div>
+      </div>
+      <br />
+      <div class="chapter" id="chapter_pb_python.txt">
+        <h3 class="title"><span class="keyword">chapter</span> pb_python.txt</h3>
+        <div class="doc">
+          <div class="rst-root">
+            <div class="rst-document" id="-the-pb-python-console-script">
+<h1 class="rst-title">The pb_python Console Script</h1>
+<p>The <tt class="rst-docutils literal"><span class="rst-pre">pb_python</span></tt> script provides a simple way to write scripts against a
+single target database. Usually these would tend to be scripts that do condition
+processing that is difficult to do in pure SQL, or simple report construction.</p>
+<div class="rst-section">
+<h1><a id="-usage" name="usage">Usage</a></h1>
+<p>Usage: pb_python [connection options] [script] [-- script options] [args]</p>
+<dl class="rst-docutils">
+<dt>Options:</dt>
+<dd><table class="rst-first last docutils option-list" frame="void" rules="none">
+<col class="rst-option" />
+<col class="rst-description" />
+<tbody valign="top">
+<tr><td class="rst-option-group" colspan="2">
+<kbd><span class="rst-option">-d <var>DATABASE</var></span>, <span class="rst-option">--database=<var>DATABASE</var></span></kbd></td>
+</tr>
+<tr><td> </td><td>database's name</td></tr>
+<tr><td class="rst-option-group" colspan="2">
+<kbd><span class="rst-option">-h <var>SOCKET_PROVIDER</var></span>, <span class="rst-option">--host=<var>SOCKET_PROVIDER</var></span></kbd></td>
+</tr>
+<tr><td> </td><td>database server host</td></tr>
+<tr><td class="rst-option-group" colspan="2">
+<kbd><span class="rst-option">-p <var>PORT</var></span>, <span class="rst-option">--port=<var>PORT</var></span></kbd></td>
+</tr>
+<tr><td> </td><td>database server port</td></tr>
+<tr><td class="rst-option-group" colspan="2">
+<kbd><span class="rst-option">-U <var>USER</var></span>, <span class="rst-option">--username=<var>USER</var></span></kbd></td>
+</tr>
+<tr><td> </td><td>user name to connect as</td></tr>
+<tr><td class="rst-option-group">
+<kbd><span class="rst-option">-W</span>, <span class="rst-option">--password</span></kbd></td>
+<td>prompt for password</td></tr>
+<tr><td class="rst-option-group" colspan="2">
+<kbd><span class="rst-option">--unix-socket=<var>SOCKET_PROVIDER</var></span></kbd></td>
+</tr>
+<tr><td> </td><td>path to filesystem socket</td></tr>
+<tr><td class="rst-option-group" colspan="2">
+<kbd><span class="rst-option">--process=<var>SOCKET_PROVIDER</var></span></kbd></td>
+</tr>
+<tr><td> </td><td>the subprocess to execute to facilitate the connection</td></tr>
+<tr><td class="rst-option-group" colspan="2">
+<kbd><span class="rst-option">--server-options=<var>OPTIONS</var></span></kbd></td>
+</tr>
+<tr><td> </td><td>command line options for the remote Postgres backend</td></tr>
+<tr><td class="rst-option-group" colspan="2">
+<kbd><span class="rst-option">--ssl-mode=<var>SSLMODE</var></span></kbd></td>
+</tr>
+<tr><td> </td><td>SSL rules for connectivity</td></tr>
+<tr><td class="rst-option-group">
+<kbd><span class="rst-option">--require-ssl</span></kbd></td>
+<td>require an SSL connection</td></tr>
+<tr><td class="rst-option-group">
+<kbd><span class="rst-option">--role=<var>ROLE</var></span></kbd></td>
+<td>run operation as the role</td></tr>
+<tr><td class="rst-option-group" colspan="2">
+<kbd><span class="rst-option">--fragment=<var>FRAGMENT</var></span></kbd></td>
+</tr>
+<tr><td> </td><td>Additional user data for the connection</td></tr>
+<tr><td class="rst-option-group" colspan="2">
+<kbd><span class="rst-option">-s <var>SETTINGS</var></span>, <span class="rst-option">--setting=<var>SETTINGS</var></span></kbd></td>
+</tr>
+<tr><td> </td><td>run-time parameters to set upon connecting</td></tr>
+<tr><td class="rst-option-group">
+<kbd><span class="rst-option">--path=<var>PATH</var></span></kbd></td>
+<td>Path to prefix search_path with</td></tr>
+<tr><td class="rst-option-group" colspan="2">
+<kbd><span class="rst-option">--pg-service-file=<var>PG_SERVICE_FILE</var></span></kbd></td>
+</tr>
+<tr><td> </td><td>Postgres service file use to for lookups</td></tr>
+<tr><td class="rst-option-group" colspan="2">
+<kbd><span class="rst-option">--pg-service=<var>PG_SERVICE</var></span></kbd></td>
+</tr>
+<tr><td> </td><td>Postgres service name to connect to</td></tr>
+<tr><td class="rst-option-group" colspan="2">
+<kbd><span class="rst-option">-I <var>IRI</var></span>, <span class="rst-option">--iri=<var>IRI</var></span></kbd></td>
+</tr>
+<tr><td> </td><td>complete resource identifier, pq IRI</td></tr>
+<tr><td class="rst-option-group" colspan="2">
+<kbd><span class="rst-option">-1</span>, <span class="rst-option">--with-transaction</span></kbd></td>
+</tr>
+<tr><td> </td><td>run operation with a transaction block</td></tr>
+<tr><td class="rst-option-group" colspan="2">
+<kbd><span class="rst-option">--python-context=<var>PYTHON_CONTEXT</var></span></kbd></td>
+</tr>
+<tr><td> </td><td>Python context code to
+run[<a class="rst-reference" href="file://,module">file://,module</a>:,&lt;code&gt;(__context__)]</td></tr>
+<tr><td class="rst-option-group">
+<kbd><span class="rst-option">-m <var>PYTHON_MAIN</var></span></kbd></td>
+<td>Python module to run as script(__main__)</td></tr>
+<tr><td class="rst-option-group">
+<kbd><span class="rst-option">-c <var>PYTHON_MAIN</var></span></kbd></td>
+<td>Python expression to run(__main__)</td></tr>
+<tr><td class="rst-option-group" colspan="2">
+<kbd><span class="rst-option">--python-postmortem=<var>PYTHON_POSTMORTEM</var></span></kbd></td>
+</tr>
+<tr><td> </td><td>Execute the specified function after a fatal exception</td></tr>
+<tr><td class="rst-option-group">
+<kbd><span class="rst-option">--pdb-pm</span></kbd></td>
+<td>Postmortem using pdb.pm</td></tr>
+<tr><td class="rst-option-group" colspan="2">
+<kbd><span class="rst-option">--pq-trace=<var>PQ_TRACE</var></span></kbd></td>
+</tr>
+<tr><td> </td><td>trace PQ protocol transmissions</td></tr>
+<tr><td class="rst-option-group">
+<kbd><span class="rst-option">--version</span></kbd></td>
+<td>show program's version number and exit</td></tr>
+<tr><td class="rst-option-group">
+<kbd><span class="rst-option">--help</span></kbd></td>
+<td>show this help message and exit</td></tr>
+</tbody>
+</table>
+</dd>
+</dl>
+</div>
+<div class="rst-section">
+<h1><a id="-environment" name="environment">Environment</a></h1>
+<p><tt class="rst-docutils literal"><span class="rst-pre">pb_python</span></tt> creates a Python environment with an already established
+connection based on the given arguments. It uses the <cite>pkg:jwp_python_command</cite>
+package to aid in harnessing the basic Python command features and then
+<cite>pkg:pg_foundation</cite> to fill in the connectivity options. In order to provide
+global access to these additional object, it assigns them in <tt class="rst-docutils literal"><span class="rst-pre">__builtins__</span></tt> to
+the following names:</p>
+<blockquote>
+<ul class="rst-simple">
+<li><tt class="rst-docutils literal"><span class="rst-pre">gtx</span></tt> (the connection object)</li>
+<li><tt class="rst-docutils literal"><span class="rst-pre">gtc</span></tt> (the connector that created the connection)</li>
+<li><tt class="rst-docutils literal"><span class="rst-pre">xact</span></tt> (gtx.xact)</li>
+<li><tt class="rst-docutils literal"><span class="rst-pre">settings</span></tt> (gtx.settings)</li>
+<li><tt class="rst-docutils literal"><span class="rst-pre">query</span></tt> (gtx.query)</li>
+<li><tt class="rst-docutils literal"><span class="rst-pre">cquery</span></tt> (gtx.cquery)</li>
+<li><tt class="rst-docutils literal"><span class="rst-pre">proc</span></tt> (gtx.proc)</li>
+<li><tt class="rst-docutils literal"><span class="rst-pre">cursor</span></tt> (gtx.cursor)</li>
+<li><tt class="rst-docutils literal"><span class="rst-pre">statement</span></tt> (gtx.statement)</li>
+</ul>
+</blockquote>
+<p>All of these are provided for convenience. With a single target being the
+primary use-case, ambiguity is not an issue. Surely, saving four characters for
+accessing each of these is not substantial, but it helps keep code concise and
+tends to be very useful when using <tt class="rst-docutils literal"><span class="rst-pre">pb_python</span></tt> interactively.</p>
+</div>
+<div class="rst-section">
+<h1><a id="-interactive-console-backslash-commands" name="interactive-console-backslash-commands">Interactive Console Backslash Commands</a></h1>
+<p>Inspired by <tt class="rst-docutils literal"><span class="rst-pre">psql</span></tt>:</p>
+<pre class="rst-literal-block">
+&gt;&gt;&gt; \?
+Backslash Commands:
+
+  \?      Show this help message.
+  \E      Edit a file or a temporary script.
+  \e      Edit and Execute the file directly in the context.
+  \i      Execute a Python script within the interpreter's context.
+  \s      Wrap each execution code of in a new SAVEPOINT; Rollback on exception
+  \set    Configure environment variables. \set without arguments to show all
+  \x      Execute the Python command within this process.
+</pre>
+</div>
+</div>
+          </div>
+        </div>
+      </div>
+      <br />
+      <div class="package" id="postgresql.interface.proboscis">
+        <h3 class="title"><span class="keyword">package</span> postgresql.interface.proboscis</h3>
+        <div class="doc">
+          <pre>Proboscis interface space</pre>
+        </div>
+      </div>
+      <br />
+      <div class="module" id="postgresql.interface.proboscis.python">
+        <h3 class="title"><span class="keyword">module</span> postgresql.interface.proboscis.python</h3>
+        <div class="content">
+          <div class="imports">
+            <div class="head">
+              <span class="title">imports</span>
+            </div>
+            <div class="import"><span class="keyword">import</span> <a class="import" href="//pg_foundation/1.0#postgresql.utility.client.config"><span class="path">postgresql.utility.client.config</span> as <span class="name">cl_config</span></a></div>
+            <div class="import"><span class="keyword">import</span> <a class="import" href="//pg_greentrunk/1.0#postgresql.protocol.greentrunk.python"><span class="path">postgresql.protocol.greentrunk.python</span> as <span class="name">gt_python</span></a></div>
+            <div class="import"><span class="keyword">import</span> <a class="import" href="//optparse"><span class="path">optparse</span></a></div>
+            <div class="import"><span class="keyword">import</span> <a class="import" href="//os"><span class="path">os</span></a></div>
+            <div class="import"><span class="keyword">import</span> <a class="import" href="#postgresql.interface.proboscis.greentrunk"><span class="path">postgresql.interface.proboscis.greentrunk</span> as <span class="name">pg</span></a></div>
+            <div class="import"><span class="keyword">import</span> <a class="import" href="//pg_foundation/1.0#postgresql.utility.client.option"><span class="path">postgresql.utility.client.option</span> as <span class="name">pg_opt</span></a></div>
+            <div class="import"><span class="keyword">import</span> <a class="import" href="//sys"><span class="path">sys</span></a></div>
+          </div>
+          <div class="functions">
+            <div class="head">
+              <span class="title">functions</span>
+            </div>
+            <div class="function">
+              <div class="title"><span class="keyword">def</span> <span class="title">command</span><span class="args">(<span class="block"><span class="argname">args</span><span class="argsep">,</span> <span class="argname">environ = <a class="objref" href="//__builtin__.dict"><pre>{'os.environ': 'masked'}</pre></a></span></span>):</span></div>
+            </div>
+            <div class="function">
+              <div class="title"><span class="keyword">def</span> <span class="title">main</span><span class="args">(<span class="block"></span>):</span></div>
+            </div>
+          </div>
+          <div class="datas">
+            <div class="head">
+              <span class="title">data</span>
+            </div>
+            <div class="data" title="__builtin__.list" id="postgresql.interface.proboscis.python.default_options"><span class="name">default_options</span> = <a class="objref" href="//__builtin__.list"><pre>[&lt;Option at 0x11bf580: -1/--with-transaction&gt;, &lt;Option at 0x11e3300: --python-context&gt;, &lt;Option at 0x11e33a0: -m&gt;, &lt;Option at 0x11e3698: -c&gt;, &lt;Option at 0x11e36c0: --python-postmortem&gt;, &lt;Option at 0x11e36e8: --pdb-pm&gt;, &lt;Option at 0x11e3738: --pq-trace&gt;]</pre></a></div>
+            <div class="data" title="__builtin__.instance" id="postgresql.interface.proboscis.python.pq_trace"><span class="name">pq_trace</span> = <a class="objref" href="//__builtin__.instance"><pre>&lt;Option at 0x11e3738: --pq-trace&gt;</pre></a></div>
+          </div>
+        </div>
+      </div>
+      <br />
+      <div class="module" id="postgresql.interface.proboscis.tracenull">
+        <h3 class="title"><span class="keyword">module</span> postgresql.interface.proboscis.tracenull</h3>
+        <div class="doc">
+          <pre>GreenTrunk interface for PostgreSQL servers that support the
+PQ version 3.0 protocol.</pre>
+        </div>
+        <div class="content">
+          <div class="imports">
+            <div class="head">
+              <span class="title">imports</span>
+            </div>
+            <div class="import"><span class="keyword">import</span> <a class="import" href="//codecs"><span class="path">codecs</span></a></div>
+            <div class="import"><span class="keyword">import</span> <a class="import" href="//crypt"><span class="path">crypt</span></a></div>
+            <div class="import"><span class="keyword">import</span> <a class="import" href="//errno"><span class="path">errno</span></a></div>
+            <div class="import"><span class="keyword">import</span> <a class="import" href="//pg_greentrunk/1.0#postgresql.protocol.greentrunk.api"><span class="path">postgresql.protocol.greentrunk.api</span> as <span class="name">gt_api</span></a></div>
+            <div class="import"><span class="keyword">import</span> <a class="import" href="//os"><span class="path">os</span></a></div>
+            <div class="import"><span class="keyword">import</span> <a class="import" href="//pg_foundation/1.0#postgresql.encodings.aliases"><span class="path">postgresql.encodings.aliases</span> as <span class="name">pg_enc_aliases</span></a></div>
+            <div class="import"><span class="keyword">import</span> <a class="import" href="//pg_foundation/1.0#postgresql.exceptions"><span class="path">postgresql.exceptions</span> as <span class="name">pg_exc</span></a></div>
+            <div class="import"><span class="keyword">import</span> <a class="import" href="//pg_typical/1.0#postgresql.protocol.typical.stdio"><span class="path">postgresql.protocol.typical.stdio</span> as <span class="name">pg_io</span></a></div>
+            <div class="import"><span class="keyword">import</span> <a class="import" href="//pg_foundation/1.0#postgresql.utility.client.iri"><span class="path">postgresql.utility.client.iri</span> as <span class="name">pg_iri</span></a></div>
+            <div class="import"><span class="keyword">import</span> <a class="import" href="//pg_foundation/1.0#postgresql.strings"><span class="path">postgresql.strings</span> as <span class="name">pg_str</span></a></div>
+            <div class="import"><span class="keyword">import</span> <a class="import" href="//pg_foundation/1.0#postgresql.types"><span class="path">postgresql.types</span> as <span class="name">pg_types</span></a></div>
+            <div class="import"><span class="keyword">import</span> <a class="import" href="//pg_typical/1.0#postgresql.protocol.typical.oidmaps"><span class="path">postgresql.protocol.typical.oidmaps</span> as <span class="name">pg_typio</span></a></div>
+            <div class="import"><span class="keyword">import</span> <a class="import" href="//pg_pqueue/1.0#postgresql.protocol.pqueue.client3"><span class="path">postgresql.protocol.pqueue.client3</span> as <span class="name">pq</span></a></div>
+            <div class="import"><span class="keyword">import</span> <a class="import" href="//socket"><span class="path">socket</span></a></div>
+            <div class="import"><span class="keyword">import</span> <a class="import" href="//sys"><span class="path">sys</span></a></div>
+            <div class="import"><span class="keyword">import</span> <a class="import" href="//jwp_terminfo/1.0.4#name.jwp.terminfo"><span class="path">name.jwp.terminfo</span> as <span class="name">ti</span></a></div>
+            <div class="import"><span class="keyword">import</span> <a class="import" href="//types"><span class="path">types</span></a></div>
+            <div class="import"><span class="keyword">import</span> <a class="import" href="//pytz/2007k#pytz"><span class="path">pytz</span> as <span class="name">tz</span></a></div>
+            <div class="import"><span class="keyword">import</span> <a class="import" href="//pg_foundation/1.0#postgresql.utility.version"><span class="path">postgresql.utility.version</span> as <span class="name">version</span></a></div>
+            <div class="import"><span class="keyword">import</span> <a class="import" href="//warnings"><span class="path">warnings</span></a></div>
+          </div>
+          <div class="classes">
+            <div class="head">
+              <span class="title">classes</span>
+            </div>
+            <div class="class" id="postgresql.interface.proboscis.tracenull.ClosedConnection">
+              <div class="title"><span class="keyword">class</span> <span class="title">ClosedConnection</span>(<a class="super" title="__builtin__.object" href="//__builtin__.object">object</a>):</div>
+              <div class="content">
+                <div class="class_methods">
+                  <div class="head">
+                    <span class="title">class methods</span>
+                  </div>
+                  <div class="method">
+                    <div class="title"><span class="keyword">def</span> <span class="title">__new__</span><span class="args">(<span class="block"><span class="argname">subtype</span></span>):</span></div>
+                  </div>
+                </div>
+                <div class="datas">
+                  <div class="head">
+                    <span class="title">class data</span>
+                  </div>
+                  <div class="data" title="__builtin__.tuple" id="postgresql.interface.proboscis.tracenull.ClosedConnection.asyncs"><span class="name">asyncs</span> = <a class="objref" href="//__builtin__.tuple"><pre>()</pre></a></div>
+                  <div class="data" title="__builtin__.bool" id="postgresql.interface.proboscis.tracenull.ClosedConnection.fatal"><span class="name">fatal</span> = <a class="objref" href="//__builtin__.bool"><pre>True</pre></a></div>
+                  <div class="data" title="postgresql.protocol.pqueue.element3.Error" id="postgresql.interface.proboscis.tracenull.ClosedConnection.error_message"><span class="name">error_message</span> = <a class="objref" href="//pg_pqueue/1.0#postgresql.protocol.pqueue.element3.Error"><pre>postgresql.protocol.pqueue.element3.Error(**{'message': 'operation on closed connection', 'code': postgresql.exceptions.State('08003'), 'severity': 'FATAL', 'hint': "Call the 'connect' method on the connection object."})</pre></a></div>
+                  <div class="data" title="__builtin__.tuple" id="postgresql.interface.proboscis.tracenull.ClosedConnection.state"><span class="name">state</span> = <a class="objref" href="//__builtin__.tuple"><pre>(None, None)</pre></a></div>
+                </div>
+              </div>
+            </div>
+            <div class="class" id="postgresql.interface.proboscis.tracenull.GreenTrunk_Connector">
+              <div class="title"><span class="keyword">class</span> <span class="title">GreenTrunk_Connector</span>(<a class="super" title="__builtin__.object" href="//__builtin__.object">object</a>):</div>
+              <div class="doc">
+                <pre>GreenTrunk_Connector(**config) -&gt; Connector
+
+All arguments to Connector are keywords. At the very least, user,
+and socket, may be provided. If socket, unix, or process is not
+provided, host and port must be.</pre>
+              </div>
+              <div class="content">
+                <div class="methods">
+                  <div class="head">
+                    <span class="title">methods</span>
+                  </div>
+                  <div class="method">
+                    <div class="title"><span class="keyword">def</span> <span class="title">__init__</span><span class="args">(<span class="block"><span class="argname">self</span></span>):</span></div>
+                  </div>
+                  <div class="method">
+                    <div class="title"><span class="keyword">def</span> <span class="title">__call__</span><span class="args">(<span class="block"><span class="argname">self</span><span class="argsep">,</span> <span class="argname">*args</span></span>):</span></div>
+                  </div>
+                  <div class="method">
+                    <div class="title"><span class="keyword">def</span> <span class="title">__getitem__</span><span class="args">(<span class="block"><span class="argname">self</span><span class="argsep">,</span> <span class="argname">k</span></span>):</span></div>
+                  </div>
+                  <div class="method">
+                    <div class="title"><span class="keyword">def</span> <span class="title">__repr__</span><span class="args">(<span class="block"><span class="argname">self</span></span>):</span></div>
+                  </div>
+                  <div class="method">
+                    <div class="title"><span class="keyword">def</span> <span class="title">_typio</span><span class="args">(<span class="block"><span class="argname">self</span><span class="argsep">,</span> <span class="argname">x</span></span>):</span></div>
+                  </div>
+                  <div class="method">
+                    <div class="title"><span class="keyword">def</span> <span class="title">create</span><span class="args">(<span class="block"><span class="argname">self</span><span class="argsep">,</span> <span class="argname">*args</span></span>):</span></div>
+                  </div>
+                  <div class="method">
+                    <div class="title"><span class="keyword">def</span> <span class="title">get</span><span class="args">(<span class="block"><span class="argname">self</span><span class="argsep">,</span> <span class="argname">k</span><span class="argsep">,</span> <span class="argname">otherwise = <a class="objref" href="//__builtin__.NoneType"><pre>None</pre></a></span></span>):</span></div>
+                  </div>
+                  <div class="method">
+                    <div class="title"><span class="keyword">def</span> <span class="title">socket_connect</span><span class="args">(<span class="block"><span class="argname">self</span></span>):</span></div>
+                    <div class="doc">
+                      <pre>create and connect a socket using the configured _socket_data</pre>
+                    </div>
+                  </div>
+                  <div class="method">
+                    <div class="title"><span class="keyword">def</span> <span class="title">socket_create</span><span class="args">(<span class="block"><span class="argname">self</span></span>):</span></div>
+                  </div>
+                </div>
+                <div class="static_methods">
+                  <div class="head">
+                    <span class="title">static methods</span>
+                  </div>
+                  <div class="method">
+                    <div class="title"><span class="keyword">def</span> <span class="title">notifier</span><span class="args">(<span class="block"><br /><span class="indent"></span><span class="argname">msg</span><span class="argsep">,</span><br /><span class="indent"></span><span class="argname">ti = <a class="objref" href="//jwp_terminfo/1.0.4#name.jwp.terminfo"><pre>name.jwp.terminfo</pre></a></span><br /></span>):</span></div>
+                  </div>
+                </div>
+                <div class="properties">
+                  <div class="head">
+                    <span class="title">properties</span>
+                  </div>
+                  <div class="property">
+                    <div class="title"><span class="keyword">property</span> <span class="title">iri</span></div>
+                  </div>
+                </div>
+                <div class="datas">
+                  <div class="head">
+                    <span class="title">class data</span>
+                  </div>
+                  <div class="data" title="__builtin__.type" id="postgresql.interface.proboscis.tracenull.GreenTrunk_Connector.connection_class"><span class="name">connection_class</span> = <a class="objref" href="#postgresql.interface.proboscis.tracenull.GreenTrunk_Connection"><pre>postgresql.interface.proboscis.tracenull.GreenTrunk_Connection</pre></a></div>
+                  <div class="data" title="__builtin__.str" id="postgresql.interface.proboscis.tracenull.GreenTrunk_Connector.sslmode"><span class="name">sslmode</span> = <a class="objref" href="//__builtin__.str"><pre>'prefer'</pre></a></div>
+                  <div class="data" title="__builtin__.tuple" id="postgresql.interface.proboscis.tracenull.GreenTrunk_Connector.words"><span class="name">words</span> = <a class="objref" href="//__builtin__.tuple"><pre>('user', 'host', 'port', 'ipv', 'process', 'pipe', 'socket', 'unix', 'sslmode', 'sslcrtfile', 'sslkeyfile', 'sslrootcrtfile', 'sslrootcrlfile', 'tracer', 'database', 'options', 'settings', 'password', 'path', 'role')</pre></a></div>
+                </div>
+              </div>
+            </div>
+            <div class="class" id="postgresql.interface.proboscis.tracenull.ResultHandle">
+              <div class="title"><span class="keyword">class</span> <span class="title">ResultHandle</span>(<a class="super" title="__builtin__.object" href="//__builtin__.object">object</a>):</div>
+              <div class="doc">
+                <pre>Object used to provide interfaces for copy and simple commands. Ties to
+a given transaction. These objects provide a way for transactions to be
+marked as defunct, so that no more time is wasted completing them.</pre>
+              </div>
+              <div class="content">
+                <div class="methods">
+                  <div class="head">
+                    <span class="title">methods</span>
+                  </div>
+                  <div class="method">
+                    <div class="title"><span class="keyword">def</span> <span class="title">__init__</span><span class="args">(<span class="block"><span class="argname">self</span><span class="argsep">,</span> <span class="argname">connection</span><span class="argsep">,</span> <span class="argname">query</span><span class="argsep">,</span> <span class="argname">params</span></span>):</span></div>
+                  </div>
+                  <div class="method">
+                    <div class="title"><span class="keyword">def</span> <span class="title">__call__</span><span class="args">(<span class="block"><span class="argname">self</span><span class="argsep">,</span> <span class="argname">copyseq</span><span class="argsep">,</span> <span class="argname">buffersize = <a class="objref" href="//__builtin__.int"><pre>100</pre></a></span></span>):</span></div>
+                  </div>
+                  <div class="method">
+                    <div class="title"><span class="keyword">def</span> <span class="title">__iter__</span><span class="args">(<span class="block"><span class="argname">self</span></span>):</span></div>
+                  </div>
+                  <div class="method">
+                    <div class="title"><span class="keyword">def</span> <span class="title">_contract</span><span class="args">(<span class="block"><span class="argname">self</span></span>):</span></div>
+                    <div class="doc">
+                      <pre>reduce the buffer's size</pre>
+                    </div>
+                  </div>
+                  <div class="method">
+                    <div class="title"><span class="keyword">def</span> <span class="title">_discover_type</span><span class="args">(<span class="block"><span class="argname">self</span><span class="argsep">,</span> <span class="argname">xact</span></span>):</span></div>
+                    <div class="doc">
+                      <pre>helper method to step until the result handle's type message
+is received. This is a copy begin message or a complete message.</pre>
+                    </div>
+                  </div>
+                  <div class="method">
+                    <div class="title"><span class="keyword">def</span> <span class="title">_expand</span><span class="args">(<span class="block"><span class="argname">self</span></span>):</span></div>
+                    <div class="doc">
+                      <pre>internal helper function to put more copy data onto the buffer for
+reading. This function will only append to the buffer and never
+set the offset.</pre>
+                    </div>
+                  </div>
+                  <div class="method">
+                    <div class="title"><span class="keyword">def</span> <span class="title">close</span><span class="args">(<span class="block"><span class="argname">self</span></span>):</span></div>
+                  </div>
+                  <div class="method">
+                    <div class="title"><span class="keyword">def</span> <span class="title">command</span><span class="args">(<span class="block"><span class="argname">self</span></span>):</span></div>
+                    <div class="doc">
+                      <pre>The completion message's command identifier</pre>
+                    </div>
+                  </div>
+                  <div class="method">
+                    <div class="title"><span class="keyword">def</span> <span class="title">count</span><span class="args">(<span class="block"><span class="argname">self</span></span>):</span></div>
+                    <div class="doc">
+                      <pre>The completion message's count number</pre>
+                    </div>
+                  </div>
+                  <div class="method">
+                    <div class="title"><span class="keyword">def</span> <span class="title">next</span><span class="args">(<span class="block"><span class="argname">self</span></span>):</span></div>
+                    <div class="doc">
+                      <pre>get the next copy line</pre>
+                    </div>
+                  </div>
+                  <div class="method">
+                    <div class="title"><span class="keyword">def</span> <span class="title">read</span><span class="args">(<span class="block"><span class="argname">self</span><span class="argsep">,</span> <span class="argname">count = <a class="objref" href="//__builtin__.NoneType"><pre>None</pre></a></span></span>):</span></div>
+                    <div class="doc">
+                      <pre>Read the specified number of COPY lines from the connection.</pre>
+                    </div>
+                  </div>
+                  <div class="method">
+                    <div class="title"><span class="keyword">def</span> <span class="title">write</span><span class="args">(<span class="block"><span class="argname">self</span><span class="argsep">,</span> <span class="argname">copylines</span></span>):</span></div>
+                    <div class="doc">
+                      <pre>Write a sequence of COPY lines to the connection.</pre>
+                    </div>
+                  </div>
+                </div>
+                <div class="properties">
+                  <div class="head">
+                    <span class="title">properties</span>
+                  </div>
+                  <div class="property">
+                    <div class="title"><span class="keyword">property</span> <span class="title">closed</span></div>
+                    <div class="doc">
+                      <pre>whether the result handle is the current transaction</pre>
+                    </div>
+                  </div>
+                </div>
+                <div class="datas">
+                  <div class="head">
+                    <span class="title">class data</span>
+                  </div>
+                  <div class="data" title="__builtin__.tuple" id="postgresql.interface.proboscis.tracenull.ResultHandle._expect_types"><span class="name">_expect_types</span> = <a class="objref" href="//__builtin__.tuple"><pre>('G', 'H', 'C', 'I', 'D')</pre></a></div>
+                  <div class="data" title="__builtin__.tuple" id="postgresql.interface.proboscis.tracenull.ResultHandle._result_types"><span class="name">_result_types</span> = <a class="objref" href="//__builtin__.tuple"><pre>('G', 'H', 'C', 'I')</pre></a></div>
+                </div>
+              </div>
+            </div>
+            <div class="class" id="postgresql.interface.proboscis.tracenull.GreenTrunk_Connection">
+              <div class="title"><span class="keyword">class</span> <span class="title">GreenTrunk_Connection</span>(<a class="super" title="postgresql.protocol.greentrunk.api.connection" href="//pg_greentrunk/1.0#postgresql.protocol.greentrunk.api.connection">connection</a>):</div>
+              <div class="doc">
+                <pre>GreenTrunk_Connection(connector) -&gt; GreenTrunk_Connection
+
+GreenTrunk API &lt;-&gt; PQ Protocol &lt;-&gt; PostgreSQL</pre>
+              </div>
+              <div class="content">
+                <div class="methods">
+                  <div class="head">
+                    <span class="title">methods</span>
+                  </div>
+                  <div class="method">
+                    <div class="title"><span class="keyword">def</span> <span class="title">__init__</span><span class="args">(<span class="block"><span class="argname">self</span><span class="argsep">,</span> <span class="argname">connector</span><span class="argsep">,</span> <span class="argname">*args</span></span>):</span></div>
+                    <div class="doc">
+                      <pre>Create a connection based on the given connector.</pre>
+                    </div>
+                  </div>
+                  <div class="method">
+                    <div class="title"><span class="keyword">def</span> <span class="title">ClientStatementCursor</span><span class="args">(<span class="block"><span class="argname">self</span><span class="argsep">,</span> <span class="argname">*args</span></span>):</span></div>
+                    <div class="doc">
+                      <pre>Create a Portal using the given client prepared statement</pre>
+                    </div>
+                  </div>
+                  <div class="method">
+                    <div class="title"><span class="keyword">def</span> <span class="title">ResultHandle</span><span class="args">(<span class="block"><span class="argname">*args</span></span>):</span></div>
+                    <div class="doc">
+                      <pre>Execute a query with the given arguments that does not return rows</pre>
+                    </div>
+                  </div>
+                  <div class="method">
+                    <div class="title"><span class="keyword">def</span> <span class="title">_A</span><span class="args">(<span class="block"><span class="argname">self</span><span class="argsep">,</span> <span class="argname">msg</span></span>):</span></div>
+                    <div class="doc">
+                      <pre>[internal] Send notification to any listeners; NOTIFY messages</pre>
+                    </div>
+                  </div>
+                  <div class="method">
+                    <div class="title"><span class="keyword">def</span> <span class="title">_N</span><span class="args">(<span class="block"><span class="argname">self</span><span class="argsep">,</span> <span class="argname">msg</span></span>):</span></div>
+                    <div class="doc">
+                      <pre>[internal] print a notice message using the notifier attribute</pre>
+                    </div>
+                  </div>
+                  <div class="method">
+                    <div class="title"><span class="keyword">def</span> <span class="title">_S</span><span class="args">(<span class="block"><span class="argname">self</span><span class="argsep">,</span> <span class="argname">msg</span></span>):</span></div>
+                    <div class="doc">
+                      <pre>[internal] Receive ShowOption message</pre>
+                    </div>
+                  </div>
+                  <div class="method">
+                    <div class="title"><span class="keyword">def</span> <span class="title">__context__</span><span class="args">(<span class="block"><span class="argname">self</span></span>):</span></div>
+                  </div>
+                  <div class="method">
+                    <div class="title"><span class="keyword">def</span> <span class="title">__enter__</span><span class="args">(<span class="block"><span class="argname">self</span></span>):</span></div>
+                    <div class="doc">
+                      <pre>Connect on entrance.</pre>
+                    </div>
+                  </div>
+                  <div class="method">
+                    <div class="title"><span class="keyword">def</span> <span class="title">__exit__</span><span class="args">(<span class="block"><span class="argname">self</span><span class="argsep">,</span> <span class="argname">type</span><span class="argsep">,</span> <span class="argname">value</span><span class="argsep">,</span> <span class="argname">tb</span></span>):</span></div>
+                    <div class="doc">
+                      <pre>Close the connection on exit.</pre>
+                    </div>
+                  </div>
+                  <div class="method">
+                    <div class="title"><span class="keyword">def</span> <span class="title">__nonzero__</span><span class="args">(<span class="block"><span class="argname">self</span></span>):</span></div>
+                    <div class="doc">
+                      <pre>connection can issue a query without an existing impediment</pre>
+                    </div>
+                  </div>
+                  <div class="method">
+                    <div class="title"><span class="keyword">def</span> <span class="title">__repr__</span><span class="args">(<span class="block"><span class="argname">self</span></span>):</span></div>
+                  </div>
+                  <div class="method">
+                    <div class="title"><span class="keyword">def</span> <span class="title">_backend_gc</span><span class="args">(<span class="block"><span class="argname">self</span></span>):</span></div>
+                    <div class="doc">
+                      <pre>close portals and statements slated for closure.
+NOTE: Assumes no running transaction.</pre>
+                    </div>
+                  </div>
+                  <div class="method">
+                    <div class="title"><span class="keyword">def</span> <span class="title">_clear</span><span class="args">(<span class="block"><span class="argname">self</span></span>):</span></div>
+                    <div class="doc">
+                      <pre>Clear container objects of data.</pre>
+                    </div>
+                  </div>
+                  <div class="method">
+                    <div class="title"><span class="keyword">def</span> <span class="title">_complete</span><span class="args">(<span class="block"><span class="argname">self</span></span>):</span></div>
+                    <div class="doc">
+                      <pre>[internal] complete the current transaction</pre>
+                    </div>
+                  </div>
+                  <div class="method">
+                    <div class="title"><span class="keyword">def</span> <span class="title">_negotiate</span><span class="args">(<span class="block"><span class="argname">self</span></span>):</span></div>
+                    <div class="doc">
+                      <pre>Initialize the connection between the client and the server.
+This requires that a socket interface has been set on the
+'socket' attribute.</pre>
+                    </div>
+                  </div>
+                  <div class="method">
+                    <div class="title"><span class="keyword">def</span> <span class="title">_pack_timestamptz</span><span class="args">(<span class="block"><span class="argname">self</span><span class="argsep">,</span> <span class="argname">dt</span></span>):</span></div>
+                  </div>
+                  <div class="method">
+                    <div class="title"><span class="keyword">def</span> <span class="title">_pop</span><span class="args">(<span class="block"><span class="argname">self</span></span>):</span></div>
+                    <div class="doc">
+                      <pre>[internal] remove the transaction and raise the exception if any</pre>
+                    </div>
+                  </div>
+                  <div class="method">
+                    <div class="title"><span class="keyword">def</span> <span class="title">_postgres_error</span><span class="args">(<span class="block"><span class="argname">self</span><span class="argsep">,</span> <span class="argname">em</span></span>):</span></div>
+                    <div class="doc">
+                      <pre>[internal] lookup a PostgreSQL error and instantiate it</pre>
+                    </div>
+                  </div>
+                  <div class="method">
+                    <div class="title"><span class="keyword">def</span> <span class="title">_push</span><span class="args">(<span class="block"><span class="argname">self</span><span class="argsep">,</span> <span class="argname">xact</span></span>):</span></div>
+                    <div class="doc">
+                      <pre>[internal] setup the given transaction to be processed</pre>
+                    </div>
+                  </div>
+                  <div class="method">
+                    <div class="title"><span class="keyword">def</span> <span class="title">_read_into</span><span class="args">(<span class="block"><span class="argname">self</span></span>):</span></div>
+                    <div class="doc">
+                      <pre>[internal] protocol message reader. internal use only</pre>
+                    </div>
+                  </div>
+                  <div class="method">
+                    <div class="title"><span class="keyword">def</span> <span class="title">_read_messages</span><span class="args">(<span class="block"><span class="argname">self</span></span>):</span></div>
+                    <div class="doc">
+                      <pre>[internal] read more messages into self._read when self._read is empty</pre>
+                    </div>
+                  </div>
+                  <div class="method">
+                    <div class="title"><span class="keyword">def</span> <span class="title">_reset</span><span class="args">(<span class="block"><span class="argname">self</span></span>):</span></div>
+                    <div class="doc">
+                      <pre>Reset state and connection information attributes.</pre>
+                    </div>
+                  </div>
+                  <div class="method">
+                    <div class="title"><span class="keyword">def</span> <span class="title">_send_message_data</span><span class="args">(<span class="block"><span class="argname">self</span></span>):</span></div>
+                    <div class="doc">
+                      <pre>[internal] send unsent data initialized for delivery</pre>
+                    </div>
+                  </div>
+                  <div class="method">
+                    <div class="title"><span class="keyword">def</span> <span class="title">_standard_read_messages</span><span class="args">(<span class="block"><span class="argname">self</span></span>):</span></div>
+                    <div class="doc">
+                      <pre>[internal] read more messages into self._read when self._read is empty</pre>
+                    </div>
+                  </div>
+                  <div class="method">
+                    <div class="title"><span class="keyword">def</span> <span class="title">_standard_write_messages</span><span class="args">(<span class="block"><span class="argname">self</span><span class="argsep">,</span> <span class="argname">messages</span></span>):</span></div>
+                    <div class="doc">
+                      <pre>[internal] protocol message writer</pre>
+                    </div>
+                  </div>
+                  <div class="method">
+                    <div class="title"><span class="keyword">def</span> <span class="title">_step</span><span class="args">(<span class="block"><span class="argname">self</span></span>):</span></div>
+                    <div class="doc">
+                      <pre>[internal] make a single transition on the transaction</pre>
+                    </div>
+                  </div>
+                  <div class="method">
+                    <div class="title"><span class="keyword">def</span> <span class="title">_traced_read_messages</span><span class="args">(<span class="block"><span class="argname">self</span></span>):</span></div>
+                    <div class="doc">
+                      <pre>[internal] _message_reader used when tracing</pre>
+                    </div>
+                  </div>
+                  <div class="method">
+                    <div class="title"><span class="keyword">def</span> <span class="title">_traced_write_messages</span><span class="args">(<span class="block"><span class="argname">self</span><span class="argsep">,</span> <span class="argname">messages</span></span>):</span></div>
+                    <div class="doc">
+                      <pre>[internal] _message_writer used when tracing</pre>
+                    </div>
+                  </div>
+                  <div class="method">
+                    <div class="title"><span class="keyword">def</span> <span class="title">_typio</span><span class="args">(<span class="block"><span class="argname">self</span><span class="argsep">,</span> <span class="argname">typoid</span><span class="argsep">,</span> <span class="argname">recursed = <a class="objref" href="//__builtin__.bool"><pre>False</pre></a></span></span>):</span></div>
+                    <div class="doc">
+                      <pre>lookup a type's IO routines from a given typoid</pre>
+                    </div>
+                  </div>
+                  <div class="method">
+                    <div class="title"><span class="keyword">def</span> <span class="title">_typioseq_from_pqdesc</span><span class="args">(<span class="block"><span class="argname">self</span><span class="argsep">,</span> <span class="argname">desc</span><span class="argsep">,</span> <span class="argname">index</span></span>):</span></div>
+                    <div class="doc">
+                      <pre>create a sequence of I/O routines from a pq descriptor</pre>
+                    </div>
+                  </div>
+                  <div class="method">
+                    <div class="title"><span class="keyword">def</span> <span class="title">_unpack_timestamptz</span><span class="args">(<span class="block"><span class="argname">self</span><span class="argsep">,</span> <span class="argname">data</span></span>):</span></div>
+                  </div>
+                  <div class="method">
+                    <div class="title"><span class="keyword">def</span> <span class="title">_write_messages</span><span class="args">(<span class="block"><span class="argname">self</span><span class="argsep">,</span> <span class="argname">messages</span></span>):</span></div>
+                    <div class="doc">
+                      <pre>[internal] protocol message writer</pre>
+                    </div>
+                  </div>
+                  <div class="method">
+                    <div class="title"><span class="keyword">def</span> <span class="title">_xp_query</span><span class="args">(<span class="block"><span class="argname">self</span><span class="argsep">,</span> <span class="argname">*args</span></span>):</span></div>
+                  </div>
+                  <div class="method">
+                    <div class="title"><span class="keyword">def</span> <span class="title">_xp_query_messages</span><span class="args">(<span class="block"><br /><span class="indent"></span><span class="argname">self</span><span class="argsep">,</span><br /><span class="indent"></span><span class="argname">string</span><span class="argsep">,</span><br /><span class="indent"></span><span class="argname">args = <a class="objref" href="//__builtin__.tuple"><pre>()</pre></a></span><span class="argsep">,</span><br /><span class="indent"></span><span class="argname">rformats = <a class="objref" href="//__builtin__.tuple"><pre>()</pre></a></span><span class="argsep">,</span><br /><span class="indent"></span><span class="argname">argtypes = <a class="objref" href="//__builtin__.tuple"><pre>()</pre></a></span><br /></span>):</span></div>
+                  </div>
+                  <div class="method">
+                    <div class="title"><span class="keyword">def</span> <span class="title">close</span><span class="args">(<span class="block"><span class="argname">self</span></span>):</span></div>
+                    <div class="doc">
+                      <pre>Close the connection and reinitialize the state and information</pre>
+                    </div>
+                  </div>
+                  <div class="method">
+                    <div class="title"><span class="keyword">def</span> <span class="title">connect</span><span class="args">(<span class="block"><span class="argname">self</span></span>):</span></div>
+                    <div class="doc">
+                      <pre>Establish the connection to the server</pre>
+                    </div>
+                  </div>
+                  <div class="method">
+                    <div class="title"><span class="keyword">def</span> <span class="title">cquery</span><span class="args">(<span class="block"><span class="argname">self</span><span class="argsep">,</span> <span class="argname">*args</span></span>):</span></div>
+                    <div class="doc">
+                      <pre>Create a query and store it in a dictionary that associates the
+created query with the string that defines the query. Passing the
+string back into the method will yield the same query object that was
+returned by prior calls. (Not consistent across disconnects)</pre>
+                    </div>
+                  </div>
+                  <div class="method">
+                    <div class="title"><span class="keyword">def</span> <span class="title">cursor</span><span class="args">(<span class="block"><span class="argname">*args</span></span>):</span></div>
+                    <div class="doc">
+                      <pre>Create a Portal object that references an already existing cursor</pre>
+                    </div>
+                  </div>
+                  <div class="method">
+                    <div class="title"><span class="keyword">def</span> <span class="title">escape_string</span><span class="args">(<span class="block"><span class="argname">self</span><span class="argsep">,</span> <span class="argname">strobj</span></span>):</span></div>
+                  </div>
+                  <div class="method">
+                    <div class="title"><span class="keyword">def</span> <span class="title">execute</span><span class="args">(<span class="block"><span class="argname">self</span><span class="argsep">,</span> <span class="argname">query</span></span>):</span></div>
+                    <div class="doc">
+                      <pre>Execute an arbitrary block of SQL</pre>
+                    </div>
+                  </div>
+                  <div class="method">
+                    <div class="title"><span class="keyword">def</span> <span class="title">interrupt</span><span class="args">(<span class="block"><span class="argname">self</span></span>):</span></div>
+                    <div class="doc">
+                      <pre>Send a CancelQuery message to the backend</pre>
+                    </div>
+                  </div>
+                  <div class="method">
+                    <div class="title"><span class="keyword">def</span> <span class="title">proc</span><span class="args">(<span class="block"><span class="argname">*args</span></span>):</span></div>
+                    <div class="doc">
+                      <pre>Create a StoredProcedure object using the given procedure identity</pre>
+                    </div>
+                  </div>
+                  <div class="method">
+                    <div class="title"><span class="keyword">def</span> <span class="title">query</span><span class="args">(<span class="block"><span class="argname">*args</span></span>):</span></div>
+                    <div class="doc">
+                      <pre>Create a query object using the given query string</pre>
+                    </div>
+                  </div>
+                  <div class="method">
+                    <div class="title"><span class="keyword">def</span> <span class="title">quote_string</span><span class="args">(<span class="block"><span class="argname">self</span><span class="argsep">,</span> <span class="argname">strobj</span></span>):</span></div>
+                  </div>
+                  <div class="method">
+                    <div class="title"><span class="keyword">def</span> <span class="title">reconnect</span><span class="args">(<span class="block"><span class="argname">self</span><span class="argsep">,</span> <span class="argname">*args</span></span>):</span></div>
+                    <div class="doc">
+                      <pre>close() and connect()</pre>
+                    </div>
+                  </div>
+                  <div class="method">
+                    <div class="title"><span class="keyword">def</span> <span class="title">reset</span><span class="args">(<span class="block"><span class="argname">self</span></span>):</span></div>
+                    <div class="doc">
+                      <pre>restore original settings, reset the transaction, drop temporary objects</pre>
+                    </div>
+                  </div>
+                  <div class="method">
+                    <div class="title"><span class="keyword">def</span> <span class="title">statement</span><span class="args">(<span class="block"><span class="argname">*args</span></span>):</span></div>
+                    <div class="doc">
+                      <pre>Create a query object using the statement identifier</pre>
+                    </div>
+                  </div>
+                  <div class="method">
+                    <div class="title"><span class="keyword">def</span> <span class="title">synchronize</span><span class="args">(<span class="block"><span class="argname">self</span></span>):</span></div>
+                    <div class="doc">
+                      <pre>Explicitly send a Synchronize message to the backend.
+Useful for forcing the completion of lazily processed transactions.
+[Avoids garbage collection not pushing; _complete, then set _xact.]</pre>
+                    </div>
+                  </div>
+                </div>
+                <div class="static_methods">
+                  <div class="head">
+                    <span class="title">static methods</span>
+                  </div>
+                  <div class="method">
+                    <div class="title"><span class="keyword">def</span> <span class="title">_update_encoding</span><span class="args">(<span class="block"><span class="argname">connection</span><span class="argsep">,</span> <span class="argname">key</span><span class="argsep">,</span> <span class="argname">value</span></span>):</span></div>
+                    <div class="doc">
+                      <pre>[internal] subscription method to client_encoding on settings</pre>
+                    </div>
+                  </div>
+                  <div class="method">
+                    <div class="title"><span class="keyword">def</span> <span class="title">_update_timezone</span><span class="args">(<span class="block"><span class="argname">connection</span><span class="argsep">,</span> <span class="argname">key</span><span class="argsep">,</span> <span class="argname">value</span></span>):</span></div>
+                    <div class="doc">
+                      <pre>[internal] subscription method to TimeZone on settings</pre>
+                    </div>
+                  </div>
+                </div>
+                <div class="properties">
+                  <div class="head">
+                    <span class="title">properties</span>
+                  </div>
+                  <div class="property">
+                    <div class="title"><span class="keyword">property</span> <span class="title">closed</span></div>
+                    <div class="doc">
+                      <pre>Whether the connection is closed or not</pre>
+                    </div>
+                  </div>
+                  <div class="property">
+                    <div class="title"><span class="keyword">property</span> <span class="title">user</span></div>
+                  </div>
+                  <div class="property">
+                    <div class="title"><span class="keyword">property</span> <span class="title">tracer</span></div>
+                    <div class="doc">
+                      <pre>Callable object to pass protocol trace strings to. (Normally a write method.)</pre>
+                    </div>
+                  </div>
+                </div>
+                <div class="datas">
+                  <div class="head">
+                    <span class="title">class data</span>
+                  </div>
+                  <div class="data" title="__builtin__.NoneType" id="postgresql.interface.proboscis.tracenull.GreenTrunk_Connection.version"><span class="name">version</span> = <a class="objref" href="//__builtin__.NoneType"><pre>None</pre></a></div>
+                  <div class="data" title="__builtin__.NoneType" id="postgresql.interface.proboscis.tracenull.GreenTrunk_Connection.type"><span class="name">type</span> = <a class="objref" href="//__builtin__.NoneType"><pre>None</pre></a></div>
+                  <div class="data" title="__builtin__.NoneType" id="postgresql.interface.proboscis.tracenull.GreenTrunk_Connection.version_info"><span class="name">version_info</span> = <a class="objref" href="//__builtin__.NoneType"><pre>None</pre></a></div>
+                  <div class="data" title="__builtin__.NoneType" id="postgresql.interface.proboscis.tracenull.GreenTrunk_Connection._tracer"><span class="name">_tracer</span> = <a class="objref" href="//__builtin__.NoneType"><pre>None</pre></a></div>
+                </div>
+              </div>
+            </div>
+            <div class="class" id="postgresql.interface.proboscis.tracenull.Portal">
+              <div class="title"><span class="keyword">class</span> <span class="title">Portal</span>(<a class="super" title="postgresql.protocol.greentrunk.api.cursor" href="//pg_greentrunk/1.0#postgresql.protocol.greentrunk.api.cursor">cursor</a>):</div>
+              <div class="doc">
+                <pre>Class for controlling a Postgres protocol cursor. Provides buffering,
+seeking, and iterator interfaces</pre>
+              </div>
+              <div class="content">
+                <div class="methods">
+                  <div class="head">
+                    <span class="title">methods</span>
+                  </div>
+                  <div class="method">
+                    <div class="title"><span class="keyword">def</span> <span class="title">__init__</span><span class="args">(<span class="block"><span class="argname">self</span><span class="argsep">,</span> <span class="argname">connection</span><span class="argsep">,</span> <span class="argname">portal_id</span><span class="argsep">,</span> <span class="argname">fetchcount = <a class="objref" href="//__builtin__.int"><pre>30</pre></a></span></span>):</span></div>
+                  </div>
+                  <div class="method">
+                    <div class="title"><span class="keyword">def</span> <span class="title">__getitem__</span><span class="args">(<span class="block"><span class="argname">self</span><span class="argsep">,</span> <span class="argname">i</span></span>):</span></div>
+                  </div>
+                  <div class="method">
+                    <div class="title"><span class="keyword">def</span> <span class="title">__iter__</span><span class="args">(<span class="block"><span class="argname">self</span></span>):</span></div>
+                  </div>
+                  <div class="method">
+                    <div class="title"><span class="keyword">def</span> <span class="title">_contract</span><span class="args">(<span class="block"><span class="argname">self</span></span>):</span></div>
+                    <div class="doc">
+                      <pre>reduce the number of tuples in the buffer by removing past tuples</pre>
+                    </div>
+                  </div>
+                  <div class="method">
+                    <div class="title"><span class="keyword">def</span> <span class="title">_expand</span><span class="args">(<span class="block"><span class="argname">self</span><span class="argsep">,</span> <span class="argname">count = <a class="objref" href="//__builtin__.NoneType"><pre>None</pre></a></span><span class="argsep">,</span> <span class="argname">next_xact = <a class="objref" href="//__builtin__.NoneType"><pre>None</pre></a></span></span>):</span></div>
+                    <div class="doc">
+                      <pre>internal helper function to put more tuples onto the buffer for
+reading. This function will only append to the buffer and never
+set the offset.</pre>
+                    </div>
+                  </div>
+                  <div class="method">
+                    <div class="title"><span class="keyword">def</span> <span class="title">_mktuple</span><span class="args">(<span class="block"><span class="argname">self</span><span class="argsep">,</span> <span class="argname">x</span></span>):</span></div>
+                    <div class="doc">
+                      <pre>given a PQ tuple, return a map tuple</pre>
+                    </div>
+                  </div>
+                  <div class="method">
+                    <div class="title"><span class="keyword">def</span> <span class="title">_xp_fetchmore</span><span class="args">(<span class="block"><span class="argname">self</span><span class="argsep">,</span> <span class="argname">count = <a class="objref" href="//__builtin__.NoneType"><pre>None</pre></a></span></span>):</span></div>
+                  </div>
+                  <div class="method">
+                    <div class="title"><span class="keyword">def</span> <span class="title">_xp_move</span><span class="args">(<span class="block"><span class="argname">self</span><span class="argsep">,</span> <span class="argname">whence</span><span class="argsep">,</span> <span class="argname">position</span><span class="argsep">,</span> <span class="argname">count = <a class="objref" href="//__builtin__.NoneType"><pre>None</pre></a></span></span>):</span></div>
+                  </div>
+                  <div class="method">
+                    <div class="title"><span class="keyword">def</span> <span class="title">close</span><span class="args">(<span class="block"><span class="argname">self</span></span>):</span></div>
+                  </div>
+                  <div class="method">
+                    <div class="title"><span class="keyword">def</span> <span class="title">move</span><span class="args">(<span class="block"><span class="argname">self</span><span class="argsep">,</span> <span class="argname">location</span><span class="argsep">,</span> <span class="argname">count = <a class="objref" href="//__builtin__.NoneType"><pre>None</pre></a></span></span>):</span></div>
+                  </div>
+                  <div class="method">
+                    <div class="title"><span class="keyword">def</span> <span class="title">next</span><span class="args">(<span class="block"><span class="argname">self</span></span>):</span></div>
+                  </div>
+                  <div class="method">
+                    <div class="title"><span class="keyword">def</span> <span class="title">read</span><span class="args">(<span class="block"><span class="argname">self</span><span class="argsep">,</span> <span class="argname">quantity = <a class="objref" href="//__builtin__.long"><pre>4294967295L</pre></a></span></span>):</span></div>
+                  </div>
+                  <div class="method">
+                    <div class="title"><span class="keyword">def</span> <span class="title">scroll</span><span class="args">(<span class="block"><span class="argname">self</span><span class="argsep">,</span> <span class="argname">quantity</span></span>):</span></div>
+                  </div>
+                  <div class="method">
+                    <div class="title"><span class="keyword">def</span> <span class="title">seek</span><span class="args">(<span class="block"><span class="argname">self</span><span class="argsep">,</span> <span class="argname">location</span><span class="argsep">,</span> <span class="argname">whence = <a class="objref" href="//__builtin__.NoneType"><pre>None</pre></a></span><span class="argsep">,</span> <span class="argname">count = <a class="objref" href="//__builtin__.NoneType"><pre>None</pre></a></span></span>):</span></div>
+                  </div>
+                </div>
+                <div class="datas">
+                  <div class="head">
+                    <span class="title">class data</span>
+                  </div>
+                  <div class="data" title="__builtin__.dict" id="postgresql.interface.proboscis.tracenull.Portal.whence_map"><span class="name">whence_map</span> = <a class="objref" href="//__builtin__.dict"><pre>{0: 'ABSOLUTE', 1: 'RELATIVE', 2: 'LAST'}</pre></a></div>
+                </div>
+              </div>
+            </div>
+            <div class="class" id="postgresql.interface.proboscis.tracenull.ClientStatementCursor">
+              <div class="title"><span class="keyword">class</span> <span class="title">ClientStatementCursor</span>(<a class="super" title="postgresql.interface.proboscis.tracenull.Portal" href="#postgresql.interface.proboscis.tracenull.Portal">Portal</a>):</div>
+              <div class="doc">
+                <pre>Client statement created cursors</pre>
+              </div>
+              <div class="content">
+                <div class="methods">
+                  <div class="head">
+                    <span class="title">methods</span>
+                  </div>
+                  <div class="method">
+                    <div class="title"><span class="keyword">def</span> <span class="title">__init__</span><span class="args">(<span class="block"><br /><span class="indent"></span><span class="argname">self</span><span class="argsep">,</span><br /><span class="indent"></span><span class="argname">query</span><span class="argsep">,</span><br /><span class="indent"></span><span class="argname">params</span><span class="argsep">,</span><br /><span class="indent"></span><span class="argname">output</span><span class="argsep">,</span><br /><span class="indent"></span><span class="argname">output_io</span><span class="argsep">,</span><br /><span class="indent"></span><span class="argname">rformats</span><br /></span>):</span></div>
+                  </div>
+                  <div class="method">
+                    <div class="title"><span class="keyword">def</span> <span class="title">__del__</span><span class="args">(<span class="block"><span class="argname">self</span></span>):</span></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="class" id="postgresql.interface.proboscis.tracenull.Cursor">
+              <div class="title"><span class="keyword">class</span> <span class="title">Cursor</span>(<a class="super" title="postgresql.interface.proboscis.tracenull.Portal" href="#postgresql.interface.proboscis.tracenull.Portal">Portal</a>):</div>
+              <div class="doc">
+                <pre>Server declared cursor interfaces</pre>
+              </div>
+              <div class="content">
+                <div class="methods">
+                  <div class="head">
+                    <span class="title">methods</span>
+                  </div>
+                  <div class="method">
+                    <div class="title"><span class="keyword">def</span> <span class="title">__init__</span><span class="args">(<span class="block"><span class="argname">self</span><span class="argsep">,</span> <span class="argname">connection</span><span class="argsep">,</span> <span class="argname">cursor_name</span></span>):</span></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="class" id="postgresql.interface.proboscis.tracenull.StoredProcedure">
+              <div class="title"><span class="keyword">class</span> <span class="title">StoredProcedure</span>(<a class="super" title="postgresql.protocol.greentrunk.api.proc" href="//pg_greentrunk/1.0#postgresql.protocol.greentrunk.api.proc">proc</a>):</div>
+              <div class="doc">
+                <pre>Interface to functions kept in the backend</pre>
+              </div>
+              <div class="content">
+                <div class="methods">
+                  <div class="head">
+                    <span class="title">methods</span>
+                  </div>
+                  <div class="method">
+                    <div class="title"><span class="keyword">def</span> <span class="title">__init__</span><span class="args">(<span class="block"><span class="argname">self</span><span class="argsep">,</span> <span class="argname">connection</span><span class="argsep">,</span> <span class="argname">ident</span><span class="argsep">,</span> <span class="argname">description = <a class="objref" href="//__builtin__.tuple"><pre>()</pre></a></span></span>):</span></div>
+                  </div>
+                  <div class="method">
+                    <div class="title"><span class="keyword">def</span> <span class="title">__call__</span><span class="args">(<span class="block"><span class="argname">self</span><span class="argsep">,</span> <span class="argname">*args</span></span>):</span></div>
+                  </div>
+                  <div class="method">
+                    <div class="title"><span class="keyword">def</span> <span class="title">__repr__</span><span class="args">(<span class="block"><span class="argname">self</span></span>):</span></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="class" id="postgresql.interface.proboscis.tracenull.PreparedStatement">
+              <div class="title"><span class="keyword">class</span> <span class="title">PreparedStatement</span>(<a class="super" title="postgresql.protocol.greentrunk.api.query" href="//pg_greentrunk/1.0#postgresql.protocol.greentrunk.api.query">query</a>):</div>
+              <div class="content">
+                <div class="methods">
+                  <div class="head">
+                    <span class="title">methods</span>
+                  </div>
+                  <div class="method">
+                    <div class="title"><span class="keyword">def</span> <span class="title">__init__</span><span class="args">(<span class="block"><span class="argname">self</span><span class="argsep">,</span> <span class="argname">connection</span><span class="argsep">,</span> <span class="argname">statement_id</span><span class="argsep">,</span> <span class="argname">title = <a class="objref" href="//__builtin__.NoneType"><pre>None</pre></a></span></span>):</span></div>
+                  </div>
+                  <div class="method">
+                    <div class="title"><span class="keyword">def</span> <span class="title">__call__</span><span class="args">(<span class="block"><span class="argname">self</span><span class="argsep">,</span> <span class="argname">*args</span></span>):</span></div>
+                  </div>
+                  <div class="method">
+                    <div class="title"><span class="keyword">def</span> <span class="title">__invert__</span><span class="args">(<span class="block"><span class="argname">self</span><span class="argsep">,</span> <span class="argname">*args</span></span>):</span></div>
+                  </div>
+                  <div class="method">
+                    <div class="title"><span class="keyword">def</span> <span class="title">__iter__</span><span class="args">(<span class="block"><span class="argname">self</span></span>):</span></div>
+                  </div>
+                  <div class="method">
+                    <div class="title"><span class="keyword">def</span> <span class="title">__lshift__</span><span class="args">(<span class="block"><span class="argname">self</span><span class="argsep">,</span> <span class="argname">tupleseq</span><span class="argsep">,</span> <span class="argname">tps = <a class="objref" href="//__builtin__.int"><pre>40</pre></a></span></span>):</span></div>
+                  </div>
+                  <div class="method">
+                    <div class="title"><span class="keyword">def</span> <span class="title">__repr__</span><span class="args">(<span class="block"><span class="argname">self</span></span>):</span></div>
+                  </div>
+                  <div class="method">
+                    <div class="title"><span class="keyword">def</span> <span class="title">close</span><span class="args">(<span class="block"><span class="argname">self</span></span>):</span></div>
+                  </div>
+                  <div class="method">
+                    <div class="title"><span class="keyword">def</span> <span class="title">finish</span><span class="args">(<span class="block"><span class="argname">self</span></span>):</span></div>
+                    <div class="doc">
+                      <pre>complete initialization that the prime() method started.</pre>
+                    </div>
+                  </div>
+                  <div class="method">
+                    <div class="title"><span class="keyword">def</span> <span class="title">first</span><span class="args">(<span class="block"><span class="argname">self</span><span class="argsep">,</span> <span class="argname">*args</span></span>):</span></div>
+                  </div>
+                  <div class="method">
+                    <div class="title"><span class="keyword">def</span> <span class="title">load</span><span class="args">(<span class="block"><span class="argname">self</span><span class="argsep">,</span> <span class="argname">tupleseq</span><span class="argsep">,</span> <span class="argname">tps = <a class="objref" href="//__builtin__.int"><pre>40</pre></a></span></span>):</span></div>
+                  </div>
+                  <div class="method">
+                    <div class="title"><span class="keyword">def</span> <span class="title">prepare</span><span class="args">(<span class="block"><span class="argname">self</span></span>):</span></div>
+                  </div>
+                  <div class="method">
+                    <div class="title"><span class="keyword">def</span> <span class="title">prime</span><span class="args">(<span class="block"><span class="argname">self</span></span>):</span></div>
+                    <div class="doc">
+                      <pre>Push initialization messages to the server, but don't wait for
+the return as there may be things that can be done while waiting
+for the return. Use the finish() to complete.</pre>
+                    </div>
+                  </div>
+                  <div class="method">
+                    <div class="title"><span class="keyword">def</span> <span class="title">reprepare</span><span class="args">(<span class="block"><span class="argname">self</span></span>):</span></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="class" id="postgresql.interface.proboscis.tracenull.ClientPreparedStatement">
+              <div class="title"><span class="keyword">class</span> <span class="title">ClientPreparedStatement</span>(<a class="super" title="postgresql.interface.proboscis.tracenull.PreparedStatement" href="#postgresql.interface.proboscis.tracenull.PreparedStatement">PreparedStatement</a>):</div>
+              <div class="doc">
+                <pre>A prepared statement generated by the connection user</pre>
+              </div>
+              <div class="content">
+                <div class="methods">
+                  <div class="head">
+                    <span class="title">methods</span>
+                  </div>
+                  <div class="method">
+                    <div class="title"><span class="keyword">def</span> <span class="title">__init__</span><span class="args">(<span class="block"><span class="argname">self</span><span class="argsep">,</span> <span class="argname">connection</span><span class="argsep">,</span> <span class="argname">src</span><span class="argsep">,</span> <span class="argname">*defaults</span></span>):</span></div>
+                  </div>
+                  <div class="method">
+                    <div class="title"><span class="keyword">def</span> <span class="title">__del__</span><span class="args">(<span class="block"><span class="argname">self</span></span>):</span></div>
+                  </div>
+                  <div class="method">
+                    <div class="title"><span class="keyword">def</span> <span class="title">prime</span><span class="args">(<span class="block"><span class="argname">self</span></span>):</span></div>
+                    <div class="doc">
+                      <pre>Push out initialization messages for query preparation</pre>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="class" id="postgresql.interface.proboscis.tracenull.ServerSettings">
+              <div class="title"><span class="keyword">class</span> <span class="title">ServerSettings</span>(<a class="super" title="postgresql.protocol.greentrunk.api.settings" href="//pg_greentrunk/1.0#postgresql.protocol.greentrunk.api.settings">settings</a>):</div>
+              <div class="content">
+                <div class="methods">
+                  <div class="head">
+                    <span class="title">methods</span>
+                  </div>
+                  <div class="method">
+                    <div class="title"><span class="keyword">def</span> <span class="title">__init__</span><span class="args">(<span class="block"><span class="argname">self</span><span class="argsep">,</span> <span class="argname">connection</span></span>):</span></div>
+                  </div>
+                  <div class="method">
+                    <div class="title"><span class="keyword">def</span> <span class="title">__call__</span><span class="args">(<span class="block"><span class="argname">self</span></span>):</span></div>
+                  </div>
+                  <div class="method">
+                    <div class="title"><span class="keyword">def</span> <span class="title">__context__</span><span class="args">(<span class="block"><span class="argname">self</span></span>):</span></div>
+                  </div>
+                  <div class="method">
+                    <div class="title"><span class="keyword">def</span> <span class="title">__enter__</span><span class="args">(<span class="block"><span class="argname">self</span></span>):</span></div>
+                  </div>
+                  <div class="method">
+                    <div class="title"><span class="keyword">def</span> <span class="title">__exit__</span><span class="args">(<span class="block"><span class="argname">self</span><span class="argsep">,</span> <span class="argname">exc</span><span class="argsep">,</span> <span class="argname">val</span><span class="argsep">,</span> <span class="argname">tb</span></span>):</span></div>
+                  </div>
+                  <div class="method">
+                    <div class="title"><span class="keyword">def</span> <span class="title">__getitem__</span><span class="args">(<span class="block"><span class="argname">self</span><span class="argsep">,</span> <span class="argname">i</span></span>):</span></div>
+                  </div>
+                  <div class="method">
+                    <div class="title"><span class="keyword">def</span> <span class="title">__setitem__</span><span class="args">(<span class="block"><span class="argname">self</span><span class="argsep">,</span> <span class="argname">i</span><span class="argsep">,</span> <span class="argname">v</span></span>):</span></div>
+                  </div>
+                  <div class="method">
+                    <div class="title"><span class="keyword">def</span> <span class="title">_clear_cache</span><span class="args">(<span class="block"><span class="argname">self</span></span>):</span></div>
+                  </div>
+                  <div class="method">
+                    <div class="title"><span class="keyword">def</span> <span class="title">_notify</span><span class="args">(<span class="block"><span class="argname">self</span><span class="argsep">,</span> <span class="argname">msg</span></span>):</span></div>
+                  </div>
+                  <div class="method">
+                    <div class="title"><span class="keyword">def</span> <span class="title">get</span><span class="args">(<span class="block"><span class="argname">self</span><span class="argsep">,</span> <span class="argname">k</span><span class="argsep">,</span> <span class="argname">alt = <a class="objref" href="//__builtin__.NoneType"><pre>None</pre></a></span></span>):</span></div>
+                  </div>
+                  <div class="method">
+                    <div class="title"><span class="keyword">def</span> <span class="title">getset</span><span class="args">(<span class="block"><span class="argname">self</span><span class="argsep">,</span> <span class="argname">keys</span></span>):</span></div>
+                  </div>
+                  <div class="method">
+                    <div class="title"><span class="keyword">def</span> <span class="title">iteritems</span><span class="args">(<span class="block"><span class="argname">self</span></span>):</span></div>
+                  </div>
+                  <div class="method">
+                    <div class="title"><span class="keyword">def</span> <span class="title">iterkeys</span><span class="args">(<span class="block"><span class="argname">self</span></span>):</span></div>
+                  </div>
+                  <div class="method">
+                    <div class="title"><span class="keyword">def</span> <span class="title">itervalues</span><span class="args">(<span class="block"><span class="argname">self</span></span>):</span></div>
+                  </div>
+                  <div class="method">
+                    <div class="title"><span class="keyword">def</span> <span class="title">subscribe</span><span class="args">(<span class="block"><span class="argname">self</span><span class="argsep">,</span> <span class="argname">key</span><span class="argsep">,</span> <span class="argname">callback</span></span>):</span></div>
+                  </div>
+                  <div class="method">
+                    <div class="title"><span class="keyword">def</span> <span class="title">unsubscribe</span><span class="args">(<span class="block"><span class="argname">self</span><span class="argsep">,</span> <span class="argname">key</span><span class="argsep">,</span> <span class="argname">callback</span></span>):</span></div>
+                  </div>
+                  <div class="method">
+                    <div class="title"><span class="keyword">def</span> <span class="title">update</span><span class="args">(<span class="block"><span class="argname">self</span><span class="argsep">,</span> <span class="argname">d</span></span>):</span></div>
+                  </div>
+                </div>
+                <div class="properties">
+                  <div class="head">
+                    <span class="title">properties</span>
+                  </div>
+                  <div class="property">
+                    <div class="title"><span class="keyword">property</span> <span class="title">path</span></div>
+                    <div class="doc">
+                      <pre>structured search_path interface</pre>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="class" id="postgresql.interface.proboscis.tracenull.HeapTuple">
+              <div class="title"><span class="keyword">class</span> <span class="title">HeapTuple</span>(<a class="super" title="__builtin__.tuple" href="//__builtin__.tuple">tuple</a>):</div>
+              <div class="doc">
+                <pre>Name addressable items tuple; mapping and sequence</pre>
+              </div>
+              <div class="content">
+                <div class="class_methods">
+                  <div class="head">
+                    <span class="title">class methods</span>
+                  </div>
+                  <div class="method">
+                    <div class="title"><span class="keyword">def</span> <span class="title">__new__</span><span class="args">(<span class="block"><span class="argname">subtype</span><span class="argsep">,</span> <span class="argname">attr</span><span class="argsep">,</span> <span class="argname">attmap = <a class="objref" href="//__builtin__.dict"><pre>{}</pre></a></span></span>):</span></div>
+                  </div>
+                </div>
+                <div class="methods">
+                  <div class="head">
+                    <span class="title">methods</span>
+                  </div>
+                  <div class="method">
+                    <div class="title"><span class="keyword">def</span> <span class="title">__getitem__</span><span class="args">(<span class="block"><span class="argname">self</span><span class="argsep">,</span> <span class="argname">i</span></span>):</span></div>
+                  </div>
+                  <div class="method">
+                    <div class="title"><span class="keyword">def</span> <span class="title">attindex</span><span class="args">(<span class="block"><span class="argname">self</span><span class="argsep">,</span> <span class="argname">k</span></span>):</span></div>
+                  </div>
+                  <div class="method">
+                    <div class="title"><span class="keyword">def</span> <span class="title">get</span><span class="args">(<span class="block"><span class="argname">self</span><span class="argsep">,</span> <span class="argname">i</span></span>):</span></div>
+                  </div>
+                  <div class="method">
+                    <div class="title"><span class="keyword">def</span> <span class="title">has_key</span><span class="args">(<span class="block"><span class="argname">self</span><span class="argsep">,</span> <span class="argname">k</span></span>):</span></div>
+                  </div>
+                  <div class="method">
+                    <div class="title"><span class="keyword">def</span> <span class="title">items</span><span class="args">(<span class="block"><span class="argname">self</span></span>):</span></div>
+                  </div>
+                  <div class="method">
+                    <div class="title"><span class="keyword">def</span> <span class="title">iteritems</span><span class="args">(<span class="block"><span class="argname">self</span></span>):</span></div>
+                  </div>
+                  <div class="method">
+                    <div class="title"><span class="keyword">def</span> <span class="title">iterkeys</span><span class="args">(<span class="block"><span class="argname">self</span></span>):</span></div>
+                  </div>
+                  <div class="method">
+                    <div class="title"><span class="keyword">def</span> <span class="title">itervalues</span><span class="args">(<span class="block"><span class="argname">self</span></span>):</span></div>
+                  </div>
+                  <div class="method">
+                    <div class="title"><span class="keyword">def</span> <span class="title">keys</span><span class="args">(<span class="block"><span class="argname">self</span></span>):</span></div>
+                  </div>
+                  <div class="method">
+                    <div class="title"><span class="keyword">def</span> <span class="title">values</span><span class="args">(<span class="block"><span class="argname">self</span></span>):</span></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="class" id="postgresql.interface.proboscis.tracenull.TransactionManager">
+              <div class="title"><span class="keyword">class</span> <span class="title">TransactionManager</span>(<a class="super" title="postgresql.protocol.greentrunk.api.xact" href="//pg_greentrunk/1.0#postgresql.protocol.greentrunk.api.xact">xact</a>):</div>
+              <div class="content">
+                <div class="methods">
+                  <div class="head">
+                    <span class="title">methods</span>
+                  </div>
+                  <div class="method">
+                    <div class="title"><span class="keyword">def</span> <span class="title">__init__</span><span class="args">(<span class="block"><span class="argname">self</span><span class="argsep">,</span> <span class="argname">connection</span></span>):</span></div>
+                  </div>
+                  <div class="method">
+                    <div class="title"><span class="keyword">def</span> <span class="title">__call__</span><span class="args">(<span class="block"><span class="argname">self</span><span class="argsep">,</span> <span class="argname">gid = <a class="objref" href="//__builtin__.NoneType"><pre>None</pre></a></span><span class="argsep">,</span> <span class="argname">mode = <a class="objref" href="//__builtin__.NoneType"><pre>None</pre></a></span><span class="argsep">,</span> <span class="argname">isolation = <a class="objref" href="//__builtin__.NoneType"><pre>None</pre></a></span></span>):</span></div>
+                  </div>
+                  <div class="method">
+                    <div class="title"><span class="keyword">def</span> <span class="title">__context__</span><span class="args">(<span class="block"><span class="argname">self</span></span>):</span></div>
+                  </div>
+                  <div class="method">
+                    <div class="title"><span class="keyword">def</span> <span class="title">__enter__</span><span class="args">(<span class="block"><span class="argname">self</span><span class="argsep">,</span> <span class="argname">isolation = <a class="objref" href="//__builtin__.NoneType"><pre>None</pre></a></span><span class="argsep">,</span> <span class="argname">mode = <a class="objref" href="//__builtin__.NoneType"><pre>None</pre></a></span></span>):</span></div>
+                  </div>
+                  <div class="method">
+                    <div class="title"><span class="keyword">def</span> <span class="title">__exit__</span><span class="args">(<span class="block"><span class="argname">self</span><span class="argsep">,</span> <span class="argname">type</span><span class="argsep">,</span> <span class="argname">value</span><span class="argsep">,</span> <span class="argname">tb</span></span>):</span></div>
+                  </div>
+                  <div class="method">
+                    <div class="title"><span class="keyword">def</span> <span class="title">_commit_string</span><span class="args">(<span class="block"><span class="argname">self</span><span class="argsep">,</span> <span class="argname">level</span></span>):</span></div>
+                  </div>
+                  <div class="method">
+                    <div class="title"><span class="keyword">def</span> <span class="title">_execute</span><span class="args">(<span class="block"><span class="argname">self</span><span class="argsep">,</span> <span class="argname">qstring</span><span class="argsep">,</span> <span class="argname">adjustment</span></span>):</span></div>
+                  </div>
+                  <div class="method">
+                    <div class="title"><span class="keyword">def</span> <span class="title">_rollback_string</span><span class="args">(<span class="block"><span class="argname">self</span><span class="argsep">,</span> <span class="argname">level</span></span>):</span></div>
+                  </div>
+                  <div class="method">
+                    <div class="title"><span class="keyword">def</span> <span class="title">_start_string</span><span class="args">(<span class="block"><span class="argname">self</span><span class="argsep">,</span> <span class="argname">level</span><span class="argsep">,</span> <span class="argname">isolation = <a class="objref" href="//__builtin__.NoneType"><pre>None</pre></a></span><span class="argsep">,</span> <span class="argname">mode = <a class="objref" href="//__builtin__.NoneType"><pre>None</pre></a></span></span>):</span></div>
+                  </div>
+                  <div class="method">
+                    <div class="title"><span class="keyword">def</span> <span class="title">abort</span><span class="args">(<span class="block"><span class="argname">self</span></span>):</span></div>
+                  </div>
+                  <div class="method">
+                    <div class="title"><span class="keyword">def</span> <span class="title">begin</span><span class="args">(<span class="block"><span class="argname">self</span><span class="argsep">,</span> <span class="argname">isolation = <a class="objref" href="//__builtin__.NoneType"><pre>None</pre></a></span><span class="argsep">,</span> <span class="argname">mode = <a class="objref" href="//__builtin__.NoneType"><pre>None</pre></a></span></span>):</span></div>
+                  </div>
+                  <div class="method">
+                    <div class="title"><span class="keyword">def</span> <span class="title">checkpoint</span><span class="args">(<span class="block"><span class="argname">self</span><span class="argsep">,</span> <span class="argname">isolation = <a class="objref" href="//__builtin__.NoneType"><pre>None</pre></a></span><span class="argsep">,</span> <span class="argname">mode = <a class="objref" href="//__builtin__.NoneType"><pre>None</pre></a></span></span>):</span></div>
+                  </div>
+                  <div class="method">
+                    <div class="title"><span class="keyword">def</span> <span class="title">commit</span><span class="args">(<span class="block"><span class="argname">self</span></span>):</span></div>
+                  </div>
+                  <div class="method">
+                    <div class="title"><span class="keyword">def</span> <span class="title">commit_prepared</span><span class="args">(<span class="block"><span class="argname">self</span><span class="argsep">,</span> <span class="argname">gid</span></span>):</span></div>
+                  </div>
+                  <div class="method">
+                    <div class="title"><span class="keyword">def</span> <span class="title">reset</span><span class="args">(<span class="block"><span class="argname">self</span></span>):</span></div>
+                  </div>
+                  <div class="method">
+                    <div class="title"><span class="keyword">def</span> <span class="title">restart</span><span class="args">(<span class="block"><span class="argname">self</span><span class="argsep">,</span> <span class="argname">isolation = <a class="objref" href="//__builtin__.NoneType"><pre>None</pre></a></span><span class="argsep">,</span> <span class="argname">mode = <a class="objref" href="//__builtin__.NoneType"><pre>None</pre></a></span></span>):</span></div>
+                  </div>
+                  <div class="method">
+                    <div class="title"><span class="keyword">def</span> <span class="title">rollback</span><span class="args">(<span class="block"><span class="argname">self</span></span>):</span></div>
+                  </div>
+                  <div class="method">
+                    <div class="title"><span class="keyword">def</span> <span class="title">rollback_prepared</span><span class="args">(<span class="block"><span class="argname">self</span><span class="argsep">,</span> <span class="argname">gid</span></span>):</span></div>
+                  </div>
+                  <div class="method">
+                    <div class="title"><span class="keyword">def</span> <span class="title">start</span><span class="args">(<span class="block"><span class="argname">self</span><span class="argsep">,</span> <span class="argname">isolation = <a class="objref" href="//__builtin__.NoneType"><pre>None</pre></a></span><span class="argsep">,</span> <span class="argname">mode = <a class="objref" href="//__builtin__.NoneType"><pre>None</pre></a></span></span>):</span></div>
+                  </div>
+                  <div class="method">
+                    <div class="title"><span class="keyword">def</span> <span class="title">wrap</span><span class="args">(<span class="block"><span class="argname">self</span><span class="argsep">,</span> <span class="argname">callable</span><span class="argsep">,</span> <span class="argname">*args</span></span>):</span></div>
+                  </div>
+                </div>
+                <div class="static_methods">
+                  <div class="head">
+                    <span class="title">static methods</span>
+                  </div>
+                  <div class="method">
+                    <div class="title"><span class="keyword">def</span> <span class="title">_start_block_string</span><span class="args">(<span class="block"><span class="argname">mode</span><span class="argsep">,</span> <span class="argname">isolation</span></span>):</span></div>
+                  </div>
+                </div>
+                <div class="properties">
+                  <div class="head">
+                    <span class="title">properties</span>
+                  </div>
+                  <div class="property">
+                    <div class="title"><span class="keyword">property</span> <span class="title">prepared</span></div>
+                  </div>
+                  <div class="property">
+                    <div class="title"><span class="keyword">property</span> <span class="title">failed</span></div>
+                  </div>
+                  <div class="property">
+                    <div class="title"><span class="keyword">property</span> <span class="title">closed</span></div>
+                  </div>
+                </div>
+                <div class="datas">
+                  <div class="head">
+                    <span class="title">class data</span>
+                  </div>
+                  <div class="data" title="__builtin__.type" id="postgresql.interface.proboscis.tracenull.TransactionManager.AbortTransaction"><span class="name">AbortTransaction</span> = <a class="objref" href="//pg_foundation/1.0#postgresql.exceptions.AbortTransaction"><pre>postgresql.exceptions.AbortTransaction</pre></a></div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="functions">
+            <div class="head">
+              <span class="title">functions</span>
+            </div>
+            <div class="function">
+              <div class="title"><span class="keyword">def</span> <span class="title">secure_socket</span><span class="args">(<span class="block"><br /><span class="indent"></span><span class="argname">connection</span><span class="argsep">,</span><br /><span class="indent"></span><span class="argname">keyfile = <a class="objref" href="//__builtin__.NoneType"><pre>None</pre></a></span><span class="argsep">,</span><br /><span class="indent"></span><span class="argname">certfile = <a class="objref" href="//__builtin__.NoneType"><pre>None</pre></a></span><span class="argsep">,</span><br /><span class="indent"></span><span class="argname">rootcertfile = <a class="objref" href="//__builtin__.NoneType"><pre>None</pre></a></span><br /></span>):</span></div>
+              <div class="doc">
+                <pre>take a would be connection socket and secure it with SSL</pre>
+              </div>
+            </div>
+            <div class="function">
+              <div class="title"><span class="keyword">def</span> <span class="title">ID</span><span class="args">(<span class="block"><span class="argname">s</span><span class="argsep">,</span> <span class="argname">title = <a class="objref" href="//__builtin__.NoneType"><pre>None</pre></a></span></span>):</span></div>
+              <div class="doc">
+                <pre>generate an id for a client statement or cursor</pre>
+              </div>
+            </div>
+            <div class="function">
+              <div class="title"><span class="keyword">def</span> <span class="title">row_unpack</span><span class="args">(<span class="block"><span class="argname">seq</span><span class="argsep">,</span> <span class="argname">typio</span><span class="argsep">,</span> <span class="argname">decode</span></span>):</span></div>
+              <div class="doc">
+                <pre>Transform object data into an object using the associated IO routines</pre>
+              </div>
+            </div>
+            <div class="function">
+              <div class="title"><span class="keyword">def</span> <span class="title">row_pack</span><span class="args">(<span class="block"><span class="argname">seq</span><span class="argsep">,</span> <span class="argname">typio</span><span class="argsep">,</span> <span class="argname">encode</span></span>):</span></div>
+              <div class="doc">
+                <pre>Transform objects into object data using the associated IO routines</pre>
+              </div>
+            </div>
+            <div class="function">
+              <div class="title"><span class="keyword">def</span> <span class="title">anyarray_unpack_elements</span><span class="args">(<span class="block"><span class="argname">a</span><span class="argsep">,</span> <span class="argname">unpack</span></span>):</span></div>
+              <div class="doc">
+                <pre>generator for yielding None if x is None or unpack(x)</pre>
+              </div>
+            </div>
+            <div class="function">
+              <div class="title"><span class="keyword">def</span> <span class="title">anyarray_unpack</span><span class="args">(<span class="block"><span class="argname">unpack</span><span class="argsep">,</span> <span class="argname">data</span></span>):</span></div>
+              <div class="doc">
+                <pre>unpack the array, normalize the lower bounds and return a pg_types.array</pre>
+              </div>
+            </div>
+            <div class="function">
+              <div class="title"><span class="keyword">def</span> <span class="title">array_typio</span><span class="args">(<span class="block"><br /><span class="indent"></span><span class="argname">connection</span><span class="argsep">,</span><br /><span class="indent"></span><span class="argname">typoid</span><span class="argsep">,</span><br /><span class="indent"></span><span class="argname">typio</span><span class="argsep">,</span><br /><span class="indent"></span><span class="argname">hasbin_input</span><span class="argsep">,</span><br /><span class="indent"></span><span class="argname">hasbin_output</span><br /></span>):</span></div>
+              <div class="doc">
+                <pre>create an array's typio pair</pre>
+              </div>
+            </div>
+            <div class="function">
+              <div class="title"><span class="keyword">def</span> <span class="title">composite_typio</span><span class="args">(<span class="block"><span class="argname">connection</span><span class="argsep">,</span> <span class="argname">typoid</span></span>):</span></div>
+              <div class="doc">
+                <pre>create the typio pair for a given composite type</pre>
+              </div>
+            </div>
+            <div class="function">
+              <div class="title"><span class="keyword">def</span> <span class="title">iter_row_pack</span><span class="args">(<span class="block"><span class="argname">htiter</span><span class="argsep">,</span> <span class="argname">typio</span><span class="argsep">,</span> <span class="argname">encode</span></span>):</span></div>
+              <div class="doc">
+                <pre>Used to process tuples for bulk loads</pre>
+              </div>
+            </div>
+            <div class="function">
+              <div class="title"><span class="keyword">def</span> <span class="title">idxiter</span><span class="args">(<span class="block"><span class="argname">tupseq</span><span class="argsep">,</span> <span class="argname">idx</span></span>):</span></div>
+            </div>
+            <div class="function">
+              <div class="title"><span class="keyword">def</span> <span class="title">subidxiter</span><span class="args">(<span class="block"><span class="argname">seq</span><span class="argsep">,</span> <span class="argname">idx</span></span>):</span></div>
+            </div>
+            <div class="function">
+              <div class="title"><span class="keyword">def</span> <span class="title">attmap_from_pqdesc</span><span class="args">(<span class="block"><span class="argname">desc</span></span>):</span></div>
+              <div class="doc">
+                <pre>create a dictionary from a pq desc that maps attribute names
+to their index</pre>
+              </div>
+            </div>
+            <div class="function">
+              <div class="title"><span class="keyword">def</span> <span class="title">extract_count</span><span class="args">(<span class="block"><span class="argname">rmsg</span></span>):</span></div>
+              <div class="doc">
+                <pre>helper function to get the last set of digits in a command completion
+as an integer.</pre>
+              </div>
+            </div>
+            <div class="function">
+              <div class="title"><span class="keyword">def</span> <span class="title">format_message</span><span class="args">(<span class="block"><span class="argname">msg</span></span>):</span></div>
+            </div>
+            <div class="function">
+              <div class="title"><span class="keyword">def</span> <span class="title">stderr_notifier</span><span class="args">(<span class="block"><br /><span class="indent"></span><span class="argname">msg</span><span class="argsep">,</span><br /><span class="indent"></span><span class="argname">ti = <a class="objref" href="//jwp_terminfo/1.0.4#name.jwp.terminfo"><pre>name.jwp.terminfo</pre></a></span><br /></span>):</span></div>
+            </div>
+          </div>
+          <div class="datas">
+            <div class="head">
+              <span class="title">data</span>
+            </div>
+            <div class="data" title="postgresql.interface.proboscis.tracenull.ClosedConnection" id="postgresql.interface.proboscis.tracenull.ClosedConnectionTransaction"><span class="name">ClosedConnectionTransaction</span> = <a class="objref" href="#postgresql.interface.proboscis.tracenull.ClosedConnection"><pre>&lt;postgresql.interface.proboscis.tracenull.ClosedConnection object at 0x143f810&gt;</pre></a></div>
+            <div class="data" title="__builtin__.str" id="postgresql.interface.proboscis.tracenull.CompositeLookup"><span class="name">CompositeLookup</span> = <a class="objref" href="//__builtin__.str"><pre>'\nSELECT\n CAST(atttypid AS oid) AS atttypid,\n CAST(attname AS VARCHAR) AS attname\nFROM\n pg_type t LEFT OUTER JOIN pg_attribute a\n  ON (t.typrelid = a.attrelid)\nWHERE\n attrelid = $1 AND NOT attisdropped AND attnum &gt; 0\nORDER BY attnum ASC\n'</pre></a></div>
+            <div class="data" title="__builtin__.str" id="postgresql.interface.proboscis.tracenull.IDNS"><span class="name">IDNS</span> = <a class="objref" href="//__builtin__.str"><pre>'%s(py:%s)'</pre></a></div>
+            <div class="data" title="__builtin__.str" id="postgresql.interface.proboscis.tracenull.PreparedLookup"><span class="name">PreparedLookup</span> = <a class="objref" href="//__builtin__.str"><pre>'\nSELECT\n\tARRAY(\n\t\tSELECT\n\t\t\tgid::text\n\t\tFROM\n\t\t\tpg_catalog.pg_prepared_xacts\n\t\tWHERE\n\t\t\tdatabase = current_database()\n\t\t\tAND (\n\t\t\t\towner = $1::text\n\t\t\t\tOR (\n\t\t\t\t\t(SELECT rolsuper FROM pg_roles WHERE rolname = $1::text)\n\t\t\t\t)\n\t\t\t)\n\t\tORDER BY prepared ASC\n\t)\n'</pre></a></div>
+            <div class="data" title="__builtin__.str" id="postgresql.interface.proboscis.tracenull.ProcedureLookup"><span class="name">ProcedureLookup</span> = <a class="objref" href="//__builtin__.str"><pre>"\nSELECT\n pg_proc.oid,\n pg_proc.*,\n pg_proc.oid::regproc AS _proid,\n array_in(array_out(proargtypes::regtype[]), 'text'::regtype, 0) AS _proargs,\n (pg_type.oid = 'record'::regtype or pg_type.typtype = 'c') AS composite\nFROM\n pg_proc LEFT OUTER JOIN pg_type ON (\n  pg_proc.prorettype = pg_type.oid\n )\n"</pre></a></div>
+            <div class="data" title="__builtin__.str" id="postgresql.interface.proboscis.tracenull.TypeLookup"><span class="name">TypeLookup</span> = <a class="objref" href="//__builtin__.str"><pre>'\nSELECT\n bt.typname,\n bt.typtype,\n bt.typlen,\n bt.typelem,\n bt.typrelid,\n ae.oid AS ae_typid,\n ae.typreceive::oid != 0 AS ae_hasbin_input,\n ae.typsend::oid != 0 AS ae_hasbin_output\nFROM pg_type bt\n LEFT OUTER JOIN pg_type ae\n  ON (\n\tbt.typlen = -1 AND\n   bt.typelem != 0 AND\n   bt.typelem = ae.oid\n  )\nWHERE bt.oid = $1\n'</pre></a></div>
+            <div class="data" title="__builtin__.function" id="postgresql.interface.proboscis.tracenull.array_pack"><span class="name">array_pack</span> = <a class="objref" href="//pg_typical/1.0#postgresql.protocol.typical.pstruct.array_pack"><pre>postgresql.protocol.typical.pstruct.array_pack</pre></a></div>
+            <div class="data" title="__builtin__.function" id="postgresql.interface.proboscis.tracenull.array_unpack"><span class="name">array_unpack</span> = <a class="objref" href="//pg_typical/1.0#postgresql.protocol.typical.pstruct.array_unpack"><pre>postgresql.protocol.typical.pstruct.array_unpack</pre></a></div>
+            <div class="data" title="__builtin__.builtin_function_or_method" id="postgresql.interface.proboscis.tracenull.md5"><span class="name">md5</span> = <a class="objref" href="//_hashlib.openssl_md5"><pre>_hashlib.openssl_md5</pre></a></div>
+            <div class="data" title="__builtin__.dict" id="postgresql.interface.proboscis.tracenull.message_style"><span class="name">message_style</span> = <a class="objref" href="//__builtin__.dict"><pre>{'INFO': '\x1b[32m', 'NOTICE': '\x1b[34m', 'WARNING': '\x1b[33m', 'ERROR': '\x1b[31m', 'DEBUG': '\x1b[36m', 'FATAL': '\x1b[31m\x1b[1m', 'PANIC': '\x1b[31m\x1b[7m'}</pre></a></div>
+            <div class="data" title="__builtin__.type" id="postgresql.interface.proboscis.tracenull.pq_message_stream"><span class="name">pq_message_stream</span> = <a class="objref" href="//__builtin__.type"><pre>&lt;type 'cbuffer.pq_message_stream'&gt;</pre></a></div>
+            <div class="data" title="__builtin__.function" id="postgresql.interface.proboscis.tracenull.record_pack"><span class="name">record_pack</span> = <a class="objref" href="//pg_typical/1.0#postgresql.protocol.typical.pstruct.record_pack"><pre>postgresql.protocol.typical.pstruct.record_pack</pre></a></div>
+            <div class="data" title="__builtin__.function" id="postgresql.interface.proboscis.tracenull.record_unpack"><span class="name">record_unpack</span> = <a class="objref" href="//pg_typical/1.0#postgresql.protocol.typical.pstruct.record_unpack"><pre>postgresql.protocol.typical.pstruct.record_unpack</pre></a></div>
+          </div>
+        </div>
+      </div>
+      <br />
+      <div class="module" id="postgresql.interface.proboscis.dbapi2">
+        <h3 class="title"><span class="keyword">module</span> postgresql.interface.proboscis.dbapi2</h3>
+        <div class="doc">
+          <pre>DB-API 2.0 conforming interface on proboscis.greentrunk</pre>
+        </div>
+        <div class="content">
+          <div class="imports">
+            <div class="head">
+              <span class="title">imports</span>
+            </div>
+            <div class="import"><span class="keyword">import</span> <a class="import" href="//datetime"><span class="path">datetime</span></a></div>
+            <div class="import"><span class="keyword">import</span> <a class="import" href="#postgresql.interface.proboscis.greentrunk"><span class="path">postgresql.interface.proboscis.greentrunk</span> as <span class="name">gt</span></a></div>
+            <div class="import"><span class="keyword">import</span> <a class="import" href="//pg_foundation/1.0#postgresql.strings"><span class="path">postgresql.strings</span> as <span class="name">pg_str</span></a></div>
+            <div class="import"><span class="keyword">import</span> <a class="import" href="//pg_foundation/1.0#postgresql.types"><span class="path">postgresql.types</span> as <span class="name">pg_type</span></a></div>
+            <div class="import"><span class="keyword">import</span> <a class="import" href="//time"><span class="path">time</span></a></div>
+          </div>
+          <div class="classes">
+            <div class="head">
+              <span class="title">classes</span>
+            </div>
+            <div class="class" id="postgresql.interface.proboscis.dbapi2.InterfaceError">
+              <div class="title"><span class="keyword">class</span> <span class="title">InterfaceError</span>(<a class="super" title="postgresql.exceptions.Error" href="//pg_foundation/1.0#postgresql.exceptions.Error">Error</a>):</div>
+              <div class="content"></div>
+            </div>
+            <div class="class" id="postgresql.interface.proboscis.dbapi2.NotSupportedError">
+              <div class="title"><span class="keyword">class</span> <span class="title">NotSupportedError</span>(<a class="super" title="postgresql.exceptions.Error" href="//pg_foundation/1.0#postgresql.exceptions.Error">Error</a>):</div>
+              <div class="content"></div>
+            </div>
+            <div class="class" id="postgresql.interface.proboscis.dbapi2.Connection">
+              <div class="title"><span class="keyword">class</span> <span class="title">Connection</span>(<a class="super" title="__builtin__.object" href="//__builtin__.object">object</a>):</div>
+              <div class="doc">
+                <pre>DB-API 2.0 connection implementation for GreenTrunk connection objects.</pre>
+              </div>
+              <div class="content">
+                <div class="methods">
+                  <div class="head">
+                    <span class="title">methods</span>
+                  </div>
+                  <div class="method">
+                    <div class="title"><span class="keyword">def</span> <span class="title">__init__</span><span class="args">(<span class="block"><span class="argname">self</span><span class="argsep">,</span> <span class="argname">connection</span></span>):</span></div>
+                  </div>
+                  <div class="method">
+                    <div class="title"><span class="keyword">def</span> <span class="title">close</span><span class="args">(<span class="block"><span class="argname">self</span></span>):</span></div>
+                  </div>
+                  <div class="method">
+                    <div class="title"><span class="keyword">def</span> <span class="title">commit</span><span class="args">(<span class="block"><span class="argname">self</span></span>):</span></div>
+                  </div>
+                  <div class="method">
+                    <div class="title"><span class="keyword">def</span> <span class="title">cursor</span><span class="args">(<span class="block"><span class="argname">self</span></span>):</span></div>
+                  </div>
+                  <div class="method">
+                    <div class="title"><span class="keyword">def</span> <span class="title">rollback</span><span class="args">(<span class="block"><span class="argname">self</span></span>):</span></div>
+                  </div>
+                </div>
+                <div class="datas">
+                  <div class="head">
+                    <span class="title">class data</span>
+                  </div>
+                  <div class="data" title="__builtin__.type" id="postgresql.interface.proboscis.dbapi2.Connection.DataError"><span class="name">DataError</span> = <a class="objref" href="//pg_foundation/1.0#postgresql.exceptions.DataError"><pre>postgresql.exceptions.DataError</pre></a></div>
+                  <div class="data" title="__builtin__.type" id="postgresql.interface.proboscis.dbapi2.Connection.NotSupportedError"><span class="name">NotSupportedError</span> = <a class="objref" href="#postgresql.interface.proboscis.dbapi2.NotSupportedError"><pre>postgresql.interface.proboscis.dbapi2.NotSupportedError</pre></a></div>
+                  <div class="data" title="__builtin__.type" id="postgresql.interface.proboscis.dbapi2.Connection.IntegrityError"><span class="name">IntegrityError</span> = <a class="objref" href="//pg_foundation/1.0#postgresql.exceptions.IntegrityError"><pre>postgresql.exceptions.IntegrityError</pre></a></div>
+                  <div class="data" title="__builtin__.type" id="postgresql.interface.proboscis.dbapi2.Connection.Error"><span class="name">Error</span> = <a class="objref" href="//pg_foundation/1.0#postgresql.exceptions.Error"><pre>postgresql.exceptions.Error</pre></a></div>
+                  <div class="data" title="__builtin__.type" id="postgresql.interface.proboscis.dbapi2.Connection.InterfaceError"><span class="name">InterfaceError</span> = <a class="objref" href="#postgresql.interface.proboscis.dbapi2.InterfaceError"><pre>postgresql.interface.proboscis.dbapi2.InterfaceError</pre></a></div>
+                  <div class="data" title="__builtin__.type" id="postgresql.interface.proboscis.dbapi2.Connection.Warning"><span class="name">Warning</span> = <a class="objref" href="//pg_foundation/1.0#postgresql.exceptions.Warning"><pre>postgresql.exceptions.Warning</pre></a></div>
+                  <div class="data" title="__builtin__.type" id="postgresql.interface.proboscis.dbapi2.Connection.OperationalError"><span class="name">OperationalError</span> = <a class="objref" href="//pg_foundation/1.0#postgresql.exceptions.IRError"><pre>postgresql.exceptions.IRError</pre></a></div>
+                  <div class="data" title="__builtin__.type" id="postgresql.interface.proboscis.dbapi2.Connection.ProgrammingError"><span class="name">ProgrammingError</span> = <a class="objref" href="//pg_foundation/1.0#postgresql.exceptions.SEARVError"><pre>postgresql.exceptions.SEARVError</pre></a></div>
+                  <div class="data" title="__builtin__.type" id="postgresql.interface.proboscis.dbapi2.Connection.InternalError"><span class="name">InternalError</span> = <a class="objref" href="//pg_foundation/1.0#postgresql.exceptions.InternalError"><pre>postgresql.exceptions.InternalError</pre></a></div>
+                  <div class="data" title="__builtin__.type" id="postgresql.interface.proboscis.dbapi2.Connection.DatabaseError"><span class="name">DatabaseError</span> = <a class="objref" href="//pg_foundation/1.0#postgresql.exceptions.Error"><pre>postgresql.exceptions.Error</pre></a></div>
+                </div>
+              </div>
+            </div>
+            <div class="class" id="postgresql.interface.proboscis.dbapi2.Cursor">
+              <div class="title"><span class="keyword">class</span> <span class="title">Cursor</span>(<a class="super" title="__builtin__.object" href="//__builtin__.object">object</a>):</div>
+              <div class="content">
+                <div class="methods">
+                  <div class="head">
+                    <span class="title">methods</span>
+                  </div>
+                  <div class="method">
+                    <div class="title"><span class="keyword">def</span> <span class="title">__init__</span><span class="args">(<span class="block"><span class="argname">self</span><span class="argsep">,</span> <span class="argname">C</span></span>):</span></div>
+                  </div>
+                  <div class="method">
+                    <div class="title"><span class="keyword">def</span> <span class="title">__iter__</span><span class="args">(<span class="block"><span class="argname">self</span></span>):</span></div>
+                  </div>
+                  <div class="method">
+                    <div class="title"><span class="keyword">def</span> <span class="title">_mkquery</span><span class="args">(<span class="block"><span class="argname">self</span><span class="argsep">,</span> <span class="argname">query</span><span class="argsep">,</span> <span class="argname">parameters</span></span>):</span></div>
+                  </div>
+                  <div class="method">
+                    <div class="title"><span class="keyword">def</span> <span class="title">callproc</span><span class="args">(<span class="block"><span class="argname">self</span><span class="argsep">,</span> <span class="argname">proname</span><span class="argsep">,</span> <span class="argname">args</span></span>):</span></div>
+                  </div>
+                  <div class="method">
+                    <div class="title"><span class="keyword">def</span> <span class="title">close</span><span class="args">(<span class="block"><span class="argname">self</span></span>):</span></div>
+                  </div>
+                  <div class="method">
+                    <div class="title"><span class="keyword">def</span> <span class="title">execute</span><span class="args">(<span class="block"><span class="argname">self</span><span class="argsep">,</span> <span class="argname">query</span><span class="argsep">,</span> <span class="argname">parameters = <a class="objref" href="//__builtin__.NoneType"><pre>None</pre></a></span></span>):</span></div>
+                  </div>
+                  <div class="method">
+                    <div class="title"><span class="keyword">def</span> <span class="title">executemany</span><span class="args">(<span class="block"><span class="argname">self</span><span class="argsep">,</span> <span class="argname">query</span><span class="argsep">,</span> <span class="argname">pseq</span></span>):</span></div>
+                  </div>
+                  <div class="method">
+                    <div class="title"><span class="keyword">def</span> <span class="title">fetchall</span><span class="args">(<span class="block"><span class="argname">self</span></span>):</span></div>
+                  </div>
+                  <div class="method">
+                    <div class="title"><span class="keyword">def</span> <span class="title">fetchmany</span><span class="args">(<span class="block"><span class="argname">self</span><span class="argsep">,</span> <span class="argname">arraysize = <a class="objref" href="//__builtin__.NoneType"><pre>None</pre></a></span></span>):</span></div>
+                  </div>
+                  <div class="method">
+                    <div class="title"><span class="keyword">def</span> <span class="title">fetchone</span><span class="args">(<span class="block"><span class="argname">self</span></span>):</span></div>
+                  </div>
+                  <div class="method">
+                    <div class="title"><span class="keyword">def</span> <span class="title">next</span><span class="args">(<span class="block"><span class="argname">self</span></span>):</span></div>
+                  </div>
+                  <div class="method">
+                    <div class="title"><span class="keyword">def</span> <span class="title">nextset</span><span class="args">(<span class="block"><span class="argname">self</span></span>):</span></div>
+                  </div>
+                  <div class="method">
+                    <div class="title"><span class="keyword">def</span> <span class="title">setinputsizes</span><span class="args">(<span class="block"><span class="argname">self</span><span class="argsep">,</span> <span class="argname">sizes</span></span>):</span></div>
+                  </div>
+                  <div class="method">
+                    <div class="title"><span class="keyword">def</span> <span class="title">setoutputsize</span><span class="args">(<span class="block"><span class="argname">self</span><span class="argsep">,</span> <span class="argname">sizes</span><span class="argsep">,</span> <span class="argname">columns = <a class="objref" href="//__builtin__.NoneType"><pre>None</pre></a></span></span>):</span></div>
+                  </div>
+                </div>
+                <div class="properties">
+                  <div class="head">
+                    <span class="title">properties</span>
+                  </div>
+                  <div class="property">
+                    <div class="title"><span class="keyword">property</span> <span class="title">_portal</span></div>
+                  </div>
+                </div>
+                <div class="datas">
+                  <div class="head">
+                    <span class="title">class data</span>
+                  </div>
+                  <div class="data" title="__builtin__.NoneType" id="postgresql.interface.proboscis.dbapi2.Cursor.description"><span class="name">description</span> = <a class="objref" href="//__builtin__.NoneType"><pre>None</pre></a></div>
+                  <div class="data" title="__builtin__.int" id="postgresql.interface.proboscis.dbapi2.Cursor.arraysize"><span class="name">arraysize</span> = <a class="objref" href="//__builtin__.int"><pre>1</pre></a></div>
+                  <div class="data" title="__builtin__.int" id="postgresql.interface.proboscis.dbapi2.Cursor.rowcount"><span class="name">rowcount</span> = <a class="objref" href="//__builtin__.int"><pre>-1</pre></a></div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="functions">
+            <div class="head">
+              <span class="title">functions</span>
+            </div>
+            <div class="function">
+              <div class="title"><span class="keyword">def</span> <span class="title">&lt;lambda&gt;</span><span class="args">(<span class="block"><span class="argname">x</span></span>):</span></div>
+            </div>
+            <div class="function">
+              <div class="title"><span class="keyword">def</span> <span class="title">&lt;lambda&gt;</span><span class="args">(<span class="block"><span class="argname">x</span></span>):</span></div>
+            </div>
+            <div class="function">
+              <div class="title"><span class="keyword">def</span> <span class="title">&lt;lambda&gt;</span><span class="args">(<span class="block"><span class="argname">x</span></span>):</span></div>
+            </div>
+            <div class="function">
+              <div class="title"><span class="keyword">def</span> <span class="title">dbapi_type</span><span class="args">(<span class="block"><span class="argname">typid</span></span>):</span></div>
+            </div>
+            <div class="function">
+              <div class="title"><span class="keyword">def</span> <span class="title">convert_keyword_parameters</span><span class="args">(<span class="block"><span class="argname">nseq</span><span class="argsep">,</span> <span class="argname">seq</span></span>):</span></div>
+              <div class="doc">
+                <pre>Given a sequence of keywords, `nseq`, yield each mapping object in `seq` as a
+tuple whose objects are the values of the keys specified in `nseq` in an
+order consistent with that in `nseq`</pre>
+              </div>
+            </div>
+            <div class="function">
+              <div class="title"><span class="keyword">def</span> <span class="title">connect</span><span class="args">(<span class="block"></span>):</span></div>
+            </div>
+          </div>
+          <div class="datas">
+            <div class="head">
+              <span class="title">data</span>
+            </div>
+            <div class="data" title="__builtin__.type" id="postgresql.interface.proboscis.dbapi2.BINARY"><span class="name">BINARY</span> = <a class="objref" href="//__builtin__.str"><pre>str</pre></a></div>
+            <div class="data" title="__builtin__.type" id="postgresql.interface.proboscis.dbapi2.Binary"><span class="name">Binary</span> = <a class="objref" href="//__builtin__.str"><pre>str</pre></a></div>
+            <div class="data" title="__builtin__.type" id="postgresql.interface.proboscis.dbapi2.DATETIME"><span class="name">DATETIME</span> = <a class="objref" href="//datetime.datetime"><pre>datetime.datetime</pre></a></div>
+            <div class="data" title="__builtin__.type" id="postgresql.interface.proboscis.dbapi2.DataError"><span class="name">DataError</span> = <a class="objref" href="//pg_foundation/1.0#postgresql.exceptions.DataError"><pre>postgresql.exceptions.DataError</pre></a></div>
+            <div class="data" title="__builtin__.type" id="postgresql.interface.proboscis.dbapi2.DatabaseError"><span class="name">DatabaseError</span> = <a class="objref" href="//pg_foundation/1.0#postgresql.exceptions.Error"><pre>postgresql.exceptions.Error</pre></a></div>
+            <div class="data" title="__builtin__.type" id="postgresql.interface.proboscis.dbapi2.Date"><span class="name">Date</span> = <a class="objref" href="//datetime.date"><pre>datetime.date</pre></a></div>
+            <div class="data" title="__builtin__.type" id="postgresql.interface.proboscis.dbapi2.Error"><span class="name">Error</span> = <a class="objref" href="//pg_foundation/1.0#postgresql.exceptions.Error"><pre>postgresql.exceptions.Error</pre></a></div>
+            <div class="data" title="__builtin__.type" id="postgresql.interface.proboscis.dbapi2.IntegrityError"><span class="name">IntegrityError</span> = <a class="objref" href="//pg_foundation/1.0#postgresql.exceptions.IntegrityError"><pre>postgresql.exceptions.IntegrityError</pre></a></div>
+            <div class="data" title="__builtin__.type" id="postgresql.interface.proboscis.dbapi2.InternalError"><span class="name">InternalError</span> = <a class="objref" href="//pg_foundation/1.0#postgresql.exceptions.InternalError"><pre>postgresql.exceptions.InternalError</pre></a></div>
+            <div class="data" title="__builtin__.type" id="postgresql.interface.proboscis.dbapi2.NUMBER"><span class="name">NUMBER</span> = <a class="objref" href="//__builtin__.int"><pre>int</pre></a></div>
+            <div class="data" title="__builtin__.type" id="postgresql.interface.proboscis.dbapi2.OperationalError"><span class="name">OperationalError</span> = <a class="objref" href="//pg_foundation/1.0#postgresql.exceptions.IRError"><pre>postgresql.exceptions.IRError</pre></a></div>
+            <div class="data" title="__builtin__.type" id="postgresql.interface.proboscis.dbapi2.ProgrammingError"><span class="name">ProgrammingError</span> = <a class="objref" href="//pg_foundation/1.0#postgresql.exceptions.SEARVError"><pre>postgresql.exceptions.SEARVError</pre></a></div>
+            <div class="data" title="__builtin__.type" id="postgresql.interface.proboscis.dbapi2.ROWID"><span class="name">ROWID</span> = <a class="objref" href="//__builtin__.int"><pre>int</pre></a></div>
+            <div class="data" title="__builtin__.type" id="postgresql.interface.proboscis.dbapi2.STRING"><span class="name">STRING</span> = <a class="objref" href="//__builtin__.unicode"><pre>unicode</pre></a></div>
+            <div class="data" title="__builtin__.type" id="postgresql.interface.proboscis.dbapi2.Time"><span class="name">Time</span> = <a class="objref" href="//datetime.time"><pre>datetime.time</pre></a></div>
+            <div class="data" title="__builtin__.type" id="postgresql.interface.proboscis.dbapi2.Timestamp"><span class="name">Timestamp</span> = <a class="objref" href="//datetime.datetime"><pre>datetime.datetime</pre></a></div>
+            <div class="data" title="__builtin__.type" id="postgresql.interface.proboscis.dbapi2.Warning"><span class="name">Warning</span> = <a class="objref" href="//pg_foundation/1.0#postgresql.exceptions.Warning"><pre>postgresql.exceptions.Warning</pre></a></div>
+            <div class="data" title="__builtin__.dict" id="postgresql.interface.proboscis.dbapi2._connectors"><span class="name">_connectors</span> = <a class="objref" href="//__builtin__.dict"><pre>{}</pre></a></div>
+            <div class="data" title="__builtin__.str" id="postgresql.interface.proboscis.dbapi2.apilevel"><span class="name">apilevel</span> = <a class="objref" href="//__builtin__.str"><pre>'2.0'</pre></a></div>
+            <div class="data" title="__builtin__.str" id="postgresql.interface.proboscis.dbapi2.paramstyle"><span class="name">paramstyle</span> = <a class="objref" href="//__builtin__.str"><pre>'pyformat'</pre></a></div>
+            <div class="data" title="__builtin__.int" id="postgresql.interface.proboscis.dbapi2.threadsafety"><span class="name">threadsafety</span> = <a class="objref" href="//__builtin__.int"><pre>1</pre></a></div>
+          </div>
+        </div>
+      </div>
+      <br />
+      <div class="module" id="postgresql.interface.proboscis.greentrunk">
+        <h3 class="title"><span class="keyword">module</span> postgresql.interface.proboscis.greentrunk</h3>
+        <div class="doc">
+          <pre>GreenTrunk module--only requires the Connector and Connection</pre>
+        </div>
+        <div class="content">
+          <div class="functions">
+            <div class="head">
+              <span class="title">functions</span>
+            </div>
+            <div class="function">
+              <div class="title"><span class="keyword">def</span> <span class="title">connect</span><span class="args">(<span class="block"></span>):</span></div>
+            </div>
+          </div>
+          <div class="datas">
+            <div class="head">
+              <span class="title">data</span>
+            </div>
+            <div class="data" title="__builtin__.type" id="postgresql.interface.proboscis.greentrunk.connection"><span class="name">connection</span> = <a class="objref" href="#postgresql.interface.proboscis.tracenull.GreenTrunk_Connection"><pre>postgresql.interface.proboscis.tracenull.GreenTrunk_Connection</pre></a></div>
+            <div class="data" title="__builtin__.type" id="postgresql.interface.proboscis.greentrunk.connector"><span class="name">connector</span> = <a class="objref" href="#postgresql.interface.proboscis.tracenull.GreenTrunk_Connector"><pre>postgresql.interface.proboscis.tracenull.GreenTrunk_Connector</pre></a></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

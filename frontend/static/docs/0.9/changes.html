@@ -1,0 +1,245 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Changes &mdash; py-postgresql v0.9.3 documentation</title>
+    <link rel="stylesheet" href="_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '',
+        VERSION:     '0.9.3',
+        COLLAPSE_MODINDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <link rel="top" title="py-postgresql v0.9.3 documentation" href="index.html" />
+    <link rel="next" title="Commands" href="bin.html" />
+    <link rel="prev" title="Gotchas" href="gotchas.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="bin.html" title="Commands"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="gotchas.html" title="Gotchas"
+             accesskey="P">previous</a> |</li>
+        <li><a href="index.html">py-postgresql v0.9.3 documentation</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="changes">
+<h1>Changes<a class="headerlink" href="#changes" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="released-on-2010-01-01">
+<h2>0.9.3 released on 2010-01-01<a class="headerlink" href="#released-on-2010-01-01" title="Permalink to this headline">¶</a></h2>
+<blockquote>
+<ul class="simple">
+<li>Fix inconsistency in savepoint identification by pq3.Transaction.
+Savepoints via db.xact() were broken.
+[Reported by Elvis Pranskevichus]</li>
+</ul>
+</blockquote>
+</div>
+<div class="section" id="released-on-2009-12-14">
+<h2>0.9.2 released on 2009-12-14<a class="headerlink" href="#released-on-2009-12-14" title="Permalink to this headline">¶</a></h2>
+<blockquote>
+<ul class="simple">
+<li>Alter protocol message type comparison method.
+In 0.9.1 and before, types were compared using &#8216;is&#8217; because all
+message type objects were loaded from a tuple created by the
+postgresql.protocol.message_types module. In some environments,
+sys.modules is cleared. For pure-Python installations, this is unlikely
+to cause a problem, but when the optimized module is available, it will hold
+a reference to the &#8220;old&#8221; version of the message_types data. Subsequently, the
+use of the &#8216;is&#8217; operator is then broken resulting in superfluous protocol
+errors. The fix is to use the &#8216;==&#8217; operator. This does not add any
+significant overhead, but use of &#8216;is&#8217; may return if some permanent storage
+method becomes available. [Reported by Radomir Stevanovic]</li>
+<li>Fix a bug revealed by a no route to host connection failure. Ended in an
+ambiguous KeyError due there being no message string for that particular
+errno. Add an appropriate message string, and fallback on a default message
+when a specific one doesn&#8217;t exist.</li>
+<li>Correct types.Array binary serialization (8.5 added extra checks)</li>
+<li>Add more encoding name mapping entries.</li>
+<li>Documentation improvements.</li>
+<li>Fix slice() support in Row.__getitem__.</li>
+<li>DEPRECATION: 2PC interfaces are being deprecated. Warnings in 1.0,
+removal in 1.1.</li>
+</ul>
+</blockquote>
+</div>
+<div class="section" id="released-on-2009-08-12">
+<h2>0.9.1 released on 2009-08-12<a class="headerlink" href="#released-on-2009-08-12" title="Permalink to this headline">¶</a></h2>
+<blockquote>
+<ul class="simple">
+<li>Fix misaligned reads in C extensions [Reported by Leonardo Francalanci]</li>
+<li>Don&#8217;t be strict about keys(field type) in Notice messages per specification:
+<a class="reference external" href="http://www.postgresql.org/docs/8.4/static/protocol-message-formats.html">http://www.postgresql.org/docs/8.4/static/protocol-message-formats.html</a></li>
+<li>Fix test_protocol on ubuntu linux systems.</li>
+<li>Stop waiting for cluster startup on postgresql.exceptions.ProtocolError.</li>
+<li>DEAD BRANCH: 0.8 is no longer supported.</li>
+</ul>
+</blockquote>
+</div>
+<div class="section" id="released-on-2009-06-13">
+<h2>0.9.0 released on 2009-06-13<a class="headerlink" href="#released-on-2009-06-13" title="Permalink to this headline">¶</a></h2>
+<blockquote>
+<ul class="simple">
+<li>Performance improvements.</li>
+<li>Extend <cite>postgresql.open</cite> to take keyword arguments.</li>
+<li>Implement query libraries and connection categories[#1010581 &amp; #1010618].</li>
+<li>Implement <tt class="docutils literal"><span class="pre">clone()</span></tt> on Connections, Statements, and Cursors.</li>
+<li>Display the line and mark the location of the POSITION for syntax errors.</li>
+<li>Refactor <tt class="docutils literal"><span class="pre">ps.load()</span></tt> into <tt class="docutils literal"><span class="pre">ps.load_chunks()</span></tt> and <tt class="docutils literal"><span class="pre">ps.load_rows()</span></tt>.</li>
+<li>Refactor <cite>postgresql.api.InterfaceElement</cite>.</li>
+<li>Refactor driver.pq3.Connection to use protocol.client3.Connection.</li>
+<li>Refactor driver.pq3.Cursor into types selected by PreparedStatements.</li>
+<li>Fix memory leak due to circular references and __del__. [Reported by Valentine Gogichashvili]
+Additionally, try to avoid circular references at that level.</li>
+<li>Correct StoredProcedure&#8217;s statement production. It was falsely using a
+a mechanism that would use SQL predefined type names instead of
+qualified names. [Reported by Dallas Morisett]</li>
+<li>Make DB-API connect() inherit defaults like postgresql.open()</li>
+<li>Make DB-API extend PG-API so that DB-API connections will now have direct
+access to PG-API features.</li>
+<li>Fix DB-API setting of rowcount after execute. [Reported by Mike Bayer; 1010643]</li>
+<li>Document msghook attributes, and use postgresql.sys.errformat for
+postgresql.exceptions.Error.__str__.</li>
+</ul>
+</blockquote>
+</div>
+<div class="section" id="id1">
+<h2>0.8.2 released on 2009-06-13<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h2>
+<blockquote>
+<ul class="simple">
+<li>Correct StoredProcedure&#8217;s statement production. It was falsely using a
+a mechanism that would use SQL predefined type names instead of
+qualified names. [Reported by Dallas Morisett]</li>
+<li>Fix DB-API setting of rowcount after execute. [Reported by Mike Bayer; 1010643]</li>
+</ul>
+</blockquote>
+</div>
+<div class="section" id="released-on-2009-04-30">
+<h2>0.8.1 released on 2009-04-30<a class="headerlink" href="#released-on-2009-04-30" title="Permalink to this headline">¶</a></h2>
+<blockquote>
+<ul class="simple">
+<li>Fix memory leak due to circular references and __del__. [Reported by Valentine Gogichashvili]</li>
+<li>Fix encoding normalization. [Reported by Marc Silver]</li>
+<li>Fix &#8220;method&#8221; decorator to return callable when val is None.</li>
+<li>Fix startup of clusters in silent mode.</li>
+</ul>
+</blockquote>
+</div>
+<div class="section" id="released-on-2009-04-03">
+<h2>0.8.0 released on 2009-04-03<a class="headerlink" href="#released-on-2009-04-03" title="Permalink to this headline">¶</a></h2>
+<p>Differences from the original pg/python projects.</p>
+<blockquote>
+<ul class="simple">
+<li>Integrate projects into a single package. Remove &#8220;codenames&#8221;.</li>
+<li>pg_greentrunk evolved into PG-API, postgresql.api.</li>
+<li>Add new execution methods to statement objects: chunks, rows, declare.</li>
+<li>Refactor connection negotiation code to use a generator. (xact3.Negotiation)</li>
+<li>Remove sixbit confusion from postgresql.exceptions.</li>
+<li>Integrate fcrypt module for crypt authentication.</li>
+<li>Remove pytz dependency, always use UTC for timestamptz.</li>
+<li>Remove netaddr dependency.</li>
+<li>Improve DB-API interface by allowing subjective paramstyle. (psycopg2 compat)</li>
+<li>Provide autocommit support on DB-API connections.</li>
+<li>Add support for binary numeric.</li>
+<li>Add proper support for sslmode and connect_timeout.</li>
+<li>Conditionally DECLARE certain cursors WITH HOLD when outside of blocks.</li>
+<li>Add typed support for fetches from db.cursor_from_id().</li>
+<li>Change the test infrastructure to automatically create a cluster.</li>
+<li>More improvements than I can remember.</li>
+</ul>
+</blockquote>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+            <h3><a href="index.html">Table Of Contents</a></h3>
+            <ul>
+<li><a class="reference external" href="">Changes</a><ul>
+<li><a class="reference external" href="#released-on-2010-01-01">0.9.3 released on 2010-01-01</a></li>
+<li><a class="reference external" href="#released-on-2009-12-14">0.9.2 released on 2009-12-14</a></li>
+<li><a class="reference external" href="#released-on-2009-08-12">0.9.1 released on 2009-08-12</a></li>
+<li><a class="reference external" href="#released-on-2009-06-13">0.9.0 released on 2009-06-13</a></li>
+<li><a class="reference external" href="#id1">0.8.2 released on 2009-06-13</a></li>
+<li><a class="reference external" href="#released-on-2009-04-30">0.8.1 released on 2009-04-30</a></li>
+<li><a class="reference external" href="#released-on-2009-04-03">0.8.0 released on 2009-04-03</a></li>
+</ul>
+</li>
+</ul>
+
+            <h4>Previous topic</h4>
+            <p class="topless"><a href="gotchas.html"
+                                  title="previous chapter">Gotchas</a></p>
+            <h4>Next topic</h4>
+            <p class="topless"><a href="bin.html"
+                                  title="next chapter">Commands</a></p>
+            <h3>This Page</h3>
+            <ul class="this-page-menu">
+              <li><a href="_sources/changes.txt"
+                     rel="nofollow">Show Source</a></li>
+            </ul>
+          <div id="searchbox" style="display: none">
+            <h3>Quick search</h3>
+              <form class="search" action="search.html" method="get">
+                <input type="text" name="q" size="18" />
+                <input type="submit" value="Go" />
+                <input type="hidden" name="check_keywords" value="yes" />
+                <input type="hidden" name="area" value="default" />
+              </form>
+              <p class="searchtip" style="font-size: 90%">
+              Enter search terms or a module, class or function name.
+              </p>
+          </div>
+          <script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="bin.html" title="Commands"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="gotchas.html" title="Gotchas"
+             >previous</a> |</li>
+        <li><a href="index.html">py-postgresql v0.9.3 documentation</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+      &copy; Copyright 2009-01-03 16:53:00-07, James William Pye &lt;x@jwp.name&gt;.
+      Last updated on Mar 16, 2010.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 0.6.3.
+    </div>
+  </body>
+</html>

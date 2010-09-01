@@ -1,0 +1,1934 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>pg_pqueue-1.0.1</title>
+    <link rel="stylesheet" type="text/css" href="xhtml.css" />
+  </head>
+  <body>
+    <h2 class="title"><span class="keyword">project</span> pg_pqueue 1.0.1</h2>
+    <div class="content">
+      <div class="description">PostgreSQL PQ protocol modules</div>
+      <div id="long_description" class="doc">
+        <div class="rst-root">
+          <div class="rst-document">
+<p>PQueue is a package providing low-level PQ protocol classes for interacting with
+a PostgreSQL database. It supports version 3.0 of the protocol--the current
+primary version of protocol. The package also provides a basic protocol
+transaction class. This class keeps the state of the protocol in an interrupt
+safe manner, and validates the integrity of the communication as messages are
+received.</p>
+<p>In general, you probably will never use this package directly, unless you are
+writing a driver.</p>
+</div>
+        </div>
+      </div>
+      <br />
+      <div class="package" id="postgresql.protocol.pqueue">
+        <h3 class="title"><span class="keyword">package</span> postgresql.protocol.pqueue</h3>
+        <div class="doc">
+          <pre>PQ protocol facilities</pre>
+        </div>
+      </div>
+      <br />
+      <div class="module" id="postgresql.protocol.pqueue.cbuffer">
+        <h3 class="title"><span class="keyword">module</span> postgresql.protocol.pqueue.cbuffer</h3>
+        <div class="doc">
+          <pre>PQ message stream</pre>
+        </div>
+      </div>
+      <br />
+      <div class="module" id="postgresql.protocol.pqueue.element3">
+        <h3 class="title"><span class="keyword">module</span> postgresql.protocol.pqueue.element3</h3>
+        <div class="doc">
+          <pre>PQ version 3.0 elements</pre>
+        </div>
+        <div class="content">
+          <div class="imports">
+            <div class="head">
+              <span class="title">imports</span>
+            </div>
+            <div class="import"><span class="keyword">import</span> <a class="import" href="//os"><span class="path">os</span></a></div>
+            <div class="import"><span class="keyword">import</span> <a class="import" href="//struct"><span class="path">struct</span></a></div>
+            <div class="import"><span class="keyword">import</span> <a class="import" href="//sys"><span class="path">sys</span></a></div>
+          </div>
+          <div class="classes">
+            <div class="head">
+              <span class="title">classes</span>
+            </div>
+            <div class="class" id="postgresql.protocol.pqueue.element3.ParseError">
+              <div class="title"><span class="keyword">class</span> <span class="title">ParseError</span>(<a class="super" title="exceptions.Exception" href="//exceptions.Exception">Exception</a>):</div>
+              <div class="content"></div>
+            </div>
+            <div class="class" id="postgresql.protocol.pqueue.element3.Message">
+              <div class="title"><span class="keyword">class</span> <span class="title">Message</span>(<a class="super" title="__builtin__.object" href="//__builtin__.object">object</a>):</div>
+              <div class="content">
+                <div class="class_methods">
+                  <div class="head">
+                    <span class="title">class methods</span>
+                  </div>
+                  <div class="method">
+                    <div class="title"><span class="keyword">def</span> <span class="title">parse</span><span class="args">(<span class="block"><span class="argname">self</span><span class="argsep">,</span> <span class="argname">data</span></span>):</span></div>
+                  </div>
+                </div>
+                <div class="methods">
+                  <div class="head">
+                    <span class="title">methods</span>
+                  </div>
+                  <div class="method">
+                    <div class="title"><span class="keyword">def</span> <span class="title">__eq__</span><span class="args">(<span class="block"><span class="argname">self</span><span class="argsep">,</span> <span class="argname">ob</span></span>):</span></div>
+                  </div>
+                  <div class="method">
+                    <div class="title"><span class="keyword">def</span> <span class="title">__repr__</span><span class="args">(<span class="block"><span class="argname">self</span></span>):</span></div>
+                  </div>
+                  <div class="method">
+                    <div class="title"><span class="keyword">def</span> <span class="title">__str__</span><span class="args">(<span class="block"><span class="argname">self</span></span>):</span></div>
+                  </div>
+                  <div class="method">
+                    <div class="title"><span class="keyword">def</span> <span class="title">serialization</span><span class="args">(<span class="block"><span class="argname">self</span><span class="argsep">,</span> <span class="argname">writer</span></span>):</span></div>
+                  </div>
+                </div>
+                <div class="datas">
+                  <div class="head">
+                    <span class="title">class data</span>
+                  </div>
+                  <div class="data" title="__builtin__.tuple" id="postgresql.protocol.pqueue.element3.Message.__slots__"><span class="name">__slots__</span> = <a class="objref" href="//__builtin__.tuple"><pre>()</pre></a></div>
+                </div>
+              </div>
+            </div>
+            <div class="class" id="postgresql.protocol.pqueue.element3.Authentication">
+              <div class="title"><span class="keyword">class</span> <span class="title">Authentication</span>(<a class="super" title="postgresql.protocol.pqueue.element3.Message" href="#postgresql.protocol.pqueue.element3.Message">Message</a>):</div>
+              <div class="doc">
+                <pre>Authentication(request, salt)</pre>
+              </div>
+              <div class="content">
+                <div class="class_methods">
+                  <div class="head">
+                    <span class="title">class methods</span>
+                  </div>
+                  <div class="method">
+                    <div class="title"><span class="keyword">def</span> <span class="title">parse</span><span class="args">(<span class="block"><span class="argname">subtype</span><span class="argsep">,</span> <span class="argname">data</span></span>):</span></div>
+                  </div>
+                </div>
+                <div class="methods">
+                  <div class="head">
+                    <span class="title">methods</span>
+                  </div>
+                  <div class="method">
+                    <div class="title"><span class="keyword">def</span> <span class="title">__init__</span><span class="args">(<span class="block"><span class="argname">self</span><span class="argsep">,</span> <span class="argname">request</span><span class="argsep">,</span> <span class="argname">salt</span></span>):</span></div>
+                  </div>
+                  <div class="method">
+                    <div class="title"><span class="keyword">def</span> <span class="title">serialize</span><span class="args">(<span class="block"><span class="argname">self</span></span>):</span></div>
+                  </div>
+                </div>
+                <div class="properties">
+                  <div class="head">
+                    <span class="title">properties</span>
+                  </div>
+                  <div class="property">
+                    <div class="title"><span class="keyword">property</span> <span class="title">salt</span></div>
+                  </div>
+                  <div class="property">
+                    <div class="title"><span class="keyword">property</span> <span class="title">request</span></div>
+                  </div>
+                </div>
+                <div class="datas">
+                  <div class="head">
+                    <span class="title">class data</span>
+                  </div>
+                  <div class="data" title="__builtin__.str" id="postgresql.protocol.pqueue.element3.Authentication.type"><span class="name">type</span> = <a class="objref" href="//__builtin__.str"><pre>'R'</pre></a></div>
+                  <div class="data" title="__builtin__.tuple" id="postgresql.protocol.pqueue.element3.Authentication.__slots__"><span class="name">__slots__</span> = <a class="objref" href="//__builtin__.tuple"><pre>('request', 'salt')</pre></a></div>
+                </div>
+              </div>
+            </div>
+            <div class="class" id="postgresql.protocol.pqueue.element3.Bind">
+              <div class="title"><span class="keyword">class</span> <span class="title">Bind</span>(<a class="super" title="postgresql.protocol.pqueue.element3.Message" href="#postgresql.protocol.pqueue.element3.Message">Message</a>):</div>
+              <div class="doc">
+                <pre>Bind a parsed statement with the given arguments to a Portal</pre>
+              </div>
+              <div class="content">
+                <div class="class_methods">
+                  <div class="head">
+                    <span class="title">class methods</span>
+                  </div>
+                  <div class="method">
+                    <div class="title"><span class="keyword">def</span> <span class="title">parse</span><span class="args">(<span class="block"><span class="argname">subtype</span><span class="argsep">,</span> <span class="argname">message_data</span></span>):</span></div>
+                  </div>
+                </div>
+                <div class="methods">
+                  <div class="head">
+                    <span class="title">methods</span>
+                  </div>
+                  <div class="method">
+                    <div class="title"><span class="keyword">def</span> <span class="title">__init__</span><span class="args">(<span class="block"><span class="argname">self</span><span class="argsep">,</span> <span class="argname">portal</span><span class="argsep">,</span> <span class="argname">statement</span><span class="argsep">,</span> <span class="argname">args</span><span class="argsep">,</span> <span class="argname">rformats</span></span>):</span></div>
+                  </div>
+                  <div class="method">
+                    <div class="title"><span class="keyword">def</span> <span class="title">serialize</span><span class="args">(<span class="block"><span class="argname">self</span></span>):</span></div>
+                  </div>
+                </div>
+                <div class="properties">
+                  <div class="head">
+                    <span class="title">properties</span>
+                  </div>
+                  <div class="property">
+                    <div class="title"><span class="keyword">property</span> <span class="title">name</span></div>
+                  </div>
+                  <div class="property">
+                    <div class="title"><span class="keyword">property</span> <span class="title">arguments</span></div>
+                  </div>
+                  <div class="property">
+                    <div class="title"><span class="keyword">property</span> <span class="title">statement</span></div>
+                  </div>
+                  <div class="property">
+                    <div class="title"><span class="keyword">property</span> <span class="title">rformats</span></div>
+                  </div>
+                </div>
+                <div class="datas">
+                  <div class="head">
+                    <span class="title">class data</span>
+                  </div>
+                  <div class="data" title="__builtin__.tuple" id="postgresql.protocol.pqueue.element3.Bind.__slots__"><span class="name">__slots__</span> = <a class="objref" href="//__builtin__.tuple"><pre>('name', 'statement', 'arguments', 'rformats')</pre></a></div>
+                  <div class="data" title="__builtin__.str" id="postgresql.protocol.pqueue.element3.Bind.type"><span class="name">type</span> = <a class="objref" href="//__builtin__.str"><pre>'B'</pre></a></div>
+                </div>
+              </div>
+            </div>
+            <div class="class" id="postgresql.protocol.pqueue.element3.CopyBegin">
+              <div class="title"><span class="keyword">class</span> <span class="title">CopyBegin</span>(<a class="super" title="postgresql.protocol.pqueue.element3.Message" href="#postgresql.protocol.pqueue.element3.Message">Message</a>):</div>
+              <div class="content">
+                <div class="class_methods">
+                  <div class="head">
+                    <span class="title">class methods</span>
+                  </div>
+                  <div class="method">
+                    <div class="title"><span class="keyword">def</span> <span class="title">parse</span><span class="args">(<span class="block"><span class="argname">subtype</span><span class="argsep">,</span> <span class="argname">data</span></span>):</span></div>
+                  </div>
+                </div>
+                <div class="methods">
+                  <div class="head">
+                    <span class="title">methods</span>
+                  </div>
+                  <div class="method">
+                    <div class="title"><span class="keyword">def</span> <span class="title">__init__</span><span class="args">(<span class="block"><span class="argname">self</span><span class="argsep">,</span> <span class="argname">format</span><span class="argsep">,</span> <span class="argname">formats</span></span>):</span></div>
+                  </div>
+                  <div class="method">
+                    <div class="title"><span class="keyword">def</span> <span class="title">serialize</span><span class="args">(<span class="block"><span class="argname">self</span></span>):</span></div>
+                  </div>
+                </div>
+                <div class="properties">
+                  <div class="head">
+                    <span class="title">properties</span>
+                  </div>
+                  <div class="property">
+                    <div class="title"><span class="keyword">property</span> <span class="title">formats</span></div>
+                  </div>
+                  <div class="property">
+                    <div class="title"><span class="keyword">property</span> <span class="title">format</span></div>
+                  </div>
+                </div>
+                <div class="datas">
+                  <div class="head">
+                    <span class="title">class data</span>
+                  </div>
+                  <div class="data" title="__builtin__.NoneType" id="postgresql.protocol.pqueue.element3.CopyBegin.type"><span class="name">type</span> = <a class="objref" href="//__builtin__.NoneType"><pre>None</pre></a></div>
+                  <div class="data" title="__builtin__.tuple" id="postgresql.protocol.pqueue.element3.CopyBegin.__slots__"><span class="name">__slots__</span> = <a class="objref" href="//__builtin__.tuple"><pre>('format', 'formats')</pre></a></div>
+                </div>
+              </div>
+            </div>
+            <div class="class" id="postgresql.protocol.pqueue.element3.CopyFromBegin">
+              <div class="title"><span class="keyword">class</span> <span class="title">CopyFromBegin</span>(<a class="super" title="postgresql.protocol.pqueue.element3.CopyBegin" href="#postgresql.protocol.pqueue.element3.CopyBegin">CopyBegin</a>):</div>
+              <div class="doc">
+                <pre>Begin copying from</pre>
+              </div>
+              <div class="content">
+                <div class="properties">
+                  <div class="head">
+                    <span class="title">properties</span>
+                  </div>
+                  <div class="property">
+                    <div class="title"><span class="keyword">property</span> <span class="title">format</span></div>
+                  </div>
+                  <div class="property">
+                    <div class="title"><span class="keyword">property</span> <span class="title">formats</span></div>
+                  </div>
+                </div>
+                <div class="datas">
+                  <div class="head">
+                    <span class="title">class data</span>
+                  </div>
+                  <div class="data" title="__builtin__.tuple" id="postgresql.protocol.pqueue.element3.CopyFromBegin.__slots__"><span class="name">__slots__</span> = <a class="objref" href="//__builtin__.tuple"><pre>('format', 'formats')</pre></a></div>
+                  <div class="data" title="__builtin__.str" id="postgresql.protocol.pqueue.element3.CopyFromBegin.type"><span class="name">type</span> = <a class="objref" href="//__builtin__.str"><pre>'G'</pre></a></div>
+                </div>
+              </div>
+            </div>
+            <div class="class" id="postgresql.protocol.pqueue.element3.CopyToBegin">
+              <div class="title"><span class="keyword">class</span> <span class="title">CopyToBegin</span>(<a class="super" title="postgresql.protocol.pqueue.element3.CopyBegin" href="#postgresql.protocol.pqueue.element3.CopyBegin">CopyBegin</a>):</div>
+              <div class="doc">
+                <pre>Begin copying to</pre>
+              </div>
+              <div class="content">
+                <div class="properties">
+                  <div class="head">
+                    <span class="title">properties</span>
+                  </div>
+                  <div class="property">
+                    <div class="title"><span class="keyword">property</span> <span class="title">format</span></div>
+                  </div>
+                  <div class="property">
+                    <div class="title"><span class="keyword">property</span> <span class="title">formats</span></div>
+                  </div>
+                </div>
+                <div class="datas">
+                  <div class="head">
+                    <span class="title">class data</span>
+                  </div>
+                  <div class="data" title="__builtin__.tuple" id="postgresql.protocol.pqueue.element3.CopyToBegin.__slots__"><span class="name">__slots__</span> = <a class="objref" href="//__builtin__.tuple"><pre>('format', 'formats')</pre></a></div>
+                  <div class="data" title="__builtin__.str" id="postgresql.protocol.pqueue.element3.CopyToBegin.type"><span class="name">type</span> = <a class="objref" href="//__builtin__.str"><pre>'H'</pre></a></div>
+                </div>
+              </div>
+            </div>
+            <div class="class" id="postgresql.protocol.pqueue.element3.CopyData">
+              <div class="title"><span class="keyword">class</span> <span class="title">CopyData</span>(<a class="super" title="postgresql.protocol.pqueue.element3.Message" href="#postgresql.protocol.pqueue.element3.Message">Message</a>):</div>
+              <div class="content">
+                <div class="class_methods">
+                  <div class="head">
+                    <span class="title">class methods</span>
+                  </div>
+                  <div class="method">
+                    <div class="title"><span class="keyword">def</span> <span class="title">parse</span><span class="args">(<span class="block"><span class="argname">subtype</span><span class="argsep">,</span> <span class="argname">data</span></span>):</span></div>
+                  </div>
+                </div>
+                <div class="methods">
+                  <div class="head">
+                    <span class="title">methods</span>
+                  </div>
+                  <div class="method">
+                    <div class="title"><span class="keyword">def</span> <span class="title">__init__</span><span class="args">(<span class="block"><span class="argname">self</span><span class="argsep">,</span> <span class="argname">data</span></span>):</span></div>
+                  </div>
+                  <div class="method">
+                    <div class="title"><span class="keyword">def</span> <span class="title">serialize</span><span class="args">(<span class="block"><span class="argname">self</span></span>):</span></div>
+                  </div>
+                </div>
+                <div class="properties">
+                  <div class="head">
+                    <span class="title">properties</span>
+                  </div>
+                  <div class="property">
+                    <div class="title"><span class="keyword">property</span> <span class="title">data</span></div>
+                  </div>
+                </div>
+                <div class="datas">
+                  <div class="head">
+                    <span class="title">class data</span>
+                  </div>
+                  <div class="data" title="__builtin__.str" id="postgresql.protocol.pqueue.element3.CopyData.type"><span class="name">type</span> = <a class="objref" href="//__builtin__.str"><pre>'d'</pre></a></div>
+                  <div class="data" title="__builtin__.tuple" id="postgresql.protocol.pqueue.element3.CopyData.__slots__"><span class="name">__slots__</span> = <a class="objref" href="//__builtin__.tuple"><pre>('data',)</pre></a></div>
+                </div>
+              </div>
+            </div>
+            <div class="class" id="postgresql.protocol.pqueue.element3.EmptyMessage">
+              <div class="title"><span class="keyword">class</span> <span class="title">EmptyMessage</span>(<a class="super" title="postgresql.protocol.pqueue.element3.Message" href="#postgresql.protocol.pqueue.element3.Message">Message</a>):</div>
+              <div class="doc">
+                <pre>An abstract message that is always empty</pre>
+              </div>
+              <div class="content">
+                <div class="class_methods">
+                  <div class="head">
+                    <span class="title">class methods</span>
+                  </div>
+                  <div class="method">
+                    <div class="title"><span class="keyword">def</span> <span class="title">parse</span><span class="args">(<span class="block"><span class="argname">self</span><span class="argsep">,</span> <span class="argname">data</span></span>):</span></div>
+                  </div>
+                </div>
+                <div class="methods">
+                  <div class="head">
+                    <span class="title">methods</span>
+                  </div>
+                  <div class="method">
+                    <div class="title"><span class="keyword">def</span> <span class="title">serialize</span><span class="args">(<span class="block"><span class="argname">self</span></span>):</span></div>
+                  </div>
+                </div>
+                <div class="datas">
+                  <div class="head">
+                    <span class="title">class data</span>
+                  </div>
+                  <div class="data" title="__builtin__.str" id="postgresql.protocol.pqueue.element3.EmptyMessage.type"><span class="name">type</span> = <a class="objref" href="//__builtin__.str"><pre>''</pre></a></div>
+                  <div class="data" title="__builtin__.tuple" id="postgresql.protocol.pqueue.element3.EmptyMessage.__slots__"><span class="name">__slots__</span> = <a class="objref" href="//__builtin__.tuple"><pre>()</pre></a></div>
+                </div>
+              </div>
+            </div>
+            <div class="class" id="postgresql.protocol.pqueue.element3.BindComplete">
+              <div class="title"><span class="keyword">class</span> <span class="title">BindComplete</span>(<a class="super" title="postgresql.protocol.pqueue.element3.EmptyMessage" href="#postgresql.protocol.pqueue.element3.EmptyMessage">EmptyMessage</a>):</div>
+              <div class="doc">
+                <pre>Bind reaction</pre>
+              </div>
+              <div class="content">
+                <div class="class_methods">
+                  <div class="head">
+                    <span class="title">class methods</span>
+                  </div>
+                  <div class="method">
+                    <div class="title"><span class="keyword">def</span> <span class="title">__new__</span><span class="args">(<span class="block"><span class="argname">subtype</span></span>):</span></div>
+                  </div>
+                </div>
+                <div class="datas">
+                  <div class="head">
+                    <span class="title">class data</span>
+                  </div>
+                  <div class="data" title="__builtin__.tuple" id="postgresql.protocol.pqueue.element3.BindComplete.__slots__"><span class="name">__slots__</span> = <a class="objref" href="//__builtin__.tuple"><pre>()</pre></a></div>
+                  <div class="data" title="__builtin__.str" id="postgresql.protocol.pqueue.element3.BindComplete.type"><span class="name">type</span> = <a class="objref" href="//__builtin__.str"><pre>'2'</pre></a></div>
+                </div>
+              </div>
+            </div>
+            <div class="class" id="postgresql.protocol.pqueue.element3.CloseComplete">
+              <div class="title"><span class="keyword">class</span> <span class="title">CloseComplete</span>(<a class="super" title="postgresql.protocol.pqueue.element3.EmptyMessage" href="#postgresql.protocol.pqueue.element3.EmptyMessage">EmptyMessage</a>):</div>
+              <div class="doc">
+                <pre>Close statement or Portal</pre>
+              </div>
+              <div class="content">
+                <div class="class_methods">
+                  <div class="head">
+                    <span class="title">class methods</span>
+                  </div>
+                  <div class="method">
+                    <div class="title"><span class="keyword">def</span> <span class="title">__new__</span><span class="args">(<span class="block"><span class="argname">subtype</span></span>):</span></div>
+                  </div>
+                </div>
+                <div class="datas">
+                  <div class="head">
+                    <span class="title">class data</span>
+                  </div>
+                  <div class="data" title="__builtin__.tuple" id="postgresql.protocol.pqueue.element3.CloseComplete.__slots__"><span class="name">__slots__</span> = <a class="objref" href="//__builtin__.tuple"><pre>()</pre></a></div>
+                  <div class="data" title="__builtin__.str" id="postgresql.protocol.pqueue.element3.CloseComplete.type"><span class="name">type</span> = <a class="objref" href="//__builtin__.str"><pre>'3'</pre></a></div>
+                </div>
+              </div>
+            </div>
+            <div class="class" id="postgresql.protocol.pqueue.element3.CopyDone">
+              <div class="title"><span class="keyword">class</span> <span class="title">CopyDone</span>(<a class="super" title="postgresql.protocol.pqueue.element3.EmptyMessage" href="#postgresql.protocol.pqueue.element3.EmptyMessage">EmptyMessage</a>):</div>
+              <div class="content">
+                <div class="class_methods">
+                  <div class="head">
+                    <span class="title">class methods</span>
+                  </div>
+                  <div class="method">
+                    <div class="title"><span class="keyword">def</span> <span class="title">__new__</span><span class="args">(<span class="block"><span class="argname">subtype</span></span>):</span></div>
+                  </div>
+                </div>
+                <div class="datas">
+                  <div class="head">
+                    <span class="title">class data</span>
+                  </div>
+                  <div class="data" title="__builtin__.str" id="postgresql.protocol.pqueue.element3.CopyDone.type"><span class="name">type</span> = <a class="objref" href="//__builtin__.str"><pre>'c'</pre></a></div>
+                  <div class="data" title="__builtin__.tuple" id="postgresql.protocol.pqueue.element3.CopyDone.__slots__"><span class="name">__slots__</span> = <a class="objref" href="//__builtin__.tuple"><pre>()</pre></a></div>
+                </div>
+              </div>
+            </div>
+            <div class="class" id="postgresql.protocol.pqueue.element3.Disconnect">
+              <div class="title"><span class="keyword">class</span> <span class="title">Disconnect</span>(<a class="super" title="postgresql.protocol.pqueue.element3.EmptyMessage" href="#postgresql.protocol.pqueue.element3.EmptyMessage">EmptyMessage</a>):</div>
+              <div class="doc">
+                <pre>Close the connection</pre>
+              </div>
+              <div class="content">
+                <div class="class_methods">
+                  <div class="head">
+                    <span class="title">class methods</span>
+                  </div>
+                  <div class="method">
+                    <div class="title"><span class="keyword">def</span> <span class="title">__new__</span><span class="args">(<span class="block"><span class="argname">subtype</span></span>):</span></div>
+                  </div>
+                </div>
+                <div class="datas">
+                  <div class="head">
+                    <span class="title">class data</span>
+                  </div>
+                  <div class="data" title="__builtin__.tuple" id="postgresql.protocol.pqueue.element3.Disconnect.__slots__"><span class="name">__slots__</span> = <a class="objref" href="//__builtin__.tuple"><pre>()</pre></a></div>
+                  <div class="data" title="__builtin__.str" id="postgresql.protocol.pqueue.element3.Disconnect.type"><span class="name">type</span> = <a class="objref" href="//__builtin__.str"><pre>'X'</pre></a></div>
+                </div>
+              </div>
+            </div>
+            <div class="class" id="postgresql.protocol.pqueue.element3.Flush">
+              <div class="title"><span class="keyword">class</span> <span class="title">Flush</span>(<a class="super" title="postgresql.protocol.pqueue.element3.EmptyMessage" href="#postgresql.protocol.pqueue.element3.EmptyMessage">EmptyMessage</a>):</div>
+              <div class="doc">
+                <pre>Flush</pre>
+              </div>
+              <div class="content">
+                <div class="class_methods">
+                  <div class="head">
+                    <span class="title">class methods</span>
+                  </div>
+                  <div class="method">
+                    <div class="title"><span class="keyword">def</span> <span class="title">__new__</span><span class="args">(<span class="block"><span class="argname">subtype</span></span>):</span></div>
+                  </div>
+                </div>
+                <div class="datas">
+                  <div class="head">
+                    <span class="title">class data</span>
+                  </div>
+                  <div class="data" title="__builtin__.tuple" id="postgresql.protocol.pqueue.element3.Flush.__slots__"><span class="name">__slots__</span> = <a class="objref" href="//__builtin__.tuple"><pre>()</pre></a></div>
+                  <div class="data" title="__builtin__.str" id="postgresql.protocol.pqueue.element3.Flush.type"><span class="name">type</span> = <a class="objref" href="//__builtin__.str"><pre>'H'</pre></a></div>
+                </div>
+              </div>
+            </div>
+            <div class="class" id="postgresql.protocol.pqueue.element3.NoData">
+              <div class="title"><span class="keyword">class</span> <span class="title">NoData</span>(<a class="super" title="postgresql.protocol.pqueue.element3.EmptyMessage" href="#postgresql.protocol.pqueue.element3.EmptyMessage">EmptyMessage</a>):</div>
+              <div class="doc">
+                <pre>Null command</pre>
+              </div>
+              <div class="content">
+                <div class="class_methods">
+                  <div class="head">
+                    <span class="title">class methods</span>
+                  </div>
+                  <div class="method">
+                    <div class="title"><span class="keyword">def</span> <span class="title">__new__</span><span class="args">(<span class="block"><span class="argname">subtype</span></span>):</span></div>
+                  </div>
+                </div>
+                <div class="datas">
+                  <div class="head">
+                    <span class="title">class data</span>
+                  </div>
+                  <div class="data" title="__builtin__.tuple" id="postgresql.protocol.pqueue.element3.NoData.__slots__"><span class="name">__slots__</span> = <a class="objref" href="//__builtin__.tuple"><pre>()</pre></a></div>
+                  <div class="data" title="__builtin__.str" id="postgresql.protocol.pqueue.element3.NoData.type"><span class="name">type</span> = <a class="objref" href="//__builtin__.str"><pre>'n'</pre></a></div>
+                </div>
+              </div>
+            </div>
+            <div class="class" id="postgresql.protocol.pqueue.element3.Null">
+              <div class="title"><span class="keyword">class</span> <span class="title">Null</span>(<a class="super" title="postgresql.protocol.pqueue.element3.EmptyMessage" href="#postgresql.protocol.pqueue.element3.EmptyMessage">EmptyMessage</a>):</div>
+              <div class="doc">
+                <pre>Null command</pre>
+              </div>
+              <div class="content">
+                <div class="class_methods">
+                  <div class="head">
+                    <span class="title">class methods</span>
+                  </div>
+                  <div class="method">
+                    <div class="title"><span class="keyword">def</span> <span class="title">__new__</span><span class="args">(<span class="block"><span class="argname">subtype</span></span>):</span></div>
+                  </div>
+                </div>
+                <div class="datas">
+                  <div class="head">
+                    <span class="title">class data</span>
+                  </div>
+                  <div class="data" title="__builtin__.tuple" id="postgresql.protocol.pqueue.element3.Null.__slots__"><span class="name">__slots__</span> = <a class="objref" href="//__builtin__.tuple"><pre>()</pre></a></div>
+                  <div class="data" title="__builtin__.str" id="postgresql.protocol.pqueue.element3.Null.type"><span class="name">type</span> = <a class="objref" href="//__builtin__.str"><pre>'I'</pre></a></div>
+                </div>
+              </div>
+            </div>
+            <div class="class" id="postgresql.protocol.pqueue.element3.ParseComplete">
+              <div class="title"><span class="keyword">class</span> <span class="title">ParseComplete</span>(<a class="super" title="postgresql.protocol.pqueue.element3.EmptyMessage" href="#postgresql.protocol.pqueue.element3.EmptyMessage">EmptyMessage</a>):</div>
+              <div class="doc">
+                <pre>Parse reaction</pre>
+              </div>
+              <div class="content">
+                <div class="class_methods">
+                  <div class="head">
+                    <span class="title">class methods</span>
+                  </div>
+                  <div class="method">
+                    <div class="title"><span class="keyword">def</span> <span class="title">__new__</span><span class="args">(<span class="block"><span class="argname">subtype</span></span>):</span></div>
+                  </div>
+                </div>
+                <div class="datas">
+                  <div class="head">
+                    <span class="title">class data</span>
+                  </div>
+                  <div class="data" title="__builtin__.tuple" id="postgresql.protocol.pqueue.element3.ParseComplete.__slots__"><span class="name">__slots__</span> = <a class="objref" href="//__builtin__.tuple"><pre>()</pre></a></div>
+                  <div class="data" title="__builtin__.str" id="postgresql.protocol.pqueue.element3.ParseComplete.type"><span class="name">type</span> = <a class="objref" href="//__builtin__.str"><pre>'1'</pre></a></div>
+                </div>
+              </div>
+            </div>
+            <div class="class" id="postgresql.protocol.pqueue.element3.Suspension">
+              <div class="title"><span class="keyword">class</span> <span class="title">Suspension</span>(<a class="super" title="postgresql.protocol.pqueue.element3.EmptyMessage" href="#postgresql.protocol.pqueue.element3.EmptyMessage">EmptyMessage</a>):</div>
+              <div class="doc">
+                <pre>Portal was suspended, more tuples for reading</pre>
+              </div>
+              <div class="content">
+                <div class="class_methods">
+                  <div class="head">
+                    <span class="title">class methods</span>
+                  </div>
+                  <div class="method">
+                    <div class="title"><span class="keyword">def</span> <span class="title">__new__</span><span class="args">(<span class="block"><span class="argname">subtype</span></span>):</span></div>
+                  </div>
+                </div>
+                <div class="datas">
+                  <div class="head">
+                    <span class="title">class data</span>
+                  </div>
+                  <div class="data" title="__builtin__.tuple" id="postgresql.protocol.pqueue.element3.Suspension.__slots__"><span class="name">__slots__</span> = <a class="objref" href="//__builtin__.tuple"><pre>()</pre></a></div>
+                  <div class="data" title="__builtin__.str" id="postgresql.protocol.pqueue.element3.Suspension.type"><span class="name">type</span> = <a class="objref" href="//__builtin__.str"><pre>'s'</pre></a></div>
+                </div>
+              </div>
+            </div>
+            <div class="class" id="postgresql.protocol.pqueue.element3.Synchronize">
+              <div class="title"><span class="keyword">class</span> <span class="title">Synchronize</span>(<a class="super" title="postgresql.protocol.pqueue.element3.EmptyMessage" href="#postgresql.protocol.pqueue.element3.EmptyMessage">EmptyMessage</a>):</div>
+              <div class="doc">
+                <pre>Synchronize</pre>
+              </div>
+              <div class="content">
+                <div class="class_methods">
+                  <div class="head">
+                    <span class="title">class methods</span>
+                  </div>
+                  <div class="method">
+                    <div class="title"><span class="keyword">def</span> <span class="title">__new__</span><span class="args">(<span class="block"><span class="argname">subtype</span></span>):</span></div>
+                  </div>
+                </div>
+                <div class="datas">
+                  <div class="head">
+                    <span class="title">class data</span>
+                  </div>
+                  <div class="data" title="__builtin__.tuple" id="postgresql.protocol.pqueue.element3.Synchronize.__slots__"><span class="name">__slots__</span> = <a class="objref" href="//__builtin__.tuple"><pre>()</pre></a></div>
+                  <div class="data" title="__builtin__.str" id="postgresql.protocol.pqueue.element3.Synchronize.type"><span class="name">type</span> = <a class="objref" href="//__builtin__.str"><pre>'S'</pre></a></div>
+                </div>
+              </div>
+            </div>
+            <div class="class" id="postgresql.protocol.pqueue.element3.Execute">
+              <div class="title"><span class="keyword">class</span> <span class="title">Execute</span>(<a class="super" title="postgresql.protocol.pqueue.element3.Message" href="#postgresql.protocol.pqueue.element3.Message">Message</a>):</div>
+              <div class="doc">
+                <pre>Fetch results from the specified Portal</pre>
+              </div>
+              <div class="content">
+                <div class="class_methods">
+                  <div class="head">
+                    <span class="title">class methods</span>
+                  </div>
+                  <div class="method">
+                    <div class="title"><span class="keyword">def</span> <span class="title">parse</span><span class="args">(<span class="block"><span class="argname">self</span><span class="argsep">,</span> <span class="argname">data</span></span>):</span></div>
+                  </div>
+                </div>
+                <div class="methods">
+                  <div class="head">
+                    <span class="title">methods</span>
+                  </div>
+                  <div class="method">
+                    <div class="title"><span class="keyword">def</span> <span class="title">__init__</span><span class="args">(<span class="block"><span class="argname">self</span><span class="argsep">,</span> <span class="argname">name</span><span class="argsep">,</span> <span class="argname">max = <a class="objref" href="//__builtin__.int"><pre>0</pre></a></span></span>):</span></div>
+                  </div>
+                  <div class="method">
+                    <div class="title"><span class="keyword">def</span> <span class="title">serialize</span><span class="args">(<span class="block"><span class="argname">self</span></span>):</span></div>
+                  </div>
+                </div>
+                <div class="properties">
+                  <div class="head">
+                    <span class="title">properties</span>
+                  </div>
+                  <div class="property">
+                    <div class="title"><span class="keyword">property</span> <span class="title">name</span></div>
+                  </div>
+                  <div class="property">
+                    <div class="title"><span class="keyword">property</span> <span class="title">max</span></div>
+                  </div>
+                </div>
+                <div class="datas">
+                  <div class="head">
+                    <span class="title">class data</span>
+                  </div>
+                  <div class="data" title="__builtin__.str" id="postgresql.protocol.pqueue.element3.Execute.type"><span class="name">type</span> = <a class="objref" href="//__builtin__.str"><pre>'E'</pre></a></div>
+                  <div class="data" title="__builtin__.tuple" id="postgresql.protocol.pqueue.element3.Execute.__slots__"><span class="name">__slots__</span> = <a class="objref" href="//__builtin__.tuple"><pre>('name', 'max')</pre></a></div>
+                </div>
+              </div>
+            </div>
+            <div class="class" id="postgresql.protocol.pqueue.element3.Function">
+              <div class="title"><span class="keyword">class</span> <span class="title">Function</span>(<a class="super" title="postgresql.protocol.pqueue.element3.Message" href="#postgresql.protocol.pqueue.element3.Message">Message</a>):</div>
+              <div class="doc">
+                <pre>Execute the specified function with the given arguments</pre>
+              </div>
+              <div class="content">
+                <div class="class_methods">
+                  <div class="head">
+                    <span class="title">class methods</span>
+                  </div>
+                  <div class="method">
+                    <div class="title"><span class="keyword">def</span> <span class="title">parse</span><span class="args">(<span class="block"><span class="argname">self</span><span class="argsep">,</span> <span class="argname">data</span></span>):</span></div>
+                  </div>
+                </div>
+                <div class="methods">
+                  <div class="head">
+                    <span class="title">methods</span>
+                  </div>
+                  <div class="method">
+                    <div class="title"><span class="keyword">def</span> <span class="title">__init__</span><span class="args">(<span class="block"><span class="argname">self</span><span class="argsep">,</span> <span class="argname">oid</span><span class="argsep">,</span> <span class="argname">args</span><span class="argsep">,</span> <span class="argname">rformat = <a class="objref" href="//__builtin__.str"><pre>'\x00\x00'</pre></a></span></span>):</span></div>
+                  </div>
+                  <div class="method">
+                    <div class="title"><span class="keyword">def</span> <span class="title">serialize</span><span class="args">(<span class="block"><span class="argname">self</span></span>):</span></div>
+                  </div>
+                </div>
+                <div class="properties">
+                  <div class="head">
+                    <span class="title">properties</span>
+                  </div>
+                  <div class="property">
+                    <div class="title"><span class="keyword">property</span> <span class="title">rformat</span></div>
+                  </div>
+                  <div class="property">
+                    <div class="title"><span class="keyword">property</span> <span class="title">oid</span></div>
+                  </div>
+                  <div class="property">
+                    <div class="title"><span class="keyword">property</span> <span class="title">arguments</span></div>
+                  </div>
+                </div>
+                <div class="datas">
+                  <div class="head">
+                    <span class="title">class data</span>
+                  </div>
+                  <div class="data" title="__builtin__.str" id="postgresql.protocol.pqueue.element3.Function.type"><span class="name">type</span> = <a class="objref" href="//__builtin__.str"><pre>'F'</pre></a></div>
+                  <div class="data" title="__builtin__.tuple" id="postgresql.protocol.pqueue.element3.Function.__slots__"><span class="name">__slots__</span> = <a class="objref" href="//__builtin__.tuple"><pre>('oid', 'arguments', 'rformat')</pre></a></div>
+                </div>
+              </div>
+            </div>
+            <div class="class" id="postgresql.protocol.pqueue.element3.FunctionResult">
+              <div class="title"><span class="keyword">class</span> <span class="title">FunctionResult</span>(<a class="super" title="postgresql.protocol.pqueue.element3.Message" href="#postgresql.protocol.pqueue.element3.Message">Message</a>):</div>
+              <div class="doc">
+                <pre>Function result value</pre>
+              </div>
+              <div class="content">
+                <div class="class_methods">
+                  <div class="head">
+                    <span class="title">class methods</span>
+                  </div>
+                  <div class="method">
+                    <div class="title"><span class="keyword">def</span> <span class="title">parse</span><span class="args">(<span class="block"><span class="argname">self</span><span class="argsep">,</span> <span class="argname">data</span></span>):</span></div>
+                  </div>
+                </div>
+                <div class="methods">
+                  <div class="head">
+                    <span class="title">methods</span>
+                  </div>
+                  <div class="method">
+                    <div class="title"><span class="keyword">def</span> <span class="title">__init__</span><span class="args">(<span class="block"><span class="argname">self</span><span class="argsep">,</span> <span class="argname">datum</span></span>):</span></div>
+                  </div>
+                  <div class="method">
+                    <div class="title"><span class="keyword">def</span> <span class="title">serialize</span><span class="args">(<span class="block"><span class="argname">self</span></span>):</span></div>
+                  </div>
+                </div>
+                <div class="properties">
+                  <div class="head">
+                    <span class="title">properties</span>
+                  </div>
+                  <div class="property">
+                    <div class="title"><span class="keyword">property</span> <span class="title">result</span></div>
+                  </div>
+                </div>
+                <div class="datas">
+                  <div class="head">
+                    <span class="title">class data</span>
+                  </div>
+                  <div class="data" title="__builtin__.str" id="postgresql.protocol.pqueue.element3.FunctionResult.type"><span class="name">type</span> = <a class="objref" href="//__builtin__.str"><pre>'V'</pre></a></div>
+                  <div class="data" title="__builtin__.tuple" id="postgresql.protocol.pqueue.element3.FunctionResult.__slots__"><span class="name">__slots__</span> = <a class="objref" href="//__builtin__.tuple"><pre>('result',)</pre></a></div>
+                </div>
+              </div>
+            </div>
+            <div class="class" id="postgresql.protocol.pqueue.element3.KillInformation">
+              <div class="title"><span class="keyword">class</span> <span class="title">KillInformation</span>(<a class="super" title="postgresql.protocol.pqueue.element3.Message" href="#postgresql.protocol.pqueue.element3.Message">Message</a>):</div>
+              <div class="doc">
+                <pre>Backend cancellation information</pre>
+              </div>
+              <div class="content">
+                <div class="class_methods">
+                  <div class="head">
+                    <span class="title">class methods</span>
+                  </div>
+                  <div class="method">
+                    <div class="title"><span class="keyword">def</span> <span class="title">parse</span><span class="args">(<span class="block"><span class="argname">self</span><span class="argsep">,</span> <span class="argname">data</span></span>):</span></div>
+                  </div>
+                </div>
+                <div class="methods">
+                  <div class="head">
+                    <span class="title">methods</span>
+                  </div>
+                  <div class="method">
+                    <div class="title"><span class="keyword">def</span> <span class="title">__init__</span><span class="args">(<span class="block"><span class="argname">self</span><span class="argsep">,</span> <span class="argname">pid</span><span class="argsep">,</span> <span class="argname">key</span></span>):</span></div>
+                  </div>
+                  <div class="method">
+                    <div class="title"><span class="keyword">def</span> <span class="title">serialize</span><span class="args">(<span class="block"><span class="argname">self</span></span>):</span></div>
+                  </div>
+                </div>
+                <div class="properties">
+                  <div class="head">
+                    <span class="title">properties</span>
+                  </div>
+                  <div class="property">
+                    <div class="title"><span class="keyword">property</span> <span class="title">key</span></div>
+                  </div>
+                  <div class="property">
+                    <div class="title"><span class="keyword">property</span> <span class="title">pid</span></div>
+                  </div>
+                </div>
+                <div class="datas">
+                  <div class="head">
+                    <span class="title">class data</span>
+                  </div>
+                  <div class="data" title="__builtin__.str" id="postgresql.protocol.pqueue.element3.KillInformation.type"><span class="name">type</span> = <a class="objref" href="//__builtin__.str"><pre>'K'</pre></a></div>
+                  <div class="data" title="__builtin__.tuple" id="postgresql.protocol.pqueue.element3.KillInformation.__slots__"><span class="name">__slots__</span> = <a class="objref" href="//__builtin__.tuple"><pre>('pid', 'key')</pre></a></div>
+                </div>
+              </div>
+            </div>
+            <div class="class" id="postgresql.protocol.pqueue.element3.CancelQuery">
+              <div class="title"><span class="keyword">class</span> <span class="title">CancelQuery</span>(<a class="super" title="postgresql.protocol.pqueue.element3.KillInformation" href="#postgresql.protocol.pqueue.element3.KillInformation">KillInformation</a>):</div>
+              <div class="doc">
+                <pre>Abort the query in the specified backend</pre>
+              </div>
+              <div class="content">
+                <div class="class_methods">
+                  <div class="head">
+                    <span class="title">class methods</span>
+                  </div>
+                  <div class="method">
+                    <div class="title"><span class="keyword">def</span> <span class="title">parse</span><span class="args">(<span class="block"><span class="argname">self</span><span class="argsep">,</span> <span class="argname">data</span></span>):</span></div>
+                  </div>
+                </div>
+                <div class="methods">
+                  <div class="head">
+                    <span class="title">methods</span>
+                  </div>
+                  <div class="method">
+                    <div class="title"><span class="keyword">def</span> <span class="title">serialize</span><span class="args">(<span class="block"><span class="argname">self</span></span>):</span></div>
+                  </div>
+                </div>
+                <div class="properties">
+                  <div class="head">
+                    <span class="title">properties</span>
+                  </div>
+                  <div class="property">
+                    <div class="title"><span class="keyword">property</span> <span class="title">key</span></div>
+                  </div>
+                  <div class="property">
+                    <div class="title"><span class="keyword">property</span> <span class="title">pid</span></div>
+                  </div>
+                </div>
+                <div class="datas">
+                  <div class="head">
+                    <span class="title">class data</span>
+                  </div>
+                  <div class="data" title="postgresql.protocol.pqueue.version.Version" id="postgresql.protocol.pqueue.element3.CancelQuery.version"><span class="name">version</span> = <a class="objref" href="#postgresql.protocol.pqueue.version.CancelRequestCode"><pre>postgresql.protocol.pqueue.version.CancelRequestCode</pre></a></div>
+                  <div class="data" title="__builtin__.str" id="postgresql.protocol.pqueue.element3.CancelQuery.type"><span class="name">type</span> = <a class="objref" href="//__builtin__.str"><pre>''</pre></a></div>
+                  <div class="data" title="__builtin__.tuple" id="postgresql.protocol.pqueue.element3.CancelQuery.__slots__"><span class="name">__slots__</span> = <a class="objref" href="//__builtin__.tuple"><pre>('pid', 'key')</pre></a></div>
+                </div>
+              </div>
+            </div>
+            <div class="class" id="postgresql.protocol.pqueue.element3.NegotiateSSL">
+              <div class="title"><span class="keyword">class</span> <span class="title">NegotiateSSL</span>(<a class="super" title="postgresql.protocol.pqueue.element3.Message" href="#postgresql.protocol.pqueue.element3.Message">Message</a>):</div>
+              <div class="doc">
+                <pre>Discover backend's SSL support</pre>
+              </div>
+              <div class="content">
+                <div class="class_methods">
+                  <div class="head">
+                    <span class="title">class methods</span>
+                  </div>
+                  <div class="method">
+                    <div class="title"><span class="keyword">def</span> <span class="title">__new__</span><span class="args">(<span class="block"><span class="argname">subtype</span></span>):</span></div>
+                  </div>
+                  <div class="method">
+                    <div class="title"><span class="keyword">def</span> <span class="title">parse</span><span class="args">(<span class="block"><span class="argname">self</span><span class="argsep">,</span> <span class="argname">data</span></span>):</span></div>
+                  </div>
+                </div>
+                <div class="methods">
+                  <div class="head">
+                    <span class="title">methods</span>
+                  </div>
+                  <div class="method">
+                    <div class="title"><span class="keyword">def</span> <span class="title">serialize</span><span class="args">(<span class="block"><span class="argname">self</span></span>):</span></div>
+                  </div>
+                </div>
+                <div class="datas">
+                  <div class="head">
+                    <span class="title">class data</span>
+                  </div>
+                  <div class="data" title="__builtin__.tuple" id="postgresql.protocol.pqueue.element3.NegotiateSSL.__slots__"><span class="name">__slots__</span> = <a class="objref" href="//__builtin__.tuple"><pre>()</pre></a></div>
+                  <div class="data" title="__builtin__.str" id="postgresql.protocol.pqueue.element3.NegotiateSSL.packed_version"><span class="name">packed_version</span> = <a class="objref" href="//__builtin__.str"><pre>'\x04\xd2\x16/'</pre></a></div>
+                  <div class="data" title="postgresql.protocol.pqueue.version.Version" id="postgresql.protocol.pqueue.element3.NegotiateSSL.version"><span class="name">version</span> = <a class="objref" href="#postgresql.protocol.pqueue.version.NegotiateSSLCode"><pre>postgresql.protocol.pqueue.version.NegotiateSSLCode</pre></a></div>
+                  <div class="data" title="__builtin__.str" id="postgresql.protocol.pqueue.element3.NegotiateSSL.type"><span class="name">type</span> = <a class="objref" href="//__builtin__.str"><pre>''</pre></a></div>
+                </div>
+              </div>
+            </div>
+            <div class="class" id="postgresql.protocol.pqueue.element3.Notify">
+              <div class="title"><span class="keyword">class</span> <span class="title">Notify</span>(<a class="super" title="postgresql.protocol.pqueue.element3.Message" href="#postgresql.protocol.pqueue.element3.Message">Message</a>):</div>
+              <div class="doc">
+                <pre>Asynchronous notification message</pre>
+              </div>
+              <div class="content">
+                <div class="class_methods">
+                  <div class="head">
+                    <span class="title">class methods</span>
+                  </div>
+                  <div class="method">
+                    <div class="title"><span class="keyword">def</span> <span class="title">parse</span><span class="args">(<span class="block"><span class="argname">self</span><span class="argsep">,</span> <span class="argname">data</span></span>):</span></div>
+                  </div>
+                </div>
+                <div class="methods">
+                  <div class="head">
+                    <span class="title">methods</span>
+                  </div>
+                  <div class="method">
+                    <div class="title"><span class="keyword">def</span> <span class="title">__init__</span><span class="args">(<span class="block"><span class="argname">self</span><span class="argsep">,</span> <span class="argname">pid</span><span class="argsep">,</span> <span class="argname">relation</span><span class="argsep">,</span> <span class="argname">parameter = <a class="objref" href="//__builtin__.str"><pre>''</pre></a></span></span>):</span></div>
+                  </div>
+                  <div class="method">
+                    <div class="title"><span class="keyword">def</span> <span class="title">serialize</span><span class="args">(<span class="block"><span class="argname">self</span></span>):</span></div>
+                  </div>
+                </div>
+                <div class="properties">
+                  <div class="head">
+                    <span class="title">properties</span>
+                  </div>
+                  <div class="property">
+                    <div class="title"><span class="keyword">property</span> <span class="title">relation</span></div>
+                  </div>
+                  <div class="property">
+                    <div class="title"><span class="keyword">property</span> <span class="title">pid</span></div>
+                  </div>
+                  <div class="property">
+                    <div class="title"><span class="keyword">property</span> <span class="title">parameter</span></div>
+                  </div>
+                </div>
+                <div class="datas">
+                  <div class="head">
+                    <span class="title">class data</span>
+                  </div>
+                  <div class="data" title="__builtin__.str" id="postgresql.protocol.pqueue.element3.Notify.type"><span class="name">type</span> = <a class="objref" href="//__builtin__.str"><pre>'A'</pre></a></div>
+                  <div class="data" title="__builtin__.tuple" id="postgresql.protocol.pqueue.element3.Notify.__slots__"><span class="name">__slots__</span> = <a class="objref" href="//__builtin__.tuple"><pre>('pid', 'relation', 'parameter')</pre></a></div>
+                </div>
+              </div>
+            </div>
+            <div class="class" id="postgresql.protocol.pqueue.element3.Parse">
+              <div class="title"><span class="keyword">class</span> <span class="title">Parse</span>(<a class="super" title="postgresql.protocol.pqueue.element3.Message" href="#postgresql.protocol.pqueue.element3.Message">Message</a>):</div>
+              <div class="doc">
+                <pre>Parse a query with the specified argument types</pre>
+              </div>
+              <div class="content">
+                <div class="class_methods">
+                  <div class="head">
+                    <span class="title">class methods</span>
+                  </div>
+                  <div class="method">
+                    <div class="title"><span class="keyword">def</span> <span class="title">parse</span><span class="args">(<span class="block"><span class="argname">self</span><span class="argsep">,</span> <span class="argname">data</span></span>):</span></div>
+                  </div>
+                </div>
+                <div class="methods">
+                  <div class="head">
+                    <span class="title">methods</span>
+                  </div>
+                  <div class="method">
+                    <div class="title"><span class="keyword">def</span> <span class="title">__init__</span><span class="args">(<span class="block"><span class="argname">self</span><span class="argsep">,</span> <span class="argname">name</span><span class="argsep">,</span> <span class="argname">statement</span><span class="argsep">,</span> <span class="argname">argtypes</span></span>):</span></div>
+                  </div>
+                  <div class="method">
+                    <div class="title"><span class="keyword">def</span> <span class="title">serialize</span><span class="args">(<span class="block"><span class="argname">self</span></span>):</span></div>
+                  </div>
+                </div>
+                <div class="properties">
+                  <div class="head">
+                    <span class="title">properties</span>
+                  </div>
+                  <div class="property">
+                    <div class="title"><span class="keyword">property</span> <span class="title">argtypes</span></div>
+                  </div>
+                  <div class="property">
+                    <div class="title"><span class="keyword">property</span> <span class="title">name</span></div>
+                  </div>
+                  <div class="property">
+                    <div class="title"><span class="keyword">property</span> <span class="title">statement</span></div>
+                  </div>
+                </div>
+                <div class="datas">
+                  <div class="head">
+                    <span class="title">class data</span>
+                  </div>
+                  <div class="data" title="__builtin__.str" id="postgresql.protocol.pqueue.element3.Parse.type"><span class="name">type</span> = <a class="objref" href="//__builtin__.str"><pre>'P'</pre></a></div>
+                  <div class="data" title="__builtin__.tuple" id="postgresql.protocol.pqueue.element3.Parse.__slots__"><span class="name">__slots__</span> = <a class="objref" href="//__builtin__.tuple"><pre>('name', 'statement', 'argtypes')</pre></a></div>
+                </div>
+              </div>
+            </div>
+            <div class="class" id="postgresql.protocol.pqueue.element3.Ready">
+              <div class="title"><span class="keyword">class</span> <span class="title">Ready</span>(<a class="super" title="postgresql.protocol.pqueue.element3.Message" href="#postgresql.protocol.pqueue.element3.Message">Message</a>):</div>
+              <div class="doc">
+                <pre>Ready for new query</pre>
+              </div>
+              <div class="content">
+                <div class="methods">
+                  <div class="head">
+                    <span class="title">methods</span>
+                  </div>
+                  <div class="method">
+                    <div class="title"><span class="keyword">def</span> <span class="title">__init__</span><span class="args">(<span class="block"><span class="argname">self</span><span class="argsep">,</span> <span class="argname">data</span></span>):</span></div>
+                  </div>
+                  <div class="method">
+                    <div class="title"><span class="keyword">def</span> <span class="title">serialize</span><span class="args">(<span class="block"><span class="argname">self</span></span>):</span></div>
+                  </div>
+                </div>
+                <div class="properties">
+                  <div class="head">
+                    <span class="title">properties</span>
+                  </div>
+                  <div class="property">
+                    <div class="title"><span class="keyword">property</span> <span class="title">xact_state</span></div>
+                  </div>
+                </div>
+                <div class="datas">
+                  <div class="head">
+                    <span class="title">class data</span>
+                  </div>
+                  <div class="data" title="__builtin__.str" id="postgresql.protocol.pqueue.element3.Ready.type"><span class="name">type</span> = <a class="objref" href="//__builtin__.str"><pre>'Z'</pre></a></div>
+                  <div class="data" title="__builtin__.tuple" id="postgresql.protocol.pqueue.element3.Ready.__slots__"><span class="name">__slots__</span> = <a class="objref" href="//__builtin__.tuple"><pre>('xact_state',)</pre></a></div>
+                </div>
+              </div>
+            </div>
+            <div class="class" id="postgresql.protocol.pqueue.element3.ShowOption">
+              <div class="title"><span class="keyword">class</span> <span class="title">ShowOption</span>(<a class="super" title="postgresql.protocol.pqueue.element3.Message" href="#postgresql.protocol.pqueue.element3.Message">Message</a>):</div>
+              <div class="doc">
+                <pre>ShowOption(name, value)
+GUC variable information from backend</pre>
+              </div>
+              <div class="content">
+                <div class="class_methods">
+                  <div class="head">
+                    <span class="title">class methods</span>
+                  </div>
+                  <div class="method">
+                    <div class="title"><span class="keyword">def</span> <span class="title">parse</span><span class="args">(<span class="block"><span class="argname">self</span><span class="argsep">,</span> <span class="argname">data</span></span>):</span></div>
+                  </div>
+                </div>
+                <div class="methods">
+                  <div class="head">
+                    <span class="title">methods</span>
+                  </div>
+                  <div class="method">
+                    <div class="title"><span class="keyword">def</span> <span class="title">__init__</span><span class="args">(<span class="block"><span class="argname">self</span><span class="argsep">,</span> <span class="argname">name</span><span class="argsep">,</span> <span class="argname">value</span></span>):</span></div>
+                  </div>
+                  <div class="method">
+                    <div class="title"><span class="keyword">def</span> <span class="title">serialize</span><span class="args">(<span class="block"><span class="argname">self</span></span>):</span></div>
+                  </div>
+                </div>
+                <div class="properties">
+                  <div class="head">
+                    <span class="title">properties</span>
+                  </div>
+                  <div class="property">
+                    <div class="title"><span class="keyword">property</span> <span class="title">value</span></div>
+                  </div>
+                  <div class="property">
+                    <div class="title"><span class="keyword">property</span> <span class="title">name</span></div>
+                  </div>
+                </div>
+                <div class="datas">
+                  <div class="head">
+                    <span class="title">class data</span>
+                  </div>
+                  <div class="data" title="__builtin__.str" id="postgresql.protocol.pqueue.element3.ShowOption.type"><span class="name">type</span> = <a class="objref" href="//__builtin__.str"><pre>'S'</pre></a></div>
+                  <div class="data" title="__builtin__.tuple" id="postgresql.protocol.pqueue.element3.ShowOption.__slots__"><span class="name">__slots__</span> = <a class="objref" href="//__builtin__.tuple"><pre>('name', 'value')</pre></a></div>
+                </div>
+              </div>
+            </div>
+            <div class="class" id="postgresql.protocol.pqueue.element3.Void">
+              <div class="title"><span class="keyword">class</span> <span class="title">Void</span>(<a class="super" title="postgresql.protocol.pqueue.element3.Message" href="#postgresql.protocol.pqueue.element3.Message">Message</a>):</div>
+              <div class="doc">
+                <pre>An absolutely empty message. When serialized, it always yields an empty
+string.</pre>
+              </div>
+              <div class="content">
+                <div class="class_methods">
+                  <div class="head">
+                    <span class="title">class methods</span>
+                  </div>
+                  <div class="method">
+                    <div class="title"><span class="keyword">def</span> <span class="title">__new__</span><span class="args">(<span class="block"><span class="argname">self</span><span class="argsep">,</span> <span class="argname">*args</span></span>):</span></div>
+                  </div>
+                </div>
+                <div class="methods">
+                  <div class="head">
+                    <span class="title">methods</span>
+                  </div>
+                  <div class="method">
+                    <div class="title"><span class="keyword">def</span> <span class="title">__str__</span><span class="args">(<span class="block"><span class="argname">self</span></span>):</span></div>
+                  </div>
+                  <div class="method">
+                    <div class="title"><span class="keyword">def</span> <span class="title">serialize</span><span class="args">(<span class="block"><span class="argname">self</span></span>):</span></div>
+                  </div>
+                </div>
+                <div class="datas">
+                  <div class="head">
+                    <span class="title">class data</span>
+                  </div>
+                  <div class="data" title="__builtin__.str" id="postgresql.protocol.pqueue.element3.Void.type"><span class="name">type</span> = <a class="objref" href="//__builtin__.str"><pre>''</pre></a></div>
+                  <div class="data" title="__builtin__.tuple" id="postgresql.protocol.pqueue.element3.Void.__slots__"><span class="name">__slots__</span> = <a class="objref" href="//__builtin__.tuple"><pre>()</pre></a></div>
+                </div>
+              </div>
+            </div>
+            <div class="class" id="postgresql.protocol.pqueue.element3.Close">
+              <div class="title"><span class="keyword">class</span> <span class="title">Close</span>(<a class="super" title="postgresql.protocol.pqueue.element3.Message" href="#postgresql.protocol.pqueue.element3.Message">Message</a>, <a class="super" title="__builtin__.str" href="//__builtin__.str">str</a>):</div>
+              <div class="doc">
+                <pre>Generic Close</pre>
+              </div>
+              <div class="content">
+                <div class="class_methods">
+                  <div class="head">
+                    <span class="title">class methods</span>
+                  </div>
+                  <div class="method">
+                    <div class="title"><span class="keyword">def</span> <span class="title">parse</span><span class="args">(<span class="block"><span class="argname">subtype</span><span class="argsep">,</span> <span class="argname">data</span></span>):</span></div>
+                  </div>
+                </div>
+                <div class="methods">
+                  <div class="head">
+                    <span class="title">methods</span>
+                  </div>
+                  <div class="method">
+                    <div class="title"><span class="keyword">def</span> <span class="title">__repr__</span><span class="args">(<span class="block"><span class="argname">self</span></span>):</span></div>
+                  </div>
+                  <div class="method">
+                    <div class="title"><span class="keyword">def</span> <span class="title">serialize</span><span class="args">(<span class="block"><span class="argname">self</span></span>):</span></div>
+                  </div>
+                </div>
+                <div class="datas">
+                  <div class="head">
+                    <span class="title">class data</span>
+                  </div>
+                  <div class="data" title="__builtin__.str" id="postgresql.protocol.pqueue.element3.Close.type"><span class="name">type</span> = <a class="objref" href="//__builtin__.str"><pre>'C'</pre></a></div>
+                  <div class="data" title="__builtin__.tuple" id="postgresql.protocol.pqueue.element3.Close.__slots__"><span class="name">__slots__</span> = <a class="objref" href="//__builtin__.tuple"><pre>()</pre></a></div>
+                </div>
+              </div>
+            </div>
+            <div class="class" id="postgresql.protocol.pqueue.element3.ClosePortal">
+              <div class="title"><span class="keyword">class</span> <span class="title">ClosePortal</span>(<a class="super" title="postgresql.protocol.pqueue.element3.Close" href="#postgresql.protocol.pqueue.element3.Close">Close</a>):</div>
+              <div class="doc">
+                <pre>Close the specified Portal</pre>
+              </div>
+              <div class="content">
+                <div class="datas">
+                  <div class="head">
+                    <span class="title">class data</span>
+                  </div>
+                  <div class="data" title="__builtin__.str" id="postgresql.protocol.pqueue.element3.ClosePortal.subtype"><span class="name">subtype</span> = <a class="objref" href="//__builtin__.str"><pre>'P'</pre></a></div>
+                  <div class="data" title="__builtin__.tuple" id="postgresql.protocol.pqueue.element3.ClosePortal.__slots__"><span class="name">__slots__</span> = <a class="objref" href="//__builtin__.tuple"><pre>()</pre></a></div>
+                </div>
+              </div>
+            </div>
+            <div class="class" id="postgresql.protocol.pqueue.element3.CloseStatement">
+              <div class="title"><span class="keyword">class</span> <span class="title">CloseStatement</span>(<a class="super" title="postgresql.protocol.pqueue.element3.Close" href="#postgresql.protocol.pqueue.element3.Close">Close</a>):</div>
+              <div class="doc">
+                <pre>Close the specified Statement</pre>
+              </div>
+              <div class="content">
+                <div class="datas">
+                  <div class="head">
+                    <span class="title">class data</span>
+                  </div>
+                  <div class="data" title="__builtin__.str" id="postgresql.protocol.pqueue.element3.CloseStatement.subtype"><span class="name">subtype</span> = <a class="objref" href="//__builtin__.str"><pre>'S'</pre></a></div>
+                  <div class="data" title="__builtin__.tuple" id="postgresql.protocol.pqueue.element3.CloseStatement.__slots__"><span class="name">__slots__</span> = <a class="objref" href="//__builtin__.tuple"><pre>()</pre></a></div>
+                </div>
+              </div>
+            </div>
+            <div class="class" id="postgresql.protocol.pqueue.element3.Complete">
+              <div class="title"><span class="keyword">class</span> <span class="title">Complete</span>(<a class="super" title="postgresql.protocol.pqueue.element3.Message" href="#postgresql.protocol.pqueue.element3.Message">Message</a>, <a class="super" title="__builtin__.str" href="//__builtin__.str">str</a>):</div>
+              <div class="doc">
+                <pre>Complete command</pre>
+              </div>
+              <div class="content">
+                <div class="class_methods">
+                  <div class="head">
+                    <span class="title">class methods</span>
+                  </div>
+                  <div class="method">
+                    <div class="title"><span class="keyword">def</span> <span class="title">parse</span><span class="args">(<span class="block"><span class="argname">self</span><span class="argsep">,</span> <span class="argname">data</span></span>):</span></div>
+                  </div>
+                </div>
+                <div class="methods">
+                  <div class="head">
+                    <span class="title">methods</span>
+                  </div>
+                  <div class="method">
+                    <div class="title"><span class="keyword">def</span> <span class="title">__repr__</span><span class="args">(<span class="block"><span class="argname">self</span></span>):</span></div>
+                  </div>
+                  <div class="method">
+                    <div class="title"><span class="keyword">def</span> <span class="title">serialize</span><span class="args">(<span class="block"><span class="argname">self</span></span>):</span></div>
+                  </div>
+                </div>
+                <div class="datas">
+                  <div class="head">
+                    <span class="title">class data</span>
+                  </div>
+                  <div class="data" title="__builtin__.str" id="postgresql.protocol.pqueue.element3.Complete.type"><span class="name">type</span> = <a class="objref" href="//__builtin__.str"><pre>'C'</pre></a></div>
+                  <div class="data" title="__builtin__.tuple" id="postgresql.protocol.pqueue.element3.Complete.__slots__"><span class="name">__slots__</span> = <a class="objref" href="//__builtin__.tuple"><pre>()</pre></a></div>
+                </div>
+              </div>
+            </div>
+            <div class="class" id="postgresql.protocol.pqueue.element3.CopyFail">
+              <div class="title"><span class="keyword">class</span> <span class="title">CopyFail</span>(<a class="super" title="postgresql.protocol.pqueue.element3.Message" href="#postgresql.protocol.pqueue.element3.Message">Message</a>, <a class="super" title="__builtin__.str" href="//__builtin__.str">str</a>):</div>
+              <div class="content">
+                <div class="class_methods">
+                  <div class="head">
+                    <span class="title">class methods</span>
+                  </div>
+                  <div class="method">
+                    <div class="title"><span class="keyword">def</span> <span class="title">parse</span><span class="args">(<span class="block"><span class="argname">self</span><span class="argsep">,</span> <span class="argname">data</span></span>):</span></div>
+                  </div>
+                </div>
+                <div class="methods">
+                  <div class="head">
+                    <span class="title">methods</span>
+                  </div>
+                  <div class="method">
+                    <div class="title"><span class="keyword">def</span> <span class="title">__repr__</span><span class="args">(<span class="block"><span class="argname">self</span></span>):</span></div>
+                  </div>
+                  <div class="method">
+                    <div class="title"><span class="keyword">def</span> <span class="title">serialize</span><span class="args">(<span class="block"><span class="argname">self</span></span>):</span></div>
+                  </div>
+                </div>
+                <div class="datas">
+                  <div class="head">
+                    <span class="title">class data</span>
+                  </div>
+                  <div class="data" title="__builtin__.str" id="postgresql.protocol.pqueue.element3.CopyFail.type"><span class="name">type</span> = <a class="objref" href="//__builtin__.str"><pre>'f'</pre></a></div>
+                  <div class="data" title="__builtin__.tuple" id="postgresql.protocol.pqueue.element3.CopyFail.__slots__"><span class="name">__slots__</span> = <a class="objref" href="//__builtin__.tuple"><pre>()</pre></a></div>
+                </div>
+              </div>
+            </div>
+            <div class="class" id="postgresql.protocol.pqueue.element3.Describe">
+              <div class="title"><span class="keyword">class</span> <span class="title">Describe</span>(<a class="super" title="postgresql.protocol.pqueue.element3.Message" href="#postgresql.protocol.pqueue.element3.Message">Message</a>, <a class="super" title="__builtin__.str" href="//__builtin__.str">str</a>):</div>
+              <div class="doc">
+                <pre>Describe a Portal or Prepared Statement</pre>
+              </div>
+              <div class="content">
+                <div class="class_methods">
+                  <div class="head">
+                    <span class="title">class methods</span>
+                  </div>
+                  <div class="method">
+                    <div class="title"><span class="keyword">def</span> <span class="title">parse</span><span class="args">(<span class="block"><span class="argname">subtype</span><span class="argsep">,</span> <span class="argname">data</span></span>):</span></div>
+                  </div>
+                </div>
+                <div class="methods">
+                  <div class="head">
+                    <span class="title">methods</span>
+                  </div>
+                  <div class="method">
+                    <div class="title"><span class="keyword">def</span> <span class="title">__repr__</span><span class="args">(<span class="block"><span class="argname">self</span></span>):</span></div>
+                  </div>
+                  <div class="method">
+                    <div class="title"><span class="keyword">def</span> <span class="title">serialize</span><span class="args">(<span class="block"><span class="argname">self</span></span>):</span></div>
+                  </div>
+                </div>
+                <div class="datas">
+                  <div class="head">
+                    <span class="title">class data</span>
+                  </div>
+                  <div class="data" title="__builtin__.str" id="postgresql.protocol.pqueue.element3.Describe.type"><span class="name">type</span> = <a class="objref" href="//__builtin__.str"><pre>'D'</pre></a></div>
+                  <div class="data" title="__builtin__.tuple" id="postgresql.protocol.pqueue.element3.Describe.__slots__"><span class="name">__slots__</span> = <a class="objref" href="//__builtin__.tuple"><pre>()</pre></a></div>
+                </div>
+              </div>
+            </div>
+            <div class="class" id="postgresql.protocol.pqueue.element3.DescribePortal">
+              <div class="title"><span class="keyword">class</span> <span class="title">DescribePortal</span>(<a class="super" title="postgresql.protocol.pqueue.element3.Describe" href="#postgresql.protocol.pqueue.element3.Describe">Describe</a>):</div>
+              <div class="content">
+                <div class="datas">
+                  <div class="head">
+                    <span class="title">class data</span>
+                  </div>
+                  <div class="data" title="__builtin__.str" id="postgresql.protocol.pqueue.element3.DescribePortal.subtype"><span class="name">subtype</span> = <a class="objref" href="//__builtin__.str"><pre>'P'</pre></a></div>
+                  <div class="data" title="__builtin__.tuple" id="postgresql.protocol.pqueue.element3.DescribePortal.__slots__"><span class="name">__slots__</span> = <a class="objref" href="//__builtin__.tuple"><pre>()</pre></a></div>
+                </div>
+              </div>
+            </div>
+            <div class="class" id="postgresql.protocol.pqueue.element3.DescribeStatement">
+              <div class="title"><span class="keyword">class</span> <span class="title">DescribeStatement</span>(<a class="super" title="postgresql.protocol.pqueue.element3.Describe" href="#postgresql.protocol.pqueue.element3.Describe">Describe</a>):</div>
+              <div class="content">
+                <div class="datas">
+                  <div class="head">
+                    <span class="title">class data</span>
+                  </div>
+                  <div class="data" title="__builtin__.str" id="postgresql.protocol.pqueue.element3.DescribeStatement.subtype"><span class="name">subtype</span> = <a class="objref" href="//__builtin__.str"><pre>'S'</pre></a></div>
+                  <div class="data" title="__builtin__.tuple" id="postgresql.protocol.pqueue.element3.DescribeStatement.__slots__"><span class="name">__slots__</span> = <a class="objref" href="//__builtin__.tuple"><pre>()</pre></a></div>
+                </div>
+              </div>
+            </div>
+            <div class="class" id="postgresql.protocol.pqueue.element3.Password">
+              <div class="title"><span class="keyword">class</span> <span class="title">Password</span>(<a class="super" title="postgresql.protocol.pqueue.element3.Message" href="#postgresql.protocol.pqueue.element3.Message">Message</a>, <a class="super" title="__builtin__.str" href="//__builtin__.str">str</a>):</div>
+              <div class="doc">
+                <pre>Password supplement</pre>
+              </div>
+              <div class="content">
+                <div class="methods">
+                  <div class="head">
+                    <span class="title">methods</span>
+                  </div>
+                  <div class="method">
+                    <div class="title"><span class="keyword">def</span> <span class="title">__repr__</span><span class="args">(<span class="block"><span class="argname">self</span></span>):</span></div>
+                  </div>
+                  <div class="method">
+                    <div class="title"><span class="keyword">def</span> <span class="title">serialize</span><span class="args">(<span class="block"><span class="argname">self</span></span>):</span></div>
+                  </div>
+                </div>
+                <div class="datas">
+                  <div class="head">
+                    <span class="title">class data</span>
+                  </div>
+                  <div class="data" title="__builtin__.str" id="postgresql.protocol.pqueue.element3.Password.type"><span class="name">type</span> = <a class="objref" href="//__builtin__.str"><pre>'p'</pre></a></div>
+                  <div class="data" title="__builtin__.tuple" id="postgresql.protocol.pqueue.element3.Password.__slots__"><span class="name">__slots__</span> = <a class="objref" href="//__builtin__.tuple"><pre>()</pre></a></div>
+                </div>
+              </div>
+            </div>
+            <div class="class" id="postgresql.protocol.pqueue.element3.Query">
+              <div class="title"><span class="keyword">class</span> <span class="title">Query</span>(<a class="super" title="postgresql.protocol.pqueue.element3.Message" href="#postgresql.protocol.pqueue.element3.Message">Message</a>, <a class="super" title="__builtin__.str" href="//__builtin__.str">str</a>):</div>
+              <div class="doc">
+                <pre>Execute the query with the given arguments</pre>
+              </div>
+              <div class="content">
+                <div class="class_methods">
+                  <div class="head">
+                    <span class="title">class methods</span>
+                  </div>
+                  <div class="method">
+                    <div class="title"><span class="keyword">def</span> <span class="title">parse</span><span class="args">(<span class="block"><span class="argname">self</span><span class="argsep">,</span> <span class="argname">data</span></span>):</span></div>
+                  </div>
+                </div>
+                <div class="methods">
+                  <div class="head">
+                    <span class="title">methods</span>
+                  </div>
+                  <div class="method">
+                    <div class="title"><span class="keyword">def</span> <span class="title">__repr__</span><span class="args">(<span class="block"><span class="argname">self</span></span>):</span></div>
+                  </div>
+                  <div class="method">
+                    <div class="title"><span class="keyword">def</span> <span class="title">serialize</span><span class="args">(<span class="block"><span class="argname">self</span></span>):</span></div>
+                  </div>
+                </div>
+                <div class="datas">
+                  <div class="head">
+                    <span class="title">class data</span>
+                  </div>
+                  <div class="data" title="__builtin__.str" id="postgresql.protocol.pqueue.element3.Query.type"><span class="name">type</span> = <a class="objref" href="//__builtin__.str"><pre>'Q'</pre></a></div>
+                  <div class="data" title="__builtin__.tuple" id="postgresql.protocol.pqueue.element3.Query.__slots__"><span class="name">__slots__</span> = <a class="objref" href="//__builtin__.tuple"><pre>()</pre></a></div>
+                </div>
+              </div>
+            </div>
+            <div class="class" id="postgresql.protocol.pqueue.element3.Notice">
+              <div class="title"><span class="keyword">class</span> <span class="title">Notice</span>(<a class="super" title="postgresql.protocol.pqueue.element3.Message" href="#postgresql.protocol.pqueue.element3.Message">Message</a>, <a class="super" title="__builtin__.dict" href="//__builtin__.dict">dict</a>):</div>
+              <div class="doc">
+                <pre>Notification message</pre>
+              </div>
+              <div class="content">
+                <div class="class_methods">
+                  <div class="head">
+                    <span class="title">class methods</span>
+                  </div>
+                  <div class="method">
+                    <div class="title"><span class="keyword">def</span> <span class="title">parse</span><span class="args">(<span class="block"><span class="argname">self</span><span class="argsep">,</span> <span class="argname">data</span></span>):</span></div>
+                  </div>
+                </div>
+                <div class="methods">
+                  <div class="head">
+                    <span class="title">methods</span>
+                  </div>
+                  <div class="method">
+                    <div class="title"><span class="keyword">def</span> <span class="title">__init__</span><span class="args">(<span class="block"><br /><span class="indent"></span><span class="argname">self</span><span class="argsep">,</span><br /><span class="indent"></span><span class="argname">severity = <a class="objref" href="//__builtin__.NoneType"><pre>None</pre></a></span><span class="argsep">,</span><br /><span class="indent"></span><span class="argname">message = <a class="objref" href="//__builtin__.NoneType"><pre>None</pre></a></span><span class="argsep">,</span><br /><span class="indent"></span><span class="argname">code = <a class="objref" href="//__builtin__.NoneType"><pre>None</pre></a></span><span class="argsep">,</span><br /><span class="indent"></span><span class="argname">detail = <a class="objref" href="//__builtin__.NoneType"><pre>None</pre></a></span><span class="argsep">,</span><br /><span class="indent"></span><span class="argname">hint = <a class="objref" href="//__builtin__.NoneType"><pre>None</pre></a></span><span class="argsep">,</span><br /><span class="indent"></span><span class="argname">position = <a class="objref" href="//__builtin__.NoneType"><pre>None</pre></a></span><span class="argsep">,</span><br /><span class="indent"></span><span class="argname">internal_position = <a class="objref" href="//__builtin__.NoneType"><pre>None</pre></a></span><span class="argsep">,</span><br /><span class="indent"></span><span class="argname">internal_query = <a class="objref" href="//__builtin__.NoneType"><pre>None</pre></a></span><span class="argsep">,</span><br /><span class="indent"></span><span class="argname">context = <a class="objref" href="//__builtin__.NoneType"><pre>None</pre></a></span><span class="argsep">,</span><br /><span class="indent"></span><span class="argname">file = <a class="objref" href="//__builtin__.NoneType"><pre>None</pre></a></span><span class="argsep">,</span><br /><span class="indent"></span><span class="argname">line = <a class="objref" href="//__builtin__.NoneType"><pre>None</pre></a></span><span class="argsep">,</span><br /><span class="indent"></span><span class="argname">function = <a class="objref" href="//__builtin__.NoneType"><pre>None</pre></a></span><br /></span>):</span></div>
+                  </div>
+                  <div class="method">
+                    <div class="title"><span class="keyword">def</span> <span class="title">__repr__</span><span class="args">(<span class="block"><span class="argname">self</span></span>):</span></div>
+                  </div>
+                  <div class="method">
+                    <div class="title"><span class="keyword">def</span> <span class="title">serialize</span><span class="args">(<span class="block"><span class="argname">self</span></span>):</span></div>
+                  </div>
+                </div>
+                <div class="datas">
+                  <div class="head">
+                    <span class="title">class data</span>
+                  </div>
+                  <div class="data" title="__builtin__.tuple" id="postgresql.protocol.pqueue.element3.Notice.__slots__"><span class="name">__slots__</span> = <a class="objref" href="//__builtin__.tuple"><pre>()</pre></a></div>
+                  <div class="data" title="__builtin__.dict" id="postgresql.protocol.pqueue.element3.Notice._dtm"><span class="name">_dtm</span> = <a class="objref" href="//__builtin__.dict"><pre>{'C': 'code', 'D': 'detail', 'p': 'internal_position', 'H': 'hint', 'F': 'file', 'M': 'message', 'L': 'line', 'q': 'internal_query', 'P': 'position', 'S': 'severity', 'R': 'function', 'W': 'context'}</pre></a></div>
+                  <div class="data" title="__builtin__.str" id="postgresql.protocol.pqueue.element3.Notice.type"><span class="name">type</span> = <a class="objref" href="//__builtin__.str"><pre>'N'</pre></a></div>
+                </div>
+              </div>
+            </div>
+            <div class="class" id="postgresql.protocol.pqueue.element3.Error">
+              <div class="title"><span class="keyword">class</span> <span class="title">Error</span>(<a class="super" title="postgresql.protocol.pqueue.element3.Notice" href="#postgresql.protocol.pqueue.element3.Notice">Notice</a>):</div>
+              <div class="doc">
+                <pre>Incoming error</pre>
+              </div>
+              <div class="content">
+                <div class="datas">
+                  <div class="head">
+                    <span class="title">class data</span>
+                  </div>
+                  <div class="data" title="__builtin__.tuple" id="postgresql.protocol.pqueue.element3.Error.__slots__"><span class="name">__slots__</span> = <a class="objref" href="//__builtin__.tuple"><pre>()</pre></a></div>
+                  <div class="data" title="__builtin__.str" id="postgresql.protocol.pqueue.element3.Error.type"><span class="name">type</span> = <a class="objref" href="//__builtin__.str"><pre>'E'</pre></a></div>
+                </div>
+              </div>
+            </div>
+            <div class="class" id="postgresql.protocol.pqueue.element3.Startup">
+              <div class="title"><span class="keyword">class</span> <span class="title">Startup</span>(<a class="super" title="postgresql.protocol.pqueue.element3.Message" href="#postgresql.protocol.pqueue.element3.Message">Message</a>, <a class="super" title="__builtin__.dict" href="//__builtin__.dict">dict</a>):</div>
+              <div class="doc">
+                <pre>Initiate a connection</pre>
+              </div>
+              <div class="content">
+                <div class="class_methods">
+                  <div class="head">
+                    <span class="title">class methods</span>
+                  </div>
+                  <div class="method">
+                    <div class="title"><span class="keyword">def</span> <span class="title">parse</span><span class="args">(<span class="block"><span class="argname">self</span><span class="argsep">,</span> <span class="argname">data</span></span>):</span></div>
+                  </div>
+                </div>
+                <div class="methods">
+                  <div class="head">
+                    <span class="title">methods</span>
+                  </div>
+                  <div class="method">
+                    <div class="title"><span class="keyword">def</span> <span class="title">__repr__</span><span class="args">(<span class="block"><span class="argname">self</span></span>):</span></div>
+                  </div>
+                  <div class="method">
+                    <div class="title"><span class="keyword">def</span> <span class="title">serialize</span><span class="args">(<span class="block"><span class="argname">self</span></span>):</span></div>
+                  </div>
+                </div>
+                <div class="datas">
+                  <div class="head">
+                    <span class="title">class data</span>
+                  </div>
+                  <div class="data" title="__builtin__.tuple" id="postgresql.protocol.pqueue.element3.Startup.__slots__"><span class="name">__slots__</span> = <a class="objref" href="//__builtin__.tuple"><pre>()</pre></a></div>
+                  <div class="data" title="postgresql.protocol.pqueue.version.Version" id="postgresql.protocol.pqueue.element3.Startup.version"><span class="name">version</span> = <a class="objref" href="#postgresql.protocol.pqueue.version.V3_0"><pre>postgresql.protocol.pqueue.version.V3_0</pre></a></div>
+                  <div class="data" title="__builtin__.str" id="postgresql.protocol.pqueue.element3.Startup.type"><span class="name">type</span> = <a class="objref" href="//__builtin__.str"><pre>''</pre></a></div>
+                </div>
+              </div>
+            </div>
+            <div class="class" id="postgresql.protocol.pqueue.element3.AttributeTypes">
+              <div class="title"><span class="keyword">class</span> <span class="title">AttributeTypes</span>(<a class="super" title="postgresql.protocol.pqueue.element3.Message" href="#postgresql.protocol.pqueue.element3.Message">Message</a>, <a class="super" title="__builtin__.tuple" href="//__builtin__.tuple">tuple</a>):</div>
+              <div class="doc">
+                <pre>Tuple attribute types</pre>
+              </div>
+              <div class="content">
+                <div class="class_methods">
+                  <div class="head">
+                    <span class="title">class methods</span>
+                  </div>
+                  <div class="method">
+                    <div class="title"><span class="keyword">def</span> <span class="title">parse</span><span class="args">(<span class="block"><span class="argname">self</span><span class="argsep">,</span> <span class="argname">data</span></span>):</span></div>
+                  </div>
+                </div>
+                <div class="methods">
+                  <div class="head">
+                    <span class="title">methods</span>
+                  </div>
+                  <div class="method">
+                    <div class="title"><span class="keyword">def</span> <span class="title">__repr__</span><span class="args">(<span class="block"><span class="argname">self</span></span>):</span></div>
+                  </div>
+                  <div class="method">
+                    <div class="title"><span class="keyword">def</span> <span class="title">serialize</span><span class="args">(<span class="block"><span class="argname">self</span></span>):</span></div>
+                  </div>
+                </div>
+                <div class="datas">
+                  <div class="head">
+                    <span class="title">class data</span>
+                  </div>
+                  <div class="data" title="__builtin__.str" id="postgresql.protocol.pqueue.element3.AttributeTypes.type"><span class="name">type</span> = <a class="objref" href="//__builtin__.str"><pre>'t'</pre></a></div>
+                  <div class="data" title="__builtin__.tuple" id="postgresql.protocol.pqueue.element3.AttributeTypes.__slots__"><span class="name">__slots__</span> = <a class="objref" href="//__builtin__.tuple"><pre>()</pre></a></div>
+                </div>
+              </div>
+            </div>
+            <div class="class" id="postgresql.protocol.pqueue.element3.Tuple">
+              <div class="title"><span class="keyword">class</span> <span class="title">Tuple</span>(<a class="super" title="postgresql.protocol.pqueue.element3.Message" href="#postgresql.protocol.pqueue.element3.Message">Message</a>, <a class="super" title="__builtin__.tuple" href="//__builtin__.tuple">tuple</a>):</div>
+              <div class="doc">
+                <pre>Incoming tuple</pre>
+              </div>
+              <div class="content">
+                <div class="class_methods">
+                  <div class="head">
+                    <span class="title">class methods</span>
+                  </div>
+                  <div class="method">
+                    <div class="title"><span class="keyword">def</span> <span class="title">parse</span><span class="args">(<span class="block"><span class="argname">self</span><span class="argsep">,</span> <span class="argname">data</span></span>):</span></div>
+                  </div>
+                </div>
+                <div class="methods">
+                  <div class="head">
+                    <span class="title">methods</span>
+                  </div>
+                  <div class="method">
+                    <div class="title"><span class="keyword">def</span> <span class="title">__repr__</span><span class="args">(<span class="block"><span class="argname">self</span></span>):</span></div>
+                  </div>
+                  <div class="method">
+                    <div class="title"><span class="keyword">def</span> <span class="title">serialize</span><span class="args">(<span class="block"><span class="argname">self</span></span>):</span></div>
+                  </div>
+                </div>
+                <div class="datas">
+                  <div class="head">
+                    <span class="title">class data</span>
+                  </div>
+                  <div class="data" title="__builtin__.str" id="postgresql.protocol.pqueue.element3.Tuple.type"><span class="name">type</span> = <a class="objref" href="//__builtin__.str"><pre>'D'</pre></a></div>
+                  <div class="data" title="__builtin__.tuple" id="postgresql.protocol.pqueue.element3.Tuple.__slots__"><span class="name">__slots__</span> = <a class="objref" href="//__builtin__.tuple"><pre>()</pre></a></div>
+                </div>
+              </div>
+            </div>
+            <div class="class" id="postgresql.protocol.pqueue.element3.TupleDescriptor">
+              <div class="title"><span class="keyword">class</span> <span class="title">TupleDescriptor</span>(<a class="super" title="postgresql.protocol.pqueue.element3.Message" href="#postgresql.protocol.pqueue.element3.Message">Message</a>, <a class="super" title="__builtin__.tuple" href="//__builtin__.tuple">tuple</a>):</div>
+              <div class="doc">
+                <pre>Tuple description</pre>
+              </div>
+              <div class="content">
+                <div class="class_methods">
+                  <div class="head">
+                    <span class="title">class methods</span>
+                  </div>
+                  <div class="method">
+                    <div class="title"><span class="keyword">def</span> <span class="title">parse</span><span class="args">(<span class="block"><span class="argname">self</span><span class="argsep">,</span> <span class="argname">data</span></span>):</span></div>
+                  </div>
+                </div>
+                <div class="methods">
+                  <div class="head">
+                    <span class="title">methods</span>
+                  </div>
+                  <div class="method">
+                    <div class="title"><span class="keyword">def</span> <span class="title">__repr__</span><span class="args">(<span class="block"><span class="argname">self</span></span>):</span></div>
+                  </div>
+                  <div class="method">
+                    <div class="title"><span class="keyword">def</span> <span class="title">serialize</span><span class="args">(<span class="block"><span class="argname">self</span></span>):</span></div>
+                  </div>
+                </div>
+                <div class="datas">
+                  <div class="head">
+                    <span class="title">class data</span>
+                  </div>
+                  <div class="data" title="__builtin__.str" id="postgresql.protocol.pqueue.element3.TupleDescriptor.type"><span class="name">type</span> = <a class="objref" href="//__builtin__.str"><pre>'T'</pre></a></div>
+                  <div class="data" title="__builtin__.tuple" id="postgresql.protocol.pqueue.element3.TupleDescriptor.__slots__"><span class="name">__slots__</span> = <a class="objref" href="//__builtin__.tuple"><pre>()</pre></a></div>
+                </div>
+              </div>
+            </div>
+            <div class="class" id="postgresql.protocol.pqueue.element3.WireMessage">
+              <div class="title"><span class="keyword">class</span> <span class="title">WireMessage</span>(<a class="super" title="postgresql.protocol.pqueue.element3.Message" href="#postgresql.protocol.pqueue.element3.Message">Message</a>, <a class="super" title="__builtin__.tuple" href="//__builtin__.tuple">tuple</a>):</div>
+              <div class="content">
+                <div class="class_methods">
+                  <div class="head">
+                    <span class="title">class methods</span>
+                  </div>
+                  <div class="method">
+                    <div class="title"><span class="keyword">def</span> <span class="title">__new__</span><span class="args">(<span class="block"><span class="argname">subtype</span><span class="argsep">,</span> (<span class="argname">type</span><span class="argsep">,</span> <span class="argname">data</span>)</span>):</span></div>
+                  </div>
+                  <div class="method">
+                    <div class="title"><span class="keyword">def</span> <span class="title">parse</span><span class="args">(<span class="block"><span class="argname">self</span><span class="argsep">,</span> <span class="argname">data</span></span>):</span></div>
+                  </div>
+                </div>
+                <div class="methods">
+                  <div class="head">
+                    <span class="title">methods</span>
+                  </div>
+                  <div class="method">
+                    <div class="title"><span class="keyword">def</span> <span class="title">__repr__</span><span class="args">(<span class="block"><span class="argname">self</span></span>):</span></div>
+                  </div>
+                  <div class="method">
+                    <div class="title"><span class="keyword">def</span> <span class="title">serialize</span><span class="args">(<span class="block"><span class="argname">self</span></span>):</span></div>
+                  </div>
+                </div>
+                <div class="properties">
+                  <div class="head">
+                    <span class="title">properties</span>
+                  </div>
+                  <div class="property">
+                    <div class="title"><span class="keyword">property</span> <span class="title">data</span></div>
+                  </div>
+                  <div class="property">
+                    <div class="title"><span class="keyword">property</span> <span class="title">type</span></div>
+                  </div>
+                </div>
+                <div class="datas">
+                  <div class="head">
+                    <span class="title">class data</span>
+                  </div>
+                  <div class="data" title="__builtin__.tuple" id="postgresql.protocol.pqueue.element3.WireMessage.__slots__"><span class="name">__slots__</span> = <a class="objref" href="//__builtin__.tuple"><pre>()</pre></a></div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="functions">
+            <div class="head">
+              <span class="title">functions</span>
+            </div>
+            <div class="function">
+              <div class="title"><span class="keyword">def</span> <span class="title">&lt;lambda&gt;</span><span class="args">(<span class="block"><span class="argname">x</span></span>):</span></div>
+            </div>
+            <div class="function">
+              <div class="title"><span class="keyword">def</span> <span class="title">&lt;lambda&gt;</span><span class="args">(<span class="block"><span class="argname">x</span></span>):</span></div>
+            </div>
+            <div class="function">
+              <div class="title"><span class="keyword">def</span> <span class="title">str_message_repr</span><span class="args">(<span class="block"><span class="argname">self</span></span>):</span></div>
+            </div>
+            <div class="function">
+              <div class="title"><span class="keyword">def</span> <span class="title">tuple_message_repr</span><span class="args">(<span class="block"><span class="argname">self</span></span>):</span></div>
+            </div>
+            <div class="function">
+              <div class="title"><span class="keyword">def</span> <span class="title">dict_message_repr</span><span class="args">(<span class="block"><span class="argname">self</span></span>):</span></div>
+            </div>
+          </div>
+          <div class="datas">
+            <div class="head">
+              <span class="title">data</span>
+            </div>
+            <div class="data" title="__builtin__.dict" id="postgresql.protocol.pqueue.element3.AuthNameMap"><span class="name">AuthNameMap</span> = <a class="objref" href="//__builtin__.dict"><pre>{1: 'Kerberos4', 2: 'Kerberos5', 3: 'Cleartext', 4: 'Crypt', 5: 'MD5', 6: 'SCM Credential', 7: 'GSS', 8: 'GSSContinue', 9: 'SSPI'}</pre></a></div>
+            <div class="data" title="__builtin__.int" id="postgresql.protocol.pqueue.element3.AuthRequest_Cleartext"><span class="name">AuthRequest_Cleartext</span> = <a class="objref" href="//__builtin__.int"><pre>3</pre></a></div>
+            <div class="data" title="__builtin__.int" id="postgresql.protocol.pqueue.element3.AuthRequest_Crypt"><span class="name">AuthRequest_Crypt</span> = <a class="objref" href="//__builtin__.int"><pre>4</pre></a></div>
+            <div class="data" title="__builtin__.int" id="postgresql.protocol.pqueue.element3.AuthRequest_GSS"><span class="name">AuthRequest_GSS</span> = <a class="objref" href="//__builtin__.int"><pre>7</pre></a></div>
+            <div class="data" title="__builtin__.int" id="postgresql.protocol.pqueue.element3.AuthRequest_GSSContinue"><span class="name">AuthRequest_GSSContinue</span> = <a class="objref" href="//__builtin__.int"><pre>8</pre></a></div>
+            <div class="data" title="__builtin__.int" id="postgresql.protocol.pqueue.element3.AuthRequest_KRB4"><span class="name">AuthRequest_KRB4</span> = <a class="objref" href="//__builtin__.int"><pre>1</pre></a></div>
+            <div class="data" title="__builtin__.int" id="postgresql.protocol.pqueue.element3.AuthRequest_KRB5"><span class="name">AuthRequest_KRB5</span> = <a class="objref" href="//__builtin__.int"><pre>2</pre></a></div>
+            <div class="data" title="__builtin__.int" id="postgresql.protocol.pqueue.element3.AuthRequest_MD5"><span class="name">AuthRequest_MD5</span> = <a class="objref" href="//__builtin__.int"><pre>5</pre></a></div>
+            <div class="data" title="__builtin__.int" id="postgresql.protocol.pqueue.element3.AuthRequest_OK"><span class="name">AuthRequest_OK</span> = <a class="objref" href="//__builtin__.int"><pre>0</pre></a></div>
+            <div class="data" title="__builtin__.int" id="postgresql.protocol.pqueue.element3.AuthRequest_Password"><span class="name">AuthRequest_Password</span> = <a class="objref" href="//__builtin__.int"><pre>3</pre></a></div>
+            <div class="data" title="__builtin__.int" id="postgresql.protocol.pqueue.element3.AuthRequest_SCMC"><span class="name">AuthRequest_SCMC</span> = <a class="objref" href="//__builtin__.int"><pre>6</pre></a></div>
+            <div class="data" title="__builtin__.int" id="postgresql.protocol.pqueue.element3.AuthRequest_SSPI"><span class="name">AuthRequest_SSPI</span> = <a class="objref" href="//__builtin__.int"><pre>9</pre></a></div>
+            <div class="data" title="__builtin__.builtin_function_or_method" id="postgresql.protocol.pqueue.element3.BYTE"><span class="name">BYTE</span> = <a class="objref" href="//__builtin__.chr"><pre>chr</pre></a></div>
+            <div class="data" title="__builtin__.str" id="postgresql.protocol.pqueue.element3.BinaryFormat"><span class="name">BinaryFormat</span> = <a class="objref" href="//__builtin__.str"><pre>'\x00\x01'</pre></a></div>
+            <div class="data" title="postgresql.protocol.pqueue.element3.BindComplete" id="postgresql.protocol.pqueue.element3.BindCompleteMessage"><span class="name">BindCompleteMessage</span> = <a class="objref" href="#postgresql.protocol.pqueue.element3.BindComplete"><pre>postgresql.protocol.pqueue.element3.BindComplete()</pre></a></div>
+            <div class="data" title="postgresql.protocol.pqueue.element3.CloseComplete" id="postgresql.protocol.pqueue.element3.CloseCompleteMessage"><span class="name">CloseCompleteMessage</span> = <a class="objref" href="#postgresql.protocol.pqueue.element3.CloseComplete"><pre>postgresql.protocol.pqueue.element3.CloseComplete()</pre></a></div>
+            <div class="data" title="postgresql.protocol.pqueue.element3.CopyDone" id="postgresql.protocol.pqueue.element3.CopyDoneMessage"><span class="name">CopyDoneMessage</span> = <a class="objref" href="#postgresql.protocol.pqueue.element3.CopyDone"><pre>postgresql.protocol.pqueue.element3.CopyDone()</pre></a></div>
+            <div class="data" title="__builtin__.type" id="postgresql.protocol.pqueue.element3.DictionaryType"><span class="name">DictionaryType</span> = <a class="objref" href="//__builtin__.dict"><pre>dict</pre></a></div>
+            <div class="data" title="postgresql.protocol.pqueue.element3.Disconnect" id="postgresql.protocol.pqueue.element3.DisconnectMessage"><span class="name">DisconnectMessage</span> = <a class="objref" href="#postgresql.protocol.pqueue.element3.Disconnect"><pre>postgresql.protocol.pqueue.element3.Disconnect()</pre></a></div>
+            <div class="data" title="postgresql.protocol.pqueue.element3.Flush" id="postgresql.protocol.pqueue.element3.FlushMessage"><span class="name">FlushMessage</span> = <a class="objref" href="#postgresql.protocol.pqueue.element3.Flush"><pre>postgresql.protocol.pqueue.element3.Flush()</pre></a></div>
+            <div class="data" title="__builtin__.Struct" id="postgresql.protocol.pqueue.element3.H_struct"><span class="name">H_struct</span> = <a class="objref" href="//__builtin__.Struct"><pre>&lt;Struct object at 0x13083e0&gt;</pre></a></div>
+            <div class="data" title="__builtin__.Struct" id="postgresql.protocol.pqueue.element3.L_struct"><span class="name">L_struct</span> = <a class="objref" href="//__builtin__.Struct"><pre>&lt;Struct object at 0x13083c0&gt;</pre></a></div>
+            <div class="data" title="postgresql.protocol.pqueue.element3.NegotiateSSL" id="postgresql.protocol.pqueue.element3.NegotiateSSLMessage"><span class="name">NegotiateSSLMessage</span> = <a class="objref" href="#postgresql.protocol.pqueue.element3.NegotiateSSL"><pre>postgresql.protocol.pqueue.element3.NegotiateSSL()</pre></a></div>
+            <div class="data" title="postgresql.protocol.pqueue.element3.NoData" id="postgresql.protocol.pqueue.element3.NoDataMessage"><span class="name">NoDataMessage</span> = <a class="objref" href="#postgresql.protocol.pqueue.element3.NoData"><pre>postgresql.protocol.pqueue.element3.NoData()</pre></a></div>
+            <div class="data" title="postgresql.protocol.pqueue.element3.Null" id="postgresql.protocol.pqueue.element3.NullMessage"><span class="name">NullMessage</span> = <a class="objref" href="#postgresql.protocol.pqueue.element3.Null"><pre>postgresql.protocol.pqueue.element3.Null()</pre></a></div>
+            <div class="data" title="__builtin__.type" id="postgresql.protocol.pqueue.element3.ObjectType"><span class="name">ObjectType</span> = <a class="objref" href="//__builtin__.object"><pre>object</pre></a></div>
+            <div class="data" title="postgresql.protocol.pqueue.element3.ParseComplete" id="postgresql.protocol.pqueue.element3.ParseCompleteMessage"><span class="name">ParseCompleteMessage</span> = <a class="objref" href="#postgresql.protocol.pqueue.element3.ParseComplete"><pre>postgresql.protocol.pqueue.element3.ParseComplete()</pre></a></div>
+            <div class="data" title="__builtin__.builtin_function_or_method" id="postgresql.protocol.pqueue.element3.SHORT"><span class="name">SHORT</span> = <a class="objref" href="//__builtin__.builtin_function_or_method"><pre>&lt;built-in method pack of Struct object at 0x13083e0&gt;</pre></a></div>
+            <div class="data" title="__builtin__.str" id="postgresql.protocol.pqueue.element3.StringFormat"><span class="name">StringFormat</span> = <a class="objref" href="//__builtin__.str"><pre>'\x00\x00'</pre></a></div>
+            <div class="data" title="__builtin__.type" id="postgresql.protocol.pqueue.element3.StringType"><span class="name">StringType</span> = <a class="objref" href="//__builtin__.str"><pre>str</pre></a></div>
+            <div class="data" title="postgresql.protocol.pqueue.element3.Suspension" id="postgresql.protocol.pqueue.element3.SuspensionMessage"><span class="name">SuspensionMessage</span> = <a class="objref" href="#postgresql.protocol.pqueue.element3.Suspension"><pre>postgresql.protocol.pqueue.element3.Suspension()</pre></a></div>
+            <div class="data" title="postgresql.protocol.pqueue.element3.Synchronize" id="postgresql.protocol.pqueue.element3.SynchronizeMessage"><span class="name">SynchronizeMessage</span> = <a class="objref" href="#postgresql.protocol.pqueue.element3.Synchronize"><pre>postgresql.protocol.pqueue.element3.Synchronize()</pre></a></div>
+            <div class="data" title="__builtin__.type" id="postgresql.protocol.pqueue.element3.TupleType"><span class="name">TupleType</span> = <a class="objref" href="//__builtin__.tuple"><pre>tuple</pre></a></div>
+            <div class="data" title="__builtin__.builtin_function_or_method" id="postgresql.protocol.pqueue.element3.UNBYTE"><span class="name">UNBYTE</span> = <a class="objref" href="//__builtin__.ord"><pre>ord</pre></a></div>
+            <div class="data" title="postgresql.protocol.pqueue.element3.Void" id="postgresql.protocol.pqueue.element3.VoidMessage"><span class="name">VoidMessage</span> = <a class="objref" href="#postgresql.protocol.pqueue.element3.Void"><pre>postgresql.protocol.pqueue.element3.Void()</pre></a></div>
+            <div class="data" title="__builtin__.function" id="postgresql.protocol.pqueue.element3.pack"><span class="name">pack</span> = <a class="objref" href="//struct.pack"><pre>struct.pack</pre></a></div>
+            <div class="data" title="__builtin__.function" id="postgresql.protocol.pqueue.element3.unpack"><span class="name">unpack</span> = <a class="objref" href="//struct.unpack"><pre>struct.unpack</pre></a></div>
+          </div>
+        </div>
+      </div>
+      <br />
+      <div class="module" id="postgresql.protocol.pqueue.buffer">
+        <h3 class="title"><span class="keyword">module</span> postgresql.protocol.pqueue.buffer</h3>
+        <div class="doc">
+          <pre>This is an abstraction module that provides the working buffer implementation.
+If a C compiler is not available on the system that built the package, the slower
+`postgresql.protocol.pqueue.pbuffer` module can be used in
+`postgresql.protocol.pqueue.cbuffer`'s absence.
+
+This provides a convenient place to import the necessary module without
+concerning the local code with the details.</pre>
+        </div>
+      </div>
+      <br />
+      <div class="module" id="postgresql.protocol.pqueue.client3">
+        <h3 class="title"><span class="keyword">module</span> postgresql.protocol.pqueue.client3</h3>
+        <div class="doc">
+          <pre>PQ version 3.0 client transactions</pre>
+        </div>
+        <div class="content">
+          <div class="imports">
+            <div class="head">
+              <span class="title">imports</span>
+            </div>
+            <div class="import"><span class="keyword">import</span> <a class="import" href="#postgresql.protocol.pqueue.element3"><span class="path">postgresql.protocol.pqueue.element3</span> as <span class="name">element</span></a></div>
+            <div class="import"><span class="keyword">import</span> <a class="import" href="//sys"><span class="path">sys</span></a></div>
+          </div>
+          <div class="classes">
+            <div class="head">
+              <span class="title">classes</span>
+            </div>
+            <div class="class" id="postgresql.protocol.pqueue.client3.ProtocolError">
+              <div class="title"><span class="keyword">class</span> <span class="title">ProtocolError</span>(<a class="super" title="exceptions.Exception" href="//exceptions.Exception">Exception</a>):</div>
+              <div class="doc">
+                <pre>An exception that occurs when an unexpected message was received.</pre>
+              </div>
+              <div class="content">
+                <div class="methods">
+                  <div class="head">
+                    <span class="title">methods</span>
+                  </div>
+                  <div class="method">
+                    <div class="title"><span class="keyword">def</span> <span class="title">__init__</span><span class="args">(<span class="block"><span class="argname">self</span><span class="argsep">,</span> <span class="argname">msg</span><span class="argsep">,</span> <span class="argname">invalid_message</span><span class="argsep">,</span> <span class="argname">expected = <a class="objref" href="//__builtin__.NoneType"><pre>None</pre></a></span></span>):</span></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="class" id="postgresql.protocol.pqueue.client3.Transaction">
+              <div class="title"><span class="keyword">class</span> <span class="title">Transaction</span>(<a class="super" title="__builtin__.object" href="//__builtin__.object">object</a>):</div>
+              <div class="doc">
+                <pre>A transaction object is state machine that is initialized with the request
+messages to be sent to the server. It provides the messages to be sent and
+takes the response messages for order and integrity validation:
+
+        Transaction([postgresql.protocol.pqueue.element3.Message(), ..])
+
+A message must be one of:
+
+        * `postgresql.protocol.pqueue.element3.Query`
+        * `postgresql.protocol.pqueue.element3.Function`
+        * `postgresql.protocol.pqueue.element3.Parse`
+        * `postgresql.protocol.pqueue.element3.Bind`
+        * `postgresql.protocol.pqueue.element3.Describe`
+        * `postgresql.protocol.pqueue.element3.Close`
+        * `postgresql.protocol.pqueue.element3.Execute`
+        * `postgresql.protocol.pqueue.element3.Synchronize`
+        * `postgresql.protocol.pqueue.element3.Flush`</pre>
+              </div>
+              <div class="content">
+                <div class="methods">
+                  <div class="head">
+                    <span class="title">methods</span>
+                  </div>
+                  <div class="method">
+                    <div class="title"><span class="keyword">def</span> <span class="title">__init__</span><span class="args">(<span class="block"><span class="argname">self</span><span class="argsep">,</span> <span class="argname">commands</span></span>):</span></div>
+                    <div class="doc">
+                      <pre>Initialize a `Transaction` instance using the given commands. Commands are
+`postgresql.protocol.pqueue.element3.Message` instances. (Of course,
+subclasses thereof.)</pre>
+                    </div>
+                  </div>
+                  <div class="method">
+                    <div class="title"><span class="keyword">def</span> <span class="title">__repr__</span><span class="args">(<span class="block"><span class="argname">self</span></span>):</span></div>
+                  </div>
+                  <div class="method">
+                    <div class="title"><span class="keyword">def</span> <span class="title">put_copydata</span><span class="args">(<span class="block"><span class="argname">self</span><span class="argsep">,</span> <span class="argname">messages</span></span>):</span></div>
+                    <div class="doc">
+                      <pre>In the context of a copy, `put_copydata` is used as a fast path for
+storing `element.CopyData` messages. When a non-`element.CopyData.type`
+message is received, it reverts the ``state`` attribute back to
+`standard_put` to normally process the message..</pre>
+                    </div>
+                  </div>
+                  <div class="method">
+                    <div class="title"><span class="keyword">def</span> <span class="title">put_tupledata</span><span class="args">(<span class="block"><span class="argname">self</span><span class="argsep">,</span> <span class="argname">messages</span></span>):</span></div>
+                    <div class="doc">
+                      <pre>Fast path used when inside an Execute command. As soon as tuple
+data is seen.</pre>
+                    </div>
+                  </div>
+                  <div class="method">
+                    <div class="title"><span class="keyword">def</span> <span class="title">reset</span><span class="args">(<span class="block"><span class="argname">self</span></span>):</span></div>
+                    <div class="doc">
+                      <pre>Reset the `Transaction` instance to its initial state. Allows reuse
+without recreation.</pre>
+                    </div>
+                  </div>
+                  <div class="method">
+                    <div class="title"><span class="keyword">def</span> <span class="title">reverse</span><span class="args">(<span class="block"><span class="argname">self</span></span>):</span></div>
+                    <div class="doc">
+                      <pre>A generator that producing an iterator of completed messages in reverse
+order. Last in, first out.</pre>
+                    </div>
+                  </div>
+                  <div class="method">
+                    <div class="title"><span class="keyword">def</span> <span class="title">sent</span><span class="args">(<span class="block"><span class="argname">self</span></span>):</span></div>
+                    <div class="doc">
+                      <pre>empty messages and switch state to receiving</pre>
+                    </div>
+                  </div>
+                  <div class="method">
+                    <div class="title"><span class="keyword">def</span> <span class="title">sent_from_stdin</span><span class="args">(<span class="block"><span class="argname">self</span></span>):</span></div>
+                    <div class="doc">
+                      <pre>The state method for sending copy data.</pre>
+                    </div>
+                  </div>
+                  <div class="method">
+                    <div class="title"><span class="keyword">def</span> <span class="title">standard_put</span><span class="args">(<span class="block"><span class="argname">self</span><span class="argsep">,</span> <span class="argname">messages</span></span>):</span></div>
+                    <div class="doc">
+                      <pre>Attempt to forward the state of the transaction using the given
+messages. "put" messages into the transaction for processing.
+
+If an invalid command is initialized on the `Transaction` object, an
+`IndexError` will be thrown.</pre>
+                    </div>
+                  </div>
+                  <div class="method">
+                    <div class="title"><span class="keyword">def</span> <span class="title">standard_sent</span><span class="args">(<span class="block"><span class="argname">self</span></span>):</span></div>
+                    <div class="doc">
+                      <pre>empty messages and switch state to receiving</pre>
+                    </div>
+                  </div>
+                </div>
+                <div class="datas">
+                  <div class="head">
+                    <span class="title">class data</span>
+                  </div>
+                  <div class="data" title="__builtin__.dict" id="postgresql.protocol.pqueue.client3.Transaction.hook"><span class="name">hook</span> = <a class="objref" href="//__builtin__.dict"><pre>{'C': ({'3': (&lt;bound method type.parse of &lt;class 'postgresql.protocol.pqueue.element3.CloseComplete'&gt;&gt;, None)},), 'B': ({'2': (&lt;bound method type.parse of &lt;class 'postgresql.protocol.pqueue.element3.BindComplete'&gt;&gt;, None)},), 'E': ({'I': (&lt;bound method type.parse of &lt;class 'postgresql.protocol.pqueue.element3.Null'&gt;&gt;, None), 'H': (&lt;bound method type.parse of &lt;class 'postgresql.protocol.pqueue.element3.CopyToBegin'&gt;&gt;, 2), 'C': (&lt;bound method type.parse of &lt;class 'postgresql.protocol.pqueue.element3.Complete'&gt;&gt;, None), 'D': (&lt;bound method type.parse of &lt;class 'postgresql.protocol.pqueue.element3.Tuple'&gt;&gt;, 1), 'G': (&lt;bound method type.parse of &lt;class 'postgresql.protocol.pqueue.element3.CopyFromBegin'&gt;&gt;, 3)}, {'C': (&lt;bound method type.parse of &lt;class 'postgresql.protocol.pqueue.element3.Complete'&gt;&gt;, None), 's': (&lt;bound method type.parse of &lt;class 'postgresql.protocol.pqueue.element3.Suspension'&gt;&gt;, None), 'D': (&lt;bound method type.parse of &lt;class 'postgresql.protocol.pqueue.element3.Tuple'&gt;&gt;, 1)}, {'c': (&lt;bound method type.parse of &lt;class 'postgresql.protocol.pqueue.element3.CopyDone'&gt;&gt;, 3), 'd': (&lt;function &lt;lambda&gt; at 0x131c1f0&gt;, 2)}, {'C': (&lt;bound method type.parse of &lt;class 'postgresql.protocol.pqueue.element3.Complete'&gt;&gt;, None)}), 'D': ({'t': (&lt;bound method type.parse of &lt;class 'postgresql.protocol.pqueue.element3.AttributeTypes'&gt;&gt;, 1), 'T': (&lt;bound method type.parse of &lt;class 'postgresql.protocol.pqueue.element3.TupleDescriptor'&gt;&gt;, None)}, {'T': (&lt;bound method type.parse of &lt;class 'postgresql.protocol.pqueue.element3.TupleDescriptor'&gt;&gt;, None), 'n': (&lt;bound method type.parse of &lt;class 'postgresql.protocol.pqueue.element3.NoData'&gt;&gt;, None)}), 'F': ({'V': (&lt;bound method type.parse of &lt;class 'postgresql.protocol.pqueue.element3.FunctionResult'&gt;&gt;, 1)}, {'Z': (&lt;bound method type.parse of &lt;class 'postgresql.protocol.pqueue.element3.Ready'&gt;&gt;, None)}), 'H': None, 'Q': ({'C': (&lt;bound method type.parse of &lt;class 'postgresql.protocol.pqueue.element3.Complete'&gt;&gt;, 0), 'G': (&lt;bound method type.parse of &lt;class 'postgresql.protocol.pqueue.element3.CopyFromBegin'&gt;&gt;, 1), 'I': (&lt;bound method type.parse of &lt;class 'postgresql.protocol.pqueue.element3.Null'&gt;&gt;, 0), 'H': (&lt;bound method type.parse of &lt;class 'postgresql.protocol.pqueue.element3.CopyToBegin'&gt;&gt;, 2), 'T': (&lt;bound method type.parse of &lt;class 'postgresql.protocol.pqueue.element3.TupleDescriptor'&gt;&gt;, 3), 'Z': (&lt;bound method type.parse of &lt;class 'postgresql.protocol.pqueue.element3.Ready'&gt;&gt;, None)}, {'C': (&lt;bound method type.parse of &lt;class 'postgresql.protocol.pqueue.element3.Complete'&gt;&gt;, 0)}, {'c': (&lt;bound method type.parse of &lt;class 'postgresql.protocol.pqueue.element3.CopyDone'&gt;&gt;, 1), 'd': (&lt;function &lt;lambda&gt; at 0x131c1b0&gt;, 2)}, {'C': (&lt;bound method type.parse of &lt;class 'postgresql.protocol.pqueue.element3.Complete'&gt;&gt;, 0), 'Z': (&lt;bound method type.parse of &lt;class 'postgresql.protocol.pqueue.element3.Ready'&gt;&gt;, None), 'D': (&lt;bound method type.parse of &lt;class 'postgresql.protocol.pqueue.element3.Tuple'&gt;&gt;, 3)}), 'P': ({'1': (&lt;bound method type.parse of &lt;class 'postgresql.protocol.pqueue.element3.ParseComplete'&gt;&gt;, None)},), 'S': ({'Z': (&lt;bound method type.parse of &lt;class 'postgresql.protocol.pqueue.element3.Ready'&gt;&gt;, None)},)}</pre></a></div>
+                  <div class="data" title="postgresql.protocol.pqueue.element3.CopyFail" id="postgresql.protocol.pqueue.client3.Transaction.CopyFailMessage"><span class="name">CopyFailMessage</span> = <a class="objref" href="#postgresql.protocol.pqueue.element3.CopyFail"><pre>postgresql.protocol.pqueue.element3.CopyFail('invalid termination')</pre></a></div>
+                  <div class="data" title="__builtin__.NoneType" id="postgresql.protocol.pqueue.client3.Transaction.fatal"><span class="name">fatal</span> = <a class="objref" href="//__builtin__.NoneType"><pre>None</pre></a></div>
+                  <div class="data" title="__builtin__.tuple" id="postgresql.protocol.pqueue.client3.Transaction.state"><span class="name">state</span> = <a class="objref" href="//__builtin__.tuple"><pre>(None, None)</pre></a></div>
+                  <div class="data" title="__builtin__.dict" id="postgresql.protocol.pqueue.client3.Transaction.asynchook"><span class="name">asynchook</span> = <a class="objref" href="//__builtin__.dict"><pre>{'A': &lt;bound method type.parse of &lt;class 'postgresql.protocol.pqueue.element3.Notify'&gt;&gt;, 'S': &lt;bound method type.parse of &lt;class 'postgresql.protocol.pqueue.element3.ShowOption'&gt;&gt;, 'N': &lt;bound method type.parse of &lt;class 'postgresql.protocol.pqueue.element3.Notice'&gt;&gt;}</pre></a></div>
+                  <div class="data" title="__builtin__.tuple" id="postgresql.protocol.pqueue.client3.Transaction.initial_state"><span class="name">initial_state</span> = <a class="objref" href="//__builtin__.tuple"><pre>((), (0, 0), (0, 0))</pre></a></div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="datas">
+            <div class="head">
+              <span class="title">data</span>
+            </div>
+            <div class="data" title="__builtin__.NoneType" id="postgresql.protocol.pqueue.client3.Complete"><span class="name">Complete</span> = <a class="objref" href="//__builtin__.NoneType"><pre>None</pre></a></div>
+            <div class="data" title="__builtin__.bool" id="postgresql.protocol.pqueue.client3.Receiving"><span class="name">Receiving</span> = <a class="objref" href="//__builtin__.bool"><pre>True</pre></a></div>
+            <div class="data" title="__builtin__.bool" id="postgresql.protocol.pqueue.client3.Sending"><span class="name">Sending</span> = <a class="objref" href="//__builtin__.bool"><pre>False</pre></a></div>
+          </div>
+        </div>
+      </div>
+      <br />
+      <div class="module" id="postgresql.protocol.pqueue.version">
+        <h3 class="title"><span class="keyword">module</span> postgresql.protocol.pqueue.version</h3>
+        <div class="doc">
+          <pre>PQ version class</pre>
+        </div>
+        <div class="content">
+          <div class="classes">
+            <div class="head">
+              <span class="title">classes</span>
+            </div>
+            <div class="class" id="postgresql.protocol.pqueue.version.Version">
+              <div class="title"><span class="keyword">class</span> <span class="title">Version</span>(<a class="super" title="__builtin__.tuple" href="//__builtin__.tuple">tuple</a>):</div>
+              <div class="doc">
+                <pre>Version((major, minor)) -&gt; Version
+
+Version serializer and parser.</pre>
+              </div>
+              <div class="content">
+                <div class="class_methods">
+                  <div class="head">
+                    <span class="title">class methods</span>
+                  </div>
+                  <div class="method">
+                    <div class="title"><span class="keyword">def</span> <span class="title">__new__</span><span class="args">(<span class="block"><span class="argname">subtype</span><span class="argsep">,</span> (<span class="argname">major</span><span class="argsep">,</span> <span class="argname">minor</span>)</span>):</span></div>
+                  </div>
+                  <div class="method">
+                    <div class="title"><span class="keyword">def</span> <span class="title">parse</span><span class="args">(<span class="block"><span class="argname">self</span><span class="argsep">,</span> <span class="argname">data</span></span>):</span></div>
+                  </div>
+                </div>
+                <div class="methods">
+                  <div class="head">
+                    <span class="title">methods</span>
+                  </div>
+                  <div class="method">
+                    <div class="title"><span class="keyword">def</span> <span class="title">__int__</span><span class="args">(<span class="block"><span class="argname">self</span></span>):</span></div>
+                  </div>
+                  <div class="method">
+                    <div class="title"><span class="keyword">def</span> <span class="title">__repr__</span><span class="args">(<span class="block"><span class="argname">self</span></span>):</span></div>
+                  </div>
+                  <div class="method">
+                    <div class="title"><span class="keyword">def</span> <span class="title">__str__</span><span class="args">(<span class="block"><span class="argname">self</span></span>):</span></div>
+                  </div>
+                </div>
+                <div class="properties">
+                  <div class="head">
+                    <span class="title">properties</span>
+                  </div>
+                  <div class="property">
+                    <div class="title"><span class="keyword">property</span> <span class="title">major</span></div>
+                  </div>
+                  <div class="property">
+                    <div class="title"><span class="keyword">property</span> <span class="title">minor</span></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="datas">
+            <div class="head">
+              <span class="title">data</span>
+            </div>
+            <div class="data" title="postgresql.protocol.pqueue.version.Version" id="postgresql.protocol.pqueue.version.CancelRequestCode"><span class="name">CancelRequestCode</span> = <a class="objref" href="#postgresql.protocol.pqueue.version.Version"><pre>1234.5678</pre></a></div>
+            <div class="data" title="postgresql.protocol.pqueue.version.Version" id="postgresql.protocol.pqueue.version.NegotiateSSLCode"><span class="name">NegotiateSSLCode</span> = <a class="objref" href="#postgresql.protocol.pqueue.version.Version"><pre>1234.5679</pre></a></div>
+            <div class="data" title="__builtin__.type" id="postgresql.protocol.pqueue.version.TupleType"><span class="name">TupleType</span> = <a class="objref" href="//__builtin__.tuple"><pre>tuple</pre></a></div>
+            <div class="data" title="postgresql.protocol.pqueue.version.Version" id="postgresql.protocol.pqueue.version.V2_0"><span class="name">V2_0</span> = <a class="objref" href="#postgresql.protocol.pqueue.version.Version"><pre>2.0</pre></a></div>
+            <div class="data" title="postgresql.protocol.pqueue.version.Version" id="postgresql.protocol.pqueue.version.V3_0"><span class="name">V3_0</span> = <a class="objref" href="#postgresql.protocol.pqueue.version.Version"><pre>3.0</pre></a></div>
+            <div class="data" title="__builtin__.function" id="postgresql.protocol.pqueue.version.pack"><span class="name">pack</span> = <a class="objref" href="//struct.pack"><pre>struct.pack</pre></a></div>
+            <div class="data" title="__builtin__.function" id="postgresql.protocol.pqueue.version.unpack"><span class="name">unpack</span> = <a class="objref" href="//struct.unpack"><pre>struct.unpack</pre></a></div>
+          </div>
+        </div>
+      </div>
+      <br />
+      <div class="module" id="postgresql.protocol.pqueue.pbuffer">
+        <h3 class="title"><span class="keyword">module</span> postgresql.protocol.pqueue.pbuffer</h3>
+        <div class="content">
+          <div class="imports">
+            <div class="head">
+              <span class="title">imports</span>
+            </div>
+            <div class="import"><span class="keyword">import</span> <a class="import" href="//struct"><span class="path">struct</span></a></div>
+          </div>
+          <div class="classes">
+            <div class="head">
+              <span class="title">classes</span>
+            </div>
+            <div class="class" id="postgresql.protocol.pqueue.pbuffer.pq_message_stream">
+              <div class="title"><span class="keyword">class</span> <span class="title">pq_message_stream</span>(<a class="super" title="__builtin__.object" href="//__builtin__.object">object</a>):</div>
+              <div class="doc">
+                <pre>provide a message stream from a data stream</pre>
+              </div>
+              <div class="content">
+                <div class="methods">
+                  <div class="head">
+                    <span class="title">methods</span>
+                  </div>
+                  <div class="method">
+                    <div class="title"><span class="keyword">def</span> <span class="title">__init__</span><span class="args">(<span class="block"><span class="argname">self</span></span>):</span></div>
+                  </div>
+                  <div class="method">
+                    <div class="title"><span class="keyword">def</span> <span class="title">__len__</span><span class="args">(<span class="block"><span class="argname">self</span></span>):</span></div>
+                    <div class="doc">
+                      <pre>number of messages in buffer</pre>
+                    </div>
+                  </div>
+                  <div class="method">
+                    <div class="title"><span class="keyword">def</span> <span class="title">__next__</span><span class="args">(<span class="block"><span class="argname">self</span></span>):</span></div>
+                  </div>
+                  <div class="method">
+                    <div class="title"><span class="keyword">def</span> <span class="title">_get_message</span><span class="args">(<span class="block"><span class="argname">self</span></span>):</span></div>
+                  </div>
+                  <div class="method">
+                    <div class="title"><span class="keyword">def</span> <span class="title">_rtruncate</span><span class="args">(<span class="block"><span class="argname">self</span><span class="argsep">,</span> <span class="argname">amt = <a class="objref" href="//__builtin__.NoneType"><pre>None</pre></a></span></span>):</span></div>
+                    <div class="doc">
+                      <pre>[internal] remove the given amount of data</pre>
+                    </div>
+                  </div>
+                  <div class="method">
+                    <div class="title"><span class="keyword">def</span> <span class="title">has_message</span><span class="args">(<span class="block"><span class="argname">self</span></span>):</span></div>
+                    <div class="doc">
+                      <pre>if the buffer has a message available</pre>
+                    </div>
+                  </div>
+                  <div class="method">
+                    <div class="title"><span class="keyword">def</span> <span class="title">next</span><span class="args">(<span class="block"><span class="argname">self</span></span>):</span></div>
+                  </div>
+                  <div class="method">
+                    <div class="title"><span class="keyword">def</span> <span class="title">next_message</span><span class="args">(<span class="block"><span class="argname">self</span></span>):</span></div>
+                  </div>
+                  <div class="method">
+                    <div class="title"><span class="keyword">def</span> <span class="title">read</span><span class="args">(<span class="block"><span class="argname">self</span><span class="argsep">,</span> <span class="argname">num = <a class="objref" href="//__builtin__.long"><pre>4294967295L</pre></a></span></span>):</span></div>
+                  </div>
+                  <div class="method">
+                    <div class="title"><span class="keyword">def</span> <span class="title">truncate</span><span class="args">(<span class="block"><span class="argname">self</span></span>):</span></div>
+                    <div class="doc">
+                      <pre>remove all data in the buffer</pre>
+                    </div>
+                  </div>
+                  <div class="method">
+                    <div class="title"><span class="keyword">def</span> <span class="title">write</span><span class="args">(<span class="block"><span class="argname">self</span><span class="argsep">,</span> <span class="argname">data</span></span>):</span></div>
+                  </div>
+                </div>
+                <div class="datas">
+                  <div class="head">
+                    <span class="title">class data</span>
+                  </div>
+                  <div class="data" title="__builtin__.int" id="postgresql.protocol.pqueue.pbuffer.pq_message_stream._block"><span class="name">_block</span> = <a class="objref" href="//__builtin__.int"><pre>512</pre></a></div>
+                  <div class="data" title="__builtin__.int" id="postgresql.protocol.pqueue.pbuffer.pq_message_stream._limit"><span class="name">_limit</span> = <a class="objref" href="//__builtin__.int"><pre>2048</pre></a></div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="datas">
+            <div class="head">
+              <span class="title">data</span>
+            </div>
+            <div class="data" title="__builtin__.builtin_function_or_method" id="postgresql.protocol.pqueue.pbuffer.StringIO"><span class="name">StringIO</span> = <a class="objref" href="//cStringIO.StringIO"><pre>cStringIO.StringIO</pre></a></div>
+            <div class="data" title="__builtin__.list" id="postgresql.protocol.pqueue.pbuffer.__all__"><span class="name">__all__</span> = <a class="objref" href="//__builtin__.list"><pre>['pq_message_stream']</pre></a></div>
+            <div class="data" title="__builtin__.builtin_function_or_method" id="postgresql.protocol.pqueue.pbuffer.cl_unpack"><span class="name">cl_unpack</span> = <a class="objref" href="//__builtin__.builtin_function_or_method"><pre>&lt;built-in method unpack_from of Struct object at 0x1301d00&gt;</pre></a></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

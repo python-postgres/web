@@ -1,0 +1,648 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>pg_typical-1.0</title>
+    <link rel="stylesheet" type="text/css" href="xhtml.css" />
+  </head>
+  <body>
+    <h2 class="title"><span class="keyword">project</span> pg_typical 1.0</h2>
+    <div class="content">
+      <div class="description">PostgreSQL binary type I/O routines</div>
+      <div id="long_description" class="doc">
+        <div class="rst-root">
+          <div class="rst-document">
+<p>Typical is a project providing PostgreSQL binary type I/O routines for Python.
+At the core, pstruct, it provides the transformation routine. The outer layers,
+oidmap and stdio, it provides dictionaries that associate the PostgreSQL type
+oid with the transformation routine.</p>
+</div>
+        </div>
+      </div>
+      <br />
+      <div class="package" id="postgresql.protocol.typical">
+        <h3 class="title"><span class="keyword">package</span> postgresql.protocol.typical</h3>
+        <div class="doc">
+          <pre>Typical PostgreSQL type I/O package space</pre>
+        </div>
+      </div>
+      <br />
+      <div class="module" id="postgresql.protocol.typical.oidmaps">
+        <h3 class="title"><span class="keyword">module</span> postgresql.protocol.typical.oidmaps</h3>
+        <div class="doc">
+          <pre>Map PostgreSQL type Oids to routines that pack and unpack raw data.
+
+ stdio:
+  The primary map.</pre>
+        </div>
+      </div>
+      <br />
+      <div class="module" id="postgresql.protocol.typical.pstruct">
+        <h3 class="title"><span class="keyword">module</span> postgresql.protocol.typical.pstruct</h3>
+        <div class="doc">
+          <pre>PostgreSQL data type protocol--packing and unpacking functions.
+
+This module provides functions that pack and unpack many standard PostgreSQL
+types. These functions are completely unassociated with normally corresponding
+type Oids; that mapping is handled by the `postgresql.protocol.typical.oidmaps`
+module and the `postgresql.protocol.typical.stdio` module(The latter doesn't
+normally map to these functions, rather a higher level transformation that uses
+these functions).
+
+The name of the function describes what type the function is intended to be used
+on. Normally, the fucntions return a structured form of the serialized data to
+be used as a parameter to the creation of a higher level instance. In
+particular, most of the functions that deal with time return a pair for
+representing the relative offset: (seconds, microseconds). For times, this
+provides an abstraction for quad-word based times used by some configurations of
+PostgreSQL.</pre>
+        </div>
+        <div class="content">
+          <div class="imports">
+            <div class="head">
+              <span class="title">imports</span>
+            </div>
+            <div class="import"><span class="keyword">import</span> <a class="import" href="//math"><span class="path">math</span></a></div>
+            <div class="import"><span class="keyword">import</span> <a class="import" href="//struct"><span class="path">struct</span></a></div>
+          </div>
+          <div class="functions">
+            <div class="head">
+              <span class="title">functions</span>
+            </div>
+            <div class="function">
+              <div class="title"><span class="keyword">def</span> <span class="title">mk_pack</span><span class="args">(<span class="block"><span class="argname">x</span></span>):</span></div>
+              <div class="doc">
+                <pre>Create a pair, (pack, unpack) for the given `struct` format.</pre>
+              </div>
+            </div>
+            <div class="function">
+              <div class="title"><span class="keyword">def</span> <span class="title">&lt;lambda&gt;</span><span class="args">(<span class="block"><span class="argname">y</span></span>):</span></div>
+            </div>
+            <div class="function">
+              <div class="title"><span class="keyword">def</span> <span class="title">&lt;lambda&gt;</span><span class="args">(<span class="block"><span class="argname">y</span></span>):</span></div>
+            </div>
+            <div class="function">
+              <div class="title"><span class="keyword">def</span> <span class="title">&lt;lambda&gt;</span><span class="args">(<span class="block"><span class="argname">y</span></span>):</span></div>
+            </div>
+            <div class="function">
+              <div class="title"><span class="keyword">def</span> <span class="title">&lt;lambda&gt;</span><span class="args">(<span class="block"><span class="argname">y</span></span>):</span></div>
+            </div>
+            <div class="function">
+              <div class="title"><span class="keyword">def</span> <span class="title">&lt;lambda&gt;</span><span class="args">(<span class="block"><span class="argname">y</span></span>):</span></div>
+            </div>
+            <div class="function">
+              <div class="title"><span class="keyword">def</span> <span class="title">&lt;lambda&gt;</span><span class="args">(<span class="block"><span class="argname">y</span></span>):</span></div>
+            </div>
+            <div class="function">
+              <div class="title"><span class="keyword">def</span> <span class="title">&lt;lambda&gt;</span><span class="args">(<span class="block"><span class="argname">y</span></span>):</span></div>
+            </div>
+            <div class="function">
+              <div class="title"><span class="keyword">def</span> <span class="title">&lt;lambda&gt;</span><span class="args">(<span class="block"><span class="argname">y</span></span>):</span></div>
+            </div>
+            <div class="function">
+              <div class="title"><span class="keyword">def</span> <span class="title">&lt;lambda&gt;</span><span class="args">(<span class="block"><span class="argname">y</span></span>):</span></div>
+            </div>
+            <div class="function">
+              <div class="title"><span class="keyword">def</span> <span class="title">&lt;lambda&gt;</span><span class="args">(<span class="block"><span class="argname">y</span></span>):</span></div>
+            </div>
+            <div class="function">
+              <div class="title"><span class="keyword">def</span> <span class="title">&lt;lambda&gt;</span><span class="args">(<span class="block"><span class="argname">y</span></span>):</span></div>
+            </div>
+            <div class="function">
+              <div class="title"><span class="keyword">def</span> <span class="title">&lt;lambda&gt;</span><span class="args">(<span class="block"><span class="argname">y</span></span>):</span></div>
+            </div>
+            <div class="function">
+              <div class="title"><span class="keyword">def</span> <span class="title">&lt;lambda&gt;</span><span class="args">(<span class="block"><span class="argname">y</span></span>):</span></div>
+            </div>
+            <div class="function">
+              <div class="title"><span class="keyword">def</span> <span class="title">&lt;lambda&gt;</span><span class="args">(<span class="block"><span class="argname">y</span></span>):</span></div>
+            </div>
+            <div class="function">
+              <div class="title"><span class="keyword">def</span> <span class="title">&lt;lambda&gt;</span><span class="args">(<span class="block"><span class="argname">y</span></span>):</span></div>
+            </div>
+            <div class="function">
+              <div class="title"><span class="keyword">def</span> <span class="title">&lt;lambda&gt;</span><span class="args">(<span class="block"><span class="argname">y</span></span>):</span></div>
+            </div>
+            <div class="function">
+              <div class="title"><span class="keyword">def</span> <span class="title">&lt;lambda&gt;</span><span class="args">(<span class="block"><span class="argname">y</span></span>):</span></div>
+            </div>
+            <div class="function">
+              <div class="title"><span class="keyword">def</span> <span class="title">&lt;lambda&gt;</span><span class="args">(<span class="block"><span class="argname">y</span></span>):</span></div>
+            </div>
+            <div class="function">
+              <div class="title"><span class="keyword">def</span> <span class="title">&lt;lambda&gt;</span><span class="args">(<span class="block"><span class="argname">y</span></span>):</span></div>
+            </div>
+            <div class="function">
+              <div class="title"><span class="keyword">def</span> <span class="title">&lt;lambda&gt;</span><span class="args">(<span class="block"><span class="argname">y</span></span>):</span></div>
+            </div>
+            <div class="function">
+              <div class="title"><span class="keyword">def</span> <span class="title">&lt;lambda&gt;</span><span class="args">(<span class="block"><span class="argname">y</span></span>):</span></div>
+            </div>
+            <div class="function">
+              <div class="title"><span class="keyword">def</span> <span class="title">&lt;lambda&gt;</span><span class="args">(<span class="block"><span class="argname">y</span></span>):</span></div>
+            </div>
+            <div class="function">
+              <div class="title"><span class="keyword">def</span> <span class="title">&lt;lambda&gt;</span><span class="args">(<span class="block"><span class="argname">y</span></span>):</span></div>
+            </div>
+            <div class="function">
+              <div class="title"><span class="keyword">def</span> <span class="title">&lt;lambda&gt;</span><span class="args">(<span class="block"><span class="argname">y</span></span>):</span></div>
+            </div>
+            <div class="function">
+              <div class="title"><span class="keyword">def</span> <span class="title">&lt;lambda&gt;</span><span class="args">(<span class="block"><span class="argname">y</span></span>):</span></div>
+            </div>
+            <div class="function">
+              <div class="title"><span class="keyword">def</span> <span class="title">&lt;lambda&gt;</span><span class="args">(<span class="block"><span class="argname">y</span></span>):</span></div>
+            </div>
+            <div class="function">
+              <div class="title"><span class="keyword">def</span> <span class="title">&lt;lambda&gt;</span><span class="args">(<span class="block"><span class="argname">y</span></span>):</span></div>
+            </div>
+            <div class="function">
+              <div class="title"><span class="keyword">def</span> <span class="title">&lt;lambda&gt;</span><span class="args">(<span class="block"><span class="argname">y</span></span>):</span></div>
+            </div>
+            <div class="function">
+              <div class="title"><span class="keyword">def</span> <span class="title">&lt;lambda&gt;</span><span class="args">(<span class="block"><span class="argname">y</span></span>):</span></div>
+            </div>
+            <div class="function">
+              <div class="title"><span class="keyword">def</span> <span class="title">mktimetuple</span><span class="args">(<span class="block"><span class="argname">ts</span></span>):</span></div>
+              <div class="doc">
+                <pre>make a pair of (seconds, microseconds) out of the given double</pre>
+              </div>
+            </div>
+            <div class="function">
+              <div class="title"><span class="keyword">def</span> <span class="title">mktimetuple64</span><span class="args">(<span class="block"><span class="argname">ts</span></span>):</span></div>
+              <div class="doc">
+                <pre>make a pair of (seconds, microseconds) out of the given long</pre>
+              </div>
+            </div>
+            <div class="function">
+              <div class="title"><span class="keyword">def</span> <span class="title">mktime</span><span class="args">(<span class="block">(<span class="argname">seconds</span><span class="argsep">,</span> <span class="argname">ms</span>)</span>):</span></div>
+              <div class="doc">
+                <pre>make a double out of the pair of (seconds, microseconds)</pre>
+              </div>
+            </div>
+            <div class="function">
+              <div class="title"><span class="keyword">def</span> <span class="title">mktime64</span><span class="args">(<span class="block">(<span class="argname">seconds</span><span class="argsep">,</span> <span class="argname">ms</span>)</span>):</span></div>
+              <div class="doc">
+                <pre>make an integer out of the pair of (seconds, microseconds)</pre>
+              </div>
+            </div>
+            <div class="function">
+              <div class="title"><span class="keyword">def</span> <span class="title">path_pack</span><span class="args">(<span class="block"><span class="argname">data</span></span>):</span></div>
+              <div class="doc">
+                <pre>Given a sequence of point data, pack it into a path's serialized form.
+
+        [px1, py1, px2, py2, ...]
+
+Must be an even number of numbers.</pre>
+              </div>
+            </div>
+            <div class="function">
+              <div class="title"><span class="keyword">def</span> <span class="title">path_pack</span><span class="args">(<span class="block"><span class="argname">data</span></span>):</span></div>
+              <div class="doc">
+                <pre>Given a sequence of point data, pack it into a path's serialized form.
+
+        [px1, py1, px2, py2, ...]
+
+Must be an even number of numbers.</pre>
+              </div>
+            </div>
+            <div class="function">
+              <div class="title"><span class="keyword">def</span> <span class="title">path_unpack</span><span class="args">(<span class="block"><span class="argname">data</span></span>):</span></div>
+              <div class="doc">
+                <pre>Unpack a path's serialized form into a sequence of point data:
+
+        [px1, py1, px2, py2, ...]
+
+Should be an even number of numbers.</pre>
+              </div>
+            </div>
+            <div class="function">
+              <div class="title"><span class="keyword">def</span> <span class="title">path_unpack</span><span class="args">(<span class="block"><span class="argname">data</span></span>):</span></div>
+              <div class="doc">
+                <pre>Unpack a path's serialized form into a sequence of point data:
+
+        [px1, py1, px2, py2, ...]
+
+Should be an even number of numbers.</pre>
+              </div>
+            </div>
+            <div class="function">
+              <div class="title"><span class="keyword">def</span> <span class="title">time_pack</span><span class="args">(<span class="block"><span class="argname">timetup</span></span>):</span></div>
+              <div class="doc">
+                <pre>Given a pair, (seconds, microseconds), serialize it into a double.</pre>
+              </div>
+            </div>
+            <div class="function">
+              <div class="title"><span class="keyword">def</span> <span class="title">time_unpack</span><span class="args">(<span class="block"><span class="argname">data</span></span>):</span></div>
+              <div class="doc">
+                <pre>Given a serialized double, return the pai (seconds, microseconds).</pre>
+              </div>
+            </div>
+            <div class="function">
+              <div class="title"><span class="keyword">def</span> <span class="title">interval_pack</span><span class="args">(<span class="block">(<span class="argname">month</span><span class="argsep">,</span> <span class="argname">day</span><span class="argsep">,</span> <span class="argname">timetup</span>)</span>):</span></div>
+              <div class="doc">
+                <pre>Given a triple, (month, day, (seconds, microseconds)), serialize it for
+transport.</pre>
+              </div>
+            </div>
+            <div class="function">
+              <div class="title"><span class="keyword">def</span> <span class="title">interval_unpack</span><span class="args">(<span class="block"><span class="argname">data</span></span>):</span></div>
+              <div class="doc">
+                <pre>Given a serialized interval, '{month}{day}{time}', yield the triple:
+
+        (month, day, (seconds, microseconds))</pre>
+              </div>
+            </div>
+            <div class="function">
+              <div class="title"><span class="keyword">def</span> <span class="title">interval_noday_pack</span><span class="args">(<span class="block">(<span class="argname">month</span><span class="argsep">,</span> <span class="argname">day</span><span class="argsep">,</span> <span class="argname">timetup</span>)</span>):</span></div>
+              <div class="doc">
+                <pre>Given a triple, (month, day, (seconds, microseconds)), return the serialized
+form that does not have an individual day component.
+
+There is no day component, so if day is non-zero, it will be converted to
+seconds and subsequently added to the seconds.</pre>
+              </div>
+            </div>
+            <div class="function">
+              <div class="title"><span class="keyword">def</span> <span class="title">interval_noday_unpack</span><span class="args">(<span class="block"><span class="argname">data</span></span>):</span></div>
+              <div class="doc">
+                <pre>Given a serialized interval without a day component, return the triple:
+
+        (month, day(always zero), (seconds, microseconds))</pre>
+              </div>
+            </div>
+            <div class="function">
+              <div class="title"><span class="keyword">def</span> <span class="title">time64_pack</span><span class="args">(<span class="block"><span class="argname">timetup</span></span>):</span></div>
+              <div class="doc">
+                <pre>Pack a (seconds, microseconds) tuple into a quad-word.</pre>
+              </div>
+            </div>
+            <div class="function">
+              <div class="title"><span class="keyword">def</span> <span class="title">time64_unpack</span><span class="args">(<span class="block"><span class="argname">data</span></span>):</span></div>
+              <div class="doc">
+                <pre>Given a quad-word, unpack it into a pair:
+
+        (seconds, microseconds)</pre>
+              </div>
+            </div>
+            <div class="function">
+              <div class="title"><span class="keyword">def</span> <span class="title">interval64_pack</span><span class="args">(<span class="block">(<span class="argname">month</span><span class="argsep">,</span> <span class="argname">day</span><span class="argsep">,</span> <span class="argname">timetup</span>)</span>):</span></div>
+              <div class="doc">
+                <pre>Given a triple, (month, day, (seconds, microseconds)), return the serialized
+data using a quad-word for the (seconds, microseconds) tuple.</pre>
+              </div>
+            </div>
+            <div class="function">
+              <div class="title"><span class="keyword">def</span> <span class="title">interval64_unpack</span><span class="args">(<span class="block"><span class="argname">data</span></span>):</span></div>
+              <div class="doc">
+                <pre>Unpack an interval containing a quad-word into a triple:
+
+        (month, day, (seconds, microseconds))</pre>
+              </div>
+            </div>
+            <div class="function">
+              <div class="title"><span class="keyword">def</span> <span class="title">interval64_noday_pack</span><span class="args">(<span class="block">(<span class="argname">month</span><span class="argsep">,</span> <span class="argname">day</span><span class="argsep">,</span> <span class="argname">timetup</span>)</span>):</span></div>
+              <div class="doc">
+                <pre>Pack an interval without a day component and using a quad-word for second
+representation.
+
+There is no day component, so if day is non-zero, it will be converted to
+seconds and subsequently added to the seconds.</pre>
+              </div>
+            </div>
+            <div class="function">
+              <div class="title"><span class="keyword">def</span> <span class="title">interval64_noday_unpack</span><span class="args">(<span class="block"><span class="argname">data</span></span>):</span></div>
+              <div class="doc">
+                <pre>Unpack a ``noday`` quad-word based interval. Returns a triple:
+
+        (month, day(always zero), (seconds, microseconds))</pre>
+              </div>
+            </div>
+            <div class="function">
+              <div class="title"><span class="keyword">def</span> <span class="title">timetz_pack</span><span class="args">(<span class="block">(<span class="argname">timetup</span><span class="argsep">,</span> <span class="argname">tz_offset</span>)</span>):</span></div>
+              <div class="doc">
+                <pre>Pack a time; offset from beginning of the day and timezone offset.
+
+Given a pair, ((seconds, microseconds), timezone_offset), pack it into its
+serialized form: "!dl".</pre>
+              </div>
+            </div>
+            <div class="function">
+              <div class="title"><span class="keyword">def</span> <span class="title">timetz_unpack</span><span class="args">(<span class="block"><span class="argname">data</span></span>):</span></div>
+              <div class="doc">
+                <pre>Given serialized time data, unpack it into a pair:
+
+    ((seconds, microseconds), timezone_offset).</pre>
+              </div>
+            </div>
+            <div class="function">
+              <div class="title"><span class="keyword">def</span> <span class="title">timetz64_pack</span><span class="args">(<span class="block">(<span class="argname">timetup</span><span class="argsep">,</span> <span class="argname">tz_offset</span>)</span>):</span></div>
+              <div class="doc">
+                <pre>Pack a time; offset from beginning of the day and timezone offset.
+
+Given a pair, ((seconds, microseconds), timezone_offset), pack it into its
+serialized form using a long long: "!ql".</pre>
+              </div>
+            </div>
+            <div class="function">
+              <div class="title"><span class="keyword">def</span> <span class="title">timetz64_unpack</span><span class="args">(<span class="block"><span class="argname">data</span></span>):</span></div>
+              <div class="doc">
+                <pre>Given "long long" serialized time data, "ql", unpack it into a pair:
+
+    ((seconds, microseconds), timezone_offset)</pre>
+              </div>
+            </div>
+            <div class="function">
+              <div class="title"><span class="keyword">def</span> <span class="title">oidvector_pack</span><span class="args">(<span class="block"><span class="argname">seq</span></span>):</span></div>
+              <div class="doc">
+                <pre>Given a sequence of Oids, pack them into the serialized form.
+
+An oidvector is a type used by the PostgreSQL catalog.</pre>
+              </div>
+            </div>
+            <div class="function">
+              <div class="title"><span class="keyword">def</span> <span class="title">oidvector_unpack</span><span class="args">(<span class="block"><span class="argname">data</span></span>):</span></div>
+              <div class="doc">
+                <pre>Given a serialized oidvector(32 longs), unpack it into a list of unsigned integers.
+
+An int2vector is a type used by the PostgreSQL catalog.</pre>
+              </div>
+            </div>
+            <div class="function">
+              <div class="title"><span class="keyword">def</span> <span class="title">int2vector_pack</span><span class="args">(<span class="block"><span class="argname">seq</span></span>):</span></div>
+              <div class="doc">
+                <pre>Given a sequence of integers, pack them into the serialized form.
+
+An int2vector is a type used by the PostgreSQL catalog.</pre>
+              </div>
+            </div>
+            <div class="function">
+              <div class="title"><span class="keyword">def</span> <span class="title">int2vector_unpack</span><span class="args">(<span class="block"><span class="argname">data</span></span>):</span></div>
+              <div class="doc">
+                <pre>Given a serialized int2vector, unpack it into a list of integers.
+
+An int2vector is a type used by the PostgreSQL catalog.</pre>
+              </div>
+            </div>
+            <div class="function">
+              <div class="title"><span class="keyword">def</span> <span class="title">varbit_pack</span><span class="args">(<span class="block">(<span class="argname">bits</span><span class="argsep">,</span> <span class="argname">data</span>)</span>):</span></div>
+              <div class="doc">
+                <pre>Given a pair, serialize the varbit.
+
+&gt;&gt;&gt; varbit_pack((1, '\x00'))
+'\x00\x00\x00\x01\x00'</pre>
+              </div>
+            </div>
+            <div class="function">
+              <div class="title"><span class="keyword">def</span> <span class="title">varbit_unpack</span><span class="args">(<span class="block"><span class="argname">data</span></span>):</span></div>
+              <div class="doc">
+                <pre>Given ``varbit`` data, unpack it into a pair:
+
+        (bits, data)
+
+Where</pre>
+              </div>
+            </div>
+            <div class="function">
+              <div class="title"><span class="keyword">def</span> <span class="title">cidr_pack</span><span class="args">(<span class="block">(<span class="argname">family</span><span class="argsep">,</span> <span class="argname">mask</span><span class="argsep">,</span> <span class="argname">data</span>)</span>):</span></div>
+              <div class="doc">
+                <pre>Given a triple, yield the serialized form for transport.
+
+Prepends the ``family``, ``mask`` and implicit ``is_cidr`` fields.</pre>
+              </div>
+            </div>
+            <div class="function">
+              <div class="title"><span class="keyword">def</span> <span class="title">cidr_unpack</span><span class="args">(<span class="block"><span class="argname">data</span></span>):</span></div>
+              <div class="doc">
+                <pre>Given serialized cidr data, return a tuple:
+
+        (family, mask, data)</pre>
+              </div>
+            </div>
+            <div class="function">
+              <div class="title"><span class="keyword">def</span> <span class="title">inet_pack</span><span class="args">(<span class="block"><span class="argname">data</span></span>):</span></div>
+              <div class="doc">
+                <pre>Given serialized inet data; add the necessary family mask for transport.</pre>
+              </div>
+            </div>
+            <div class="function">
+              <div class="title"><span class="keyword">def</span> <span class="title">inet_unpack</span><span class="args">(<span class="block"><span class="argname">data</span></span>):</span></div>
+              <div class="doc">
+                <pre>Unpack serialized inet data into mere address data.
+
+Mostly, this strips off the explicitly family specification as that can
+be determined from the length of the string.</pre>
+              </div>
+            </div>
+            <div class="function">
+              <div class="title"><span class="keyword">def</span> <span class="title">record_unpack</span><span class="args">(<span class="block"><span class="argname">data</span></span>):</span></div>
+              <div class="doc">
+                <pre>Given serialized record data, return a tuple of tuples of type Oids and
+attributes.</pre>
+              </div>
+            </div>
+            <div class="function">
+              <div class="title"><span class="keyword">def</span> <span class="title">record_pack</span><span class="args">(<span class="block"><span class="argname">seq</span></span>):</span></div>
+              <div class="doc">
+                <pre>pack a record given an iterable of (type_oid, data) pairs.</pre>
+              </div>
+            </div>
+            <div class="function">
+              <div class="title"><span class="keyword">def</span> <span class="title">elements_pack</span><span class="args">(<span class="block"><span class="argname">elements</span></span>):</span></div>
+              <div class="doc">
+                <pre>Pack the elements for containment within a serialized array.
+
+This is used by array_pack.</pre>
+              </div>
+            </div>
+            <div class="function">
+              <div class="title"><span class="keyword">def</span> <span class="title">array_pack</span><span class="args">(<span class="block">(<span class="argname">flags</span><span class="argsep">,</span> <span class="argname">typid</span><span class="argsep">,</span> <span class="argname">dlb</span><span class="argsep">,</span> <span class="argname">elements</span>)</span>):</span></div>
+              <div class="doc">
+                <pre>Pack a raw array. A raw array consists of flags, type oid, sequence of lower
+and upper bounds, and an iterable of already serialized element data:
+
+        (0, element type oid, (lower bounds, upper bounds, ...), iterable of element_data)
+
+The lower bounds and upper bounds specifies boundaries of the dimension. So the length
+of the boundaries sequence is two times the number of dimensions that the array has.</pre>
+              </div>
+            </div>
+            <div class="function">
+              <div class="title"><span class="keyword">def</span> <span class="title">elements_unpack</span><span class="args">(<span class="block"><span class="argname">data</span><span class="argsep">,</span> <span class="argname">offset</span></span>):</span></div>
+              <div class="doc">
+                <pre>Unpack the serialized elements of an array into a list.
+
+This is used by array_unpack.</pre>
+              </div>
+            </div>
+            <div class="function">
+              <div class="title"><span class="keyword">def</span> <span class="title">array_unpack</span><span class="args">(<span class="block"><span class="argname">data</span></span>):</span></div>
+              <div class="doc">
+                <pre>Given a serialized array, unpack it into a tuple:
+
+        (flags, typid, (lower bounds, upper bounds, ...), [elements])</pre>
+              </div>
+            </div>
+          </div>
+          <div class="datas">
+            <div class="head">
+              <span class="title">data</span>
+            </div>
+            <div class="data" title="__builtin__.builtin_function_or_method" id="postgresql.protocol.typical.pstruct.BBBB_unpack"><span class="name">BBBB_unpack</span> = <a class="objref" href="//__builtin__.builtin_function_or_method"><pre>&lt;built-in method unpack of Struct object at 0x1136fe0&gt;</pre></a></div>
+            <div class="data" title="__builtin__.builtin_function_or_method" id="postgresql.protocol.typical.pstruct.LH_unpack"><span class="name">LH_unpack</span> = <a class="objref" href="//__builtin__.builtin_function_or_method"><pre>&lt;built-in method unpack of Struct object at 0x1136de0&gt;</pre></a></div>
+            <div class="data" title="__builtin__.builtin_function_or_method" id="postgresql.protocol.typical.pstruct.bit_pack"><span class="name">bit_pack</span> = <a class="objref" href="//__builtin__.builtin_function_or_method"><pre>&lt;built-in method __getitem__ of dict object at 0x1126780&gt;</pre></a></div>
+            <div class="data" title="__builtin__.builtin_function_or_method" id="postgresql.protocol.typical.pstruct.bit_unpack"><span class="name">bit_unpack</span> = <a class="objref" href="//__builtin__.builtin_function_or_method"><pre>&lt;built-in method __getitem__ of dict object at 0x1121c90&gt;</pre></a></div>
+            <div class="data" title="__builtin__.dict" id="postgresql.protocol.typical.pstruct.bitdata_to_bool"><span class="name">bitdata_to_bool</span> = <a class="objref" href="//__builtin__.dict"><pre>{'\x00\x00\x00\x01\x00': False, '\x00\x00\x00\x01\x01': True}</pre></a></div>
+            <div class="data" title="__builtin__.builtin_function_or_method" id="postgresql.protocol.typical.pstruct.bool_pack"><span class="name">bool_pack</span> = <a class="objref" href="//__builtin__.builtin_function_or_method"><pre>&lt;built-in method __getitem__ of dict object at 0x1121810&gt;</pre></a></div>
+            <div class="data" title="__builtin__.dict" id="postgresql.protocol.typical.pstruct.bool_to_bitdata"><span class="name">bool_to_bitdata</span> = <a class="objref" href="//__builtin__.dict"><pre>{False: '\x00\x00\x00\x01\x00', True: '\x00\x00\x00\x01\x01'}</pre></a></div>
+            <div class="data" title="__builtin__.dict" id="postgresql.protocol.typical.pstruct.bool_to_data"><span class="name">bool_to_data</span> = <a class="objref" href="//__builtin__.dict"><pre>{False: '\x00', True: '\x01'}</pre></a></div>
+            <div class="data" title="__builtin__.builtin_function_or_method" id="postgresql.protocol.typical.pstruct.bool_unpack"><span class="name">bool_unpack</span> = <a class="objref" href="//__builtin__.builtin_function_or_method"><pre>&lt;built-in method __getitem__ of dict object at 0x1127270&gt;</pre></a></div>
+            <div class="data" title="__builtin__.builtin_function_or_method" id="postgresql.protocol.typical.pstruct.box_unpack"><span class="name">box_unpack</span> = <a class="objref" href="//__builtin__.builtin_function_or_method"><pre>&lt;built-in method unpack of Struct object at 0x1136d60&gt;</pre></a></div>
+            <div class="data" title="__builtin__.builtin_function_or_method" id="postgresql.protocol.typical.pstruct.cid_pack"><span class="name">cid_pack</span> = <a class="objref" href="//__builtin__.builtin_function_or_method"><pre>&lt;built-in method pack of Struct object at 0x11369e0&gt;</pre></a></div>
+            <div class="data" title="__builtin__.builtin_function_or_method" id="postgresql.protocol.typical.pstruct.circle_unpack"><span class="name">circle_unpack</span> = <a class="objref" href="//__builtin__.builtin_function_or_method"><pre>&lt;built-in method unpack of Struct object at 0x1136ce0&gt;</pre></a></div>
+            <div class="data" title="__builtin__.dict" id="postgresql.protocol.typical.pstruct.data_to_bool"><span class="name">data_to_bool</span> = <a class="objref" href="//__builtin__.dict"><pre>{'\x01': True, '\x00': False}</pre></a></div>
+            <div class="data" title="__builtin__.builtin_function_or_method" id="postgresql.protocol.typical.pstruct.date_pack"><span class="name">date_pack</span> = <a class="objref" href="//__builtin__.builtin_function_or_method"><pre>&lt;built-in method pack of Struct object at 0x1136960&gt;</pre></a></div>
+            <div class="data" title="__builtin__.builtin_function_or_method" id="postgresql.protocol.typical.pstruct.dd_unpack"><span class="name">dd_unpack</span> = <a class="objref" href="//__builtin__.builtin_function_or_method"><pre>&lt;built-in method unpack of Struct object at 0x1136c60&gt;</pre></a></div>
+            <div class="data" title="__builtin__.builtin_function_or_method" id="postgresql.protocol.typical.pstruct.ddd_unpack"><span class="name">ddd_unpack</span> = <a class="objref" href="//__builtin__.builtin_function_or_method"><pre>&lt;built-in method unpack of Struct object at 0x1136ce0&gt;</pre></a></div>
+            <div class="data" title="__builtin__.builtin_function_or_method" id="postgresql.protocol.typical.pstruct.dddd_unpack"><span class="name">dddd_unpack</span> = <a class="objref" href="//__builtin__.builtin_function_or_method"><pre>&lt;built-in method unpack of Struct object at 0x1136d60&gt;</pre></a></div>
+            <div class="data" title="__builtin__.builtin_function_or_method" id="postgresql.protocol.typical.pstruct.dl_unpack"><span class="name">dl_unpack</span> = <a class="objref" href="//__builtin__.builtin_function_or_method"><pre>&lt;built-in method unpack of Struct object at 0x113a080&gt;</pre></a></div>
+            <div class="data" title="__builtin__.builtin_function_or_method" id="postgresql.protocol.typical.pstruct.dll_unpack"><span class="name">dll_unpack</span> = <a class="objref" href="//__builtin__.builtin_function_or_method"><pre>&lt;built-in method unpack of Struct object at 0x1136f60&gt;</pre></a></div>
+            <div class="data" title="__builtin__.builtin_function_or_method" id="postgresql.protocol.typical.pstruct.double_pack"><span class="name">double_pack</span> = <a class="objref" href="//__builtin__.builtin_function_or_method"><pre>&lt;built-in method pack of Struct object at 0x1136b60&gt;</pre></a></div>
+            <div class="data" title="__builtin__.builtin_function_or_method" id="postgresql.protocol.typical.pstruct.float_pack"><span class="name">float_pack</span> = <a class="objref" href="//__builtin__.builtin_function_or_method"><pre>&lt;built-in method pack of Struct object at 0x1136be0&gt;</pre></a></div>
+            <div class="data" title="__builtin__.builtin_function_or_method" id="postgresql.protocol.typical.pstruct.int2_pack"><span class="name">int2_pack</span> = <a class="objref" href="//__builtin__.builtin_function_or_method"><pre>&lt;built-in method pack of Struct object at 0x1136a60&gt;</pre></a></div>
+            <div class="data" title="__builtin__.builtin_function_or_method" id="postgresql.protocol.typical.pstruct.int4_pack"><span class="name">int4_pack</span> = <a class="objref" href="//__builtin__.builtin_function_or_method"><pre>&lt;built-in method pack of Struct object at 0x1136960&gt;</pre></a></div>
+            <div class="data" title="__builtin__.builtin_function_or_method" id="postgresql.protocol.typical.pstruct.int8_pack"><span class="name">int8_pack</span> = <a class="objref" href="//__builtin__.builtin_function_or_method"><pre>&lt;built-in method pack of Struct object at 0x11368e0&gt;</pre></a></div>
+            <div class="data" title="__builtin__.builtin_function_or_method" id="postgresql.protocol.typical.pstruct.llL_unpack"><span class="name">llL_unpack</span> = <a class="objref" href="//__builtin__.builtin_function_or_method"><pre>&lt;built-in method unpack of Struct object at 0x1136e60&gt;</pre></a></div>
+            <div class="data" title="__builtin__.builtin_function_or_method" id="postgresql.protocol.typical.pstruct.long_pack"><span class="name">long_pack</span> = <a class="objref" href="//__builtin__.builtin_function_or_method"><pre>&lt;built-in method pack of Struct object at 0x1136960&gt;</pre></a></div>
+            <div class="data" title="__builtin__.builtin_function_or_method" id="postgresql.protocol.typical.pstruct.longlong_pack"><span class="name">longlong_pack</span> = <a class="objref" href="//__builtin__.builtin_function_or_method"><pre>&lt;built-in method pack of Struct object at 0x11368e0&gt;</pre></a></div>
+            <div class="data" title="__builtin__.builtin_function_or_method" id="postgresql.protocol.typical.pstruct.lseg_unpack"><span class="name">lseg_unpack</span> = <a class="objref" href="//__builtin__.builtin_function_or_method"><pre>&lt;built-in method unpack of Struct object at 0x1136d60&gt;</pre></a></div>
+            <div class="data" title="__builtin__.str" id="postgresql.protocol.typical.pstruct.null_sequence"><span class="name">null_sequence</span> = <a class="objref" href="//__builtin__.str"><pre>'\xff\xff\xff\xff'</pre></a></div>
+            <div class="data" title="__builtin__.builtin_function_or_method" id="postgresql.protocol.typical.pstruct.oid_pack"><span class="name">oid_pack</span> = <a class="objref" href="//__builtin__.builtin_function_or_method"><pre>&lt;built-in method pack of Struct object at 0x11369e0&gt;</pre></a></div>
+            <div class="data" title="__builtin__.builtin_function_or_method" id="postgresql.protocol.typical.pstruct.point_unpack"><span class="name">point_unpack</span> = <a class="objref" href="//__builtin__.builtin_function_or_method"><pre>&lt;built-in method unpack of Struct object at 0x1136c60&gt;</pre></a></div>
+            <div class="data" title="__builtin__.builtin_function_or_method" id="postgresql.protocol.typical.pstruct.ql_unpack"><span class="name">ql_unpack</span> = <a class="objref" href="//__builtin__.builtin_function_or_method"><pre>&lt;built-in method unpack of Struct object at 0x113a100&gt;</pre></a></div>
+            <div class="data" title="__builtin__.builtin_function_or_method" id="postgresql.protocol.typical.pstruct.qll_unpack"><span class="name">qll_unpack</span> = <a class="objref" href="//__builtin__.builtin_function_or_method"><pre>&lt;built-in method unpack of Struct object at 0x1136ee0&gt;</pre></a></div>
+            <div class="data" title="__builtin__.builtin_function_or_method" id="postgresql.protocol.typical.pstruct.short_pack"><span class="name">short_pack</span> = <a class="objref" href="//__builtin__.builtin_function_or_method"><pre>&lt;built-in method pack of Struct object at 0x1136a60&gt;</pre></a></div>
+            <div class="data" title="__builtin__.builtin_function_or_method" id="postgresql.protocol.typical.pstruct.tid_unpack"><span class="name">tid_unpack</span> = <a class="objref" href="//__builtin__.builtin_function_or_method"><pre>&lt;built-in method unpack of Struct object at 0x1136de0&gt;</pre></a></div>
+            <div class="data" title="__builtin__.builtin_function_or_method" id="postgresql.protocol.typical.pstruct.ulong_pack"><span class="name">ulong_pack</span> = <a class="objref" href="//__builtin__.builtin_function_or_method"><pre>&lt;built-in method pack of Struct object at 0x11369e0&gt;</pre></a></div>
+            <div class="data" title="__builtin__.builtin_function_or_method" id="postgresql.protocol.typical.pstruct.ushort_pack"><span class="name">ushort_pack</span> = <a class="objref" href="//__builtin__.builtin_function_or_method"><pre>&lt;built-in method pack of Struct object at 0x1136ae0&gt;</pre></a></div>
+            <div class="data" title="__builtin__.builtin_function_or_method" id="postgresql.protocol.typical.pstruct.xid_pack"><span class="name">xid_pack</span> = <a class="objref" href="//__builtin__.builtin_function_or_method"><pre>&lt;built-in method pack of Struct object at 0x11369e0&gt;</pre></a></div>
+          </div>
+        </div>
+      </div>
+      <br />
+      <div class="module" id="postgresql.protocol.typical.stdio">
+        <h3 class="title"><span class="keyword">module</span> postgresql.protocol.typical.stdio</h3>
+        <div class="doc">
+          <pre>Typical PostgreSQL type I/O routines
+
+I/O maps for converting wire data into standard Python objects.</pre>
+        </div>
+        <div class="content">
+          <div class="imports">
+            <div class="head">
+              <span class="title">imports</span>
+            </div>
+            <div class="import"><span class="keyword">import</span> <a class="import" href="//datetime"><span class="path">datetime</span></a></div>
+            <div class="import"><span class="keyword">import</span> <a class="import" href="//postgresql.types"><span class="path">postgresql.types</span> as <span class="name">pg_type</span></a></div>
+            <div class="import"><span class="keyword">import</span> <a class="import" href="#postgresql.protocol.typical.pstruct"><span class="path">postgresql.protocol.typical.pstruct</span> as <span class="name">ps</span></a></div>
+          </div>
+          <div class="functions">
+            <div class="head">
+              <span class="title">functions</span>
+            </div>
+            <div class="function">
+              <div class="title"><span class="keyword">def</span> <span class="title">timestamp_pack</span><span class="args">(<span class="block"><span class="argname">x</span></span>):</span></div>
+              <div class="doc">
+                <pre>Create a (seconds, microseconds) pair from a `datetime.datetime` instance.</pre>
+              </div>
+            </div>
+            <div class="function">
+              <div class="title"><span class="keyword">def</span> <span class="title">timestamp_unpack</span><span class="args">(<span class="block"><span class="argname">seconds</span></span>):</span></div>
+              <div class="doc">
+                <pre>Create a `datetime.datetime` instance from a (seconds, microseconds) pair.</pre>
+              </div>
+            </div>
+            <div class="function">
+              <div class="title"><span class="keyword">def</span> <span class="title">time_pack</span><span class="args">(<span class="block"><span class="argname">x</span></span>):</span></div>
+              <div class="doc">
+                <pre>Create a (seconds, microseconds) pair from a `datetime.time` instance.</pre>
+              </div>
+            </div>
+            <div class="function">
+              <div class="title"><span class="keyword">def</span> <span class="title">time_unpack</span><span class="args">(<span class="block"><span class="argname">seconds_ms</span></span>):</span></div>
+              <div class="doc">
+                <pre>Create a `datetime.time` instance from a (seconds, microseconds) pair.
+Seconds being offset from epoch.</pre>
+              </div>
+            </div>
+            <div class="function">
+              <div class="title"><span class="keyword">def</span> <span class="title">interval_pack</span><span class="args">(<span class="block"><span class="argname">x</span></span>):</span></div>
+              <div class="doc">
+                <pre>Create a (months, days, (seconds, microseconds)) tuple from a
+`datetime.timedelta` instance.</pre>
+              </div>
+            </div>
+            <div class="function">
+              <div class="title"><span class="keyword">def</span> <span class="title">interval_unpack</span><span class="args">(<span class="block"><span class="argname">mds</span></span>):</span></div>
+              <div class="doc">
+                <pre>Given a (months, days, (seconds, microseconds)) tuple, create a
+`datetime.timedelta` instance.</pre>
+              </div>
+            </div>
+            <div class="function">
+              <div class="title"><span class="keyword">def</span> <span class="title">timetz_pack</span><span class="args">(<span class="block"><span class="argname">x</span></span>):</span></div>
+              <div class="doc">
+                <pre>Create a ((seconds, microseconds), timezone) tuple from a `datetime.time`
+instance.</pre>
+              </div>
+            </div>
+            <div class="function">
+              <div class="title"><span class="keyword">def</span> <span class="title">timetz_unpack</span><span class="args">(<span class="block"><span class="argname">tstz</span></span>):</span></div>
+              <div class="doc">
+                <pre>Create a `datetime.time` instance from a ((seconds, microseconds), timezone)
+tuple.</pre>
+              </div>
+            </div>
+            <div class="function">
+              <div class="title"><span class="keyword">def</span> <span class="title">circle_unpack</span><span class="args">(<span class="block"><span class="argname">x</span></span>):</span></div>
+              <div class="doc">
+                <pre>Given raw circle data, (x, y, radius), make a circle instance using
+`postgresql.types.circle`.</pre>
+              </div>
+            </div>
+            <div class="function">
+              <div class="title"><span class="keyword">def</span> <span class="title">cidr_unpack</span><span class="args">(<span class="block"><span class="argname">x</span></span>):</span></div>
+              <div class="doc">
+                <pre>Given serialized cidr data, make a `postgresql.types.cidr` instance.</pre>
+              </div>
+            </div>
+            <div class="function">
+              <div class="title"><span class="keyword">def</span> <span class="title">two_pair</span><span class="args">(<span class="block"><span class="argname">x</span></span>):</span></div>
+              <div class="doc">
+                <pre>Make a pair of pairs out of a sequence of four objects</pre>
+              </div>
+            </div>
+          </div>
+          <div class="datas">
+            <div class="head">
+              <span class="title">data</span>
+            </div>
+            <div class="data" title="__builtin__.tuple" id="postgresql.protocol.typical.stdio.bitio"><span class="name">bitio</span> = <a class="objref" href="//__builtin__.tuple"><pre>(&lt;function &lt;lambda&gt; at 0x1159bb0&gt;, &lt;function &lt;lambda&gt; at 0x1159bf0&gt;)</pre></a></div>
+            <div class="data" title="__builtin__.tuple" id="postgresql.protocol.typical.stdio.date_io"><span class="name">date_io</span> = <a class="objref" href="//__builtin__.tuple"><pre>(&lt;function &lt;lambda&gt; at 0x1159270&gt;, &lt;function &lt;lambda&gt; at 0x11592b0&gt;)</pre></a></div>
+            <div class="data" title="__builtin__.dict" id="postgresql.protocol.typical.stdio.datetimemap"><span class="name">datetimemap</span> = <a class="objref" href="//__builtin__.dict"><pre>{1186: (&lt;function interval_pack at 0x11593f0&gt;, &lt;function interval_unpack at 0x1159430&gt;), 1083: (&lt;function time_pack at 0x1159370&gt;, &lt;function time_unpack at 0x11593b0&gt;), 1114: (&lt;function time_pack at 0x1159370&gt;, &lt;function time_unpack at 0x11593b0&gt;)}</pre></a></div>
+            <div class="data" title="__builtin__.int" id="postgresql.protocol.typical.stdio.pg_date_offset"><span class="name">pg_date_offset</span> = <a class="objref" href="//__builtin__.int"><pre>730120</pre></a></div>
+            <div class="data" title="datetime.date" id="postgresql.protocol.typical.stdio.pg_epoch_date"><span class="name">pg_epoch_date</span> = <a class="objref" href="//datetime.date"><pre>datetime.date(2000, 1, 1)</pre></a></div>
+            <div class="data" title="datetime.datetime" id="postgresql.protocol.typical.stdio.pg_epoch_datetime"><span class="name">pg_epoch_datetime</span> = <a class="objref" href="//datetime.datetime"><pre>datetime.datetime(2000, 1, 1, 0, 0)</pre></a></div>
+            <div class="data" title="__builtin__.int" id="postgresql.protocol.typical.stdio.pg_time_days"><span class="name">pg_time_days</span> = <a class="objref" href="//__builtin__.int"><pre>10957</pre></a></div>
+            <div class="data" title="__builtin__.dict" id="postgresql.protocol.typical.stdio.stdio"><span class="name">stdio</span> = <a class="objref" href="//__builtin__.dict"><pre>{1562: (&lt;function &lt;lambda&gt; at 0x1159bb0&gt;, &lt;function &lt;lambda&gt; at 0x1159bf0&gt;), 869: (&lt;function &lt;lambda&gt; at 0x1159c30&gt;, &lt;function &lt;lambda&gt; at 0x1159c70&gt;), 650: (&lt;function &lt;lambda&gt; at 0x1159cb0&gt;, &lt;function cidr_unpack at 0x1159b30&gt;), 718: (&lt;function &lt;lambda&gt; at 0x1159eb0&gt;, &lt;function &lt;lambda&gt; at 0x1159ef0&gt;), 600: (&lt;function &lt;lambda&gt; at 0x11373f0&gt;, &lt;function &lt;lambda&gt; at 0x1159d70&gt;), 1560: (&lt;function &lt;lambda&gt; at 0x1159bb0&gt;, &lt;function &lt;lambda&gt; at 0x1159bf0&gt;), 601: (&lt;function &lt;lambda&gt; at 0x1159e30&gt;, &lt;function &lt;lambda&gt; at 0x1159e70&gt;), 1082: (&lt;function &lt;lambda&gt; at 0x1159270&gt;, &lt;function &lt;lambda&gt; at 0x11592b0&gt;), 603: (&lt;function &lt;lambda&gt; at 0x1159db0&gt;, &lt;function &lt;lambda&gt; at 0x1159df0&gt;), 829: (&lt;function &lt;lambda&gt; at 0x1159cf0&gt;, &lt;function &lt;lambda&gt; at 0x1159d30&gt;)}</pre></a></div>
+            <div class="data" title="__builtin__.dict" id="postgresql.protocol.typical.stdio.time64_io"><span class="name">time64_io</span> = <a class="objref" href="//__builtin__.dict"><pre>{1184: (&lt;function &lt;lambda&gt; at 0x1159970&gt;, &lt;function &lt;lambda&gt; at 0x11599b0&gt;), 1266: (&lt;function &lt;lambda&gt; at 0x1159870&gt;, &lt;function &lt;lambda&gt; at 0x11598b0&gt;), 1083: (&lt;function &lt;lambda&gt; at 0x11597f0&gt;, &lt;function &lt;lambda&gt; at 0x1159830&gt;), 1114: (&lt;function &lt;lambda&gt; at 0x11598f0&gt;, &lt;function &lt;lambda&gt; at 0x1159930&gt;), 1186: (&lt;function &lt;lambda&gt; at 0x11599f0&gt;, &lt;function &lt;lambda&gt; at 0x1159a30&gt;)}</pre></a></div>
+            <div class="data" title="__builtin__.dict" id="postgresql.protocol.typical.stdio.time64_io_noday"><span class="name">time64_io_noday</span> = <a class="objref" href="//__builtin__.dict"><pre>{1184: (&lt;function &lt;lambda&gt; at 0x1159970&gt;, &lt;function &lt;lambda&gt; at 0x11599b0&gt;), 1266: (&lt;function &lt;lambda&gt; at 0x1159870&gt;, &lt;function &lt;lambda&gt; at 0x11598b0&gt;), 1083: (&lt;function &lt;lambda&gt; at 0x11597f0&gt;, &lt;function &lt;lambda&gt; at 0x1159830&gt;), 1114: (&lt;function &lt;lambda&gt; at 0x11598f0&gt;, &lt;function &lt;lambda&gt; at 0x1159930&gt;), 1186: (&lt;function &lt;lambda&gt; at 0x1159a70&gt;, &lt;function &lt;lambda&gt; at 0x1159ab0&gt;)}</pre></a></div>
+            <div class="data" title="__builtin__.dict" id="postgresql.protocol.typical.stdio.time_io"><span class="name">time_io</span> = <a class="objref" href="//__builtin__.dict"><pre>{1184: (&lt;function &lt;lambda&gt; at 0x1159670&gt;, &lt;function &lt;lambda&gt; at 0x11596b0&gt;), 1266: (&lt;function &lt;lambda&gt; at 0x1159570&gt;, &lt;function &lt;lambda&gt; at 0x11595b0&gt;), 1083: (&lt;function &lt;lambda&gt; at 0x11594f0&gt;, &lt;function &lt;lambda&gt; at 0x1159530&gt;), 1114: (&lt;function &lt;lambda&gt; at 0x11595f0&gt;, &lt;function &lt;lambda&gt; at 0x1159630&gt;), 1186: (&lt;function &lt;lambda&gt; at 0x11596f0&gt;, &lt;function &lt;lambda&gt; at 0x1159730&gt;)}</pre></a></div>
+            <div class="data" title="__builtin__.dict" id="postgresql.protocol.typical.stdio.time_io_noday"><span class="name">time_io_noday</span> = <a class="objref" href="//__builtin__.dict"><pre>{1184: (&lt;function &lt;lambda&gt; at 0x1159670&gt;, &lt;function &lt;lambda&gt; at 0x11596b0&gt;), 1266: (&lt;function &lt;lambda&gt; at 0x1159570&gt;, &lt;function &lt;lambda&gt; at 0x11595b0&gt;), 1083: (&lt;function &lt;lambda&gt; at 0x11594f0&gt;, &lt;function &lt;lambda&gt; at 0x1159530&gt;), 1114: (&lt;function &lt;lambda&gt; at 0x11595f0&gt;, &lt;function &lt;lambda&gt; at 0x1159630&gt;), 1186: (&lt;function &lt;lambda&gt; at 0x1159770&gt;, &lt;function &lt;lambda&gt; at 0x11597b0&gt;)}</pre></a></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

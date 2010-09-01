@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="ISO-8859-1"?><!DOCTYPE document PUBLIC "-//APACHE//DTD Documentation V1.2//EN" "http://forrest.apache.org/dtd/document-v12.dtd">
+<document><header><title>Site Linkmap Table of Contents</title></header><body><p>
+          This is a map of the complete site and its structure.
+        </p><ul><li><a>pg/python</a>  ___________________  <em>site</em></li><ul>
+ <ul><li><a>About</a>  ___________________  <em>about</em></li><ul>
+  <ul><li><a href="index.html">Index</a>  ___________________  <em>index</em> : Project Introduction</li></ul>
+  <ul><li><a href="http://pgfoundry.org/news/?group_id=1000094">News</a>  ___________________  <em>news</em> : Project News</li></ul>
+  <ul><li><a href="license.html">License</a>  ___________________  <em>license</em> : Works Licensing</li></ul>
+  <ul><li><a href="links.html">Links</a>  ___________________  <em>links</em> : Other PostgreSQL/Python related projects</li></ul>
+  <ul><li><a href="faq.html">FAQ</a>  ___________________  <em>faq</em> : Frequently Asked Questions</li></ul>
+ </ul></ul>
+ <ul><li><a href="project/">Projects</a>  ___________________  <em>prj</em></li><ul>
+  <ul><li><a href="project/pg_proboscis.html">pg_proboscis</a>  ___________________  <em>proboscis</em> : Programmer's Client</li></ul>
+  <ul><li><a href="project/pg_teop.html">pg_teop</a>  ___________________  <em>teop</em> : Procedural Language and Backend Interfaces</li></ul>
+  <ul><li><a href="project/pg_slythe.html">pg_slythe</a>  ___________________  <em>slythe</em> : Remote Python Console for PostgreSQL</li></ul>
+  <ul><li><a href="project/pg_boss.html">pg_boss</a>  ___________________  <em>boss</em> : Backend Control and Configuration</li></ul>
+  <ul><li><a href="project/pg_foundation.html">pg_foundation</a>  ___________________  <em>foundation</em> : Programmer basics for using PostgreSQL</li></ul>
+  <ul><li><a href="project/pg_pqueue.html">pg_pqueue</a>  ___________________  <em>pq</em> : PQ protocol tools</li></ul>
+  <ul><li><a href="project/pg_typical.html">pg_typical</a>  ___________________  <em>typ</em> : Type I/O routines for backend communications</li></ul>
+  <ul><li><a href="project/pg_greentrunk.html">pg_greentrunk</a>  ___________________  <em>ip</em> : Type I/O routines for backend communications</li></ul>
+ </ul></ul>
+ 
+</ul></ul></body></document>

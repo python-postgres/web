@@ -1,0 +1,1225 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>pg_greentrunk-1.0.1</title>
+    <link rel="stylesheet" type="text/css" href="xhtml.css" />
+  </head>
+  <body>
+    <h2 class="title"><span class="keyword">project</span> pg_greentrunk 1.0.1</h2>
+    <div class="content">
+      <div class="description">GreenTrunk interface support</div>
+      <div id="long_description" class="doc">
+        <div class="rst-root">
+          <div class="rst-document">
+<p>GreenTrunk is an Interface Protocol(API) for using a PostgreSQL database
+with Python. This project provides fundamental components of the
+interface for implementations to use, and provides documentation in the form of
+Python modules to allow immediate access to object descriptions--even when
+inside a Python console.</p>
+</div>
+        </div>
+      </div>
+      <br />
+      <div class="package" id="postgresql.protocol.greentrunk">
+        <h3 class="title"><span class="keyword">package</span> postgresql.protocol.greentrunk</h3>
+        <div class="doc">
+          <pre>Green Trunk interface space</pre>
+        </div>
+        <div class="content">
+          <div class="functions">
+            <div class="head">
+              <span class="title">functions</span>
+            </div>
+            <div class="function">
+              <div class="title"><span class="keyword">def</span> <span class="title">connection_api_ep</span><span class="args">(<span class="block"></span>):</span></div>
+              <div class="doc">
+                <pre>Console script entry point for pg_greentrunk.</pre>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <br />
+      <div class="module" id="postgresql.protocol.greentrunk.python">
+        <h3 class="title"><span class="keyword">module</span> postgresql.protocol.greentrunk.python</h3>
+        <div class="doc">
+          <pre>provisions for making a Python command with a Postgres connection</pre>
+        </div>
+        <div class="content">
+          <div class="imports">
+            <div class="head">
+              <span class="title">imports</span>
+            </div>
+            <div class="import"><span class="keyword">import</span> <a class="import" href="//jwp_python_command/1.1.1#name.jwp.python.command.option"><span class="path">name.jwp.python.command.option</span> as <span class="name">cmd_opt</span></a></div>
+            <div class="import"><span class="keyword">import</span> <a class="import" href="//jwp_python_command/1.1.1#name.jwp.python.command.runtime"><span class="path">name.jwp.python.command.runtime</span> as <span class="name">cmd_rt</span></a></div>
+            <div class="import"><span class="keyword">import</span> <a class="import" href="//code"><span class="path">code</span></a></div>
+            <div class="import"><span class="keyword">import</span> <a class="import" href="//os"><span class="path">os</span></a></div>
+            <div class="import"><span class="keyword">import</span> <a class="import" href="//postgresql.utility.client.option"><span class="path">postgresql.utility.client.option</span> as <span class="name">pg_opt</span></a></div>
+            <div class="import"><span class="keyword">import</span> <a class="import" href="//re"><span class="path">re</span></a></div>
+            <div class="import"><span class="keyword">import</span> <a class="import" href="//sys"><span class="path">sys</span></a></div>
+          </div>
+          <div class="classes">
+            <div class="head">
+              <span class="title">classes</span>
+            </div>
+            <div class="class" id="postgresql.protocol.greentrunk.python.SavingConsole">
+              <div class="title"><span class="keyword">class</span> <span class="title">SavingConsole</span>(<a class="super" title="name.jwp.python.command.runtime.ExtendedConsole" href="//jwp_python_command/1.1.1#name.jwp.python.command.runtime.ExtendedConsole">ExtendedConsole</a>):</div>
+              <div class="content">
+                <div class="methods">
+                  <div class="head">
+                    <span class="title">methods</span>
+                  </div>
+                  <div class="method">
+                    <div class="title"><span class="keyword">def</span> <span class="title">__init__</span><span class="args">(<span class="block"><span class="argname">self</span><span class="argsep">,</span> <span class="argname">*args</span></span>):</span></div>
+                  </div>
+                  <div class="method">
+                    <div class="title"><span class="keyword">def</span> <span class="title">runcode</span><span class="args">(<span class="block"><span class="argname">self</span><span class="argsep">,</span> <span class="argname">codeob</span></span>):</span></div>
+                  </div>
+                  <div class="method">
+                    <div class="title"><span class="keyword">def</span> <span class="title">runsavedcode</span><span class="args">(<span class="block"><span class="argname">self</span><span class="argsep">,</span> <span class="argname">codeob</span></span>):</span></div>
+                  </div>
+                  <div class="method">
+                    <div class="title"><span class="keyword">def</span> <span class="title">toggle_autosave</span><span class="args">(<span class="block"><span class="argname">self</span><span class="argsep">,</span> <span class="argname">cmd</span><span class="argsep">,</span> <span class="argname">arg</span></span>):</span></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="functions">
+            <div class="head">
+              <span class="title">functions</span>
+            </div>
+            <div class="function">
+              <div class="title"><span class="keyword">def</span> <span class="title">extract_parameters</span><span class="args">(<span class="block"><span class="argname">src</span></span>):</span></div>
+              <div class="doc">
+                <pre>extract hard parameters out of the "-*- greentrunk.*: -*-" magic lines</pre>
+              </div>
+            </div>
+            <div class="function">
+              <div class="title"><span class="keyword">def</span> <span class="title">run</span><span class="args">(<span class="block"><br /><span class="indent"></span><span class="argname">connection</span><span class="argsep">,</span><br /><span class="indent"></span><span class="argname">ca</span><span class="argsep">,</span><br /><span class="indent"></span><span class="argname">co</span><span class="argsep">,</span><br /><span class="indent"></span><span class="argname">in_xact = <a class="objref" href="//__builtin__.bool"><pre>False</pre></a></span><span class="argsep">,</span><br /><span class="indent"></span><span class="argname">environ = <a class="objref" href="//__builtin__.dict"><pre>{'os.environ': 'masked'}</pre></a></span><br /></span>):</span></div>
+            </div>
+          </div>
+          <div class="datas">
+            <div class="head">
+              <span class="title">data</span>
+            </div>
+            <div class="data" title="__builtin__.list" id="postgresql.protocol.greentrunk.python.default_options"><span class="name">default_options</span> = <a class="objref" href="//__builtin__.list"><pre>[&lt;Option at 0x118d738: -1/--with-transaction&gt;, &lt;Option at 0x116eaa8: --python-context&gt;, &lt;Option at 0x116ea80: -m&gt;, &lt;Option at 0x1172300: -c&gt;, &lt;Option at 0x1178418: --python-postmortem&gt;, &lt;Option at 0x1172288: --pdb-pm&gt;]</pre></a></div>
+            <div class="data" title="_sre.SRE_Pattern" id="postgresql.protocol.greentrunk.python.gt_param_pattern"><span class="name">gt_param_pattern</span> = <a class="objref" href="//_sre.SRE_Pattern"><pre>&lt;_sre.SRE_Pattern object at 0x299760&gt;</pre></a></div>
+          </div>
+        </div>
+      </div>
+      <br />
+      <div class="module" id="postgresql.protocol.greentrunk.api">
+        <h3 class="title"><span class="keyword">module</span> postgresql.protocol.greentrunk.api</h3>
+        <div class="doc">
+          <div class="rst-root">
+            <div class="rst-document" id="-greentrunk-api">
+<h1 class="rst-title">GreenTrunk API</h1>
+<p>pg_greentrunk is a Python API to the PostgreSQL RDBMS. It is designed to take
+full advantage of the database elements provided by PostgreSQL to provide the
+Python programmer with substantial convenience.</p>
+<p>This module is used to define the GreenTrunk API. It creates a set of classes
+that makes up the basic interfaces used to work with a PostgreSQL database.</p>
+<p>Connection objects aren't required to be a part in any special class hierarchy.
+Merely, the Python protocol described here <em>must be</em> supported. For instance, a
+module object could be a connection to the database. However, it is recommended
+that implementations inherit from these objects in order to benefit from the
+provided doc-strings.</p>
+<p>The examples herein will regularly refer to a <tt class="rst-docutils literal"><span class="rst-pre">gtx</span></tt> object; this object is the
+<cite>connection</cite> instance--a GreenTrunk Connect(X)ion.</p>
+<div class="rst-section">
+<h1><a id="-exceptions" name="exceptions">Exceptions</a></h1>
+<p>For the most part, GreenTrunk tries to stay out of the databases' business. When
+a database error occurs, it should be mapped to the corresponding exception in
+<tt class="rst-docutils literal"><span class="rst-pre">postgresql.exceptions</span></tt> and raised--the exceptions module is provided by the
+<cite>pkg:pg_foundation</cite> package. In the cases of fatal errors, panics, or unexpected
+closures, the same exception must be raised anytime an operation is enacted on
+the connection until the connection is explicitly closed.</p>
+<p>When a connection is closed and an operation is attempted on the connection--
+other than <tt class="rst-docutils literal"><span class="rst-pre">connect</span></tt>, the <cite>postgresql.exceptions.ConnectionDoesNotExistError</cite>
+error must be raised.</p>
+<p>When a connection's link is somehow lost on an operation, the
+<cite>postgresql.exceptions.ConnectionFailureError</cite> exception should be raised. If
+exception chains are supported by the Python implementation, it should chain the
+literal exception onto the <tt class="rst-docutils literal"><span class="rst-pre">ConnectionFailureError</span></tt> instance. If no explicit
+exception caused the loss, then the <tt class="rst-docutils literal"><span class="rst-pre">ConnectionFailureError</span></tt> error message
+should describe the symptom indicating the loss.</p>
+</div>
+</div>
+          </div>
+        </div>
+        <div class="content">
+          <div class="classes">
+            <div class="head">
+              <span class="title">classes</span>
+            </div>
+            <div class="class" id="postgresql.protocol.greentrunk.api.connection">
+              <div class="title"><span class="keyword">class</span> <span class="title">connection</span>(<a class="super" title="__builtin__.object" href="//__builtin__.object">object</a>):</div>
+              <div class="doc">
+                <div class="rst-root">
+                  <div class="rst-document">
+<p>The connection interface.</p>
+</div>
+                </div>
+              </div>
+              <div class="content">
+                <div class="methods">
+                  <div class="head">
+                    <span class="title">methods</span>
+                  </div>
+                  <div class="method">
+                    <div class="title"><span class="keyword">def</span> <span class="title">__context__</span><span class="args">(<span class="block"><span class="argname">self</span></span>):</span></div>
+                    <div class="doc">
+                      <div class="rst-root">
+                        <div class="rst-document">
+<p>Returns the connection object.</p>
+</div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="method">
+                    <div class="title"><span class="keyword">def</span> <span class="title">__enter__</span><span class="args">(<span class="block"><span class="argname">self</span></span>):</span></div>
+                    <div class="doc">
+                      <div class="rst-root">
+                        <div class="rst-document">
+<p>Synonym to <cite>connect</cite> for with-statement support.</p>
+</div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="method">
+                    <div class="title"><span class="keyword">def</span> <span class="title">__exit__</span><span class="args">(<span class="block"><span class="argname">self</span><span class="argsep">,</span> <span class="argname">typ</span><span class="argsep">,</span> <span class="argname">obj</span><span class="argsep">,</span> <span class="argname">tb</span></span>):</span></div>
+                    <div class="doc">
+                      <div class="rst-root">
+                        <div class="rst-document">
+<p>Closes the connection and returns <cite>True</cite> when an exception is passed in,
+<cite>False</cite> when <cite>None</cite>.</p>
+<p>If the connection has any operations queued or running, abort them.</p>
+</div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="method">
+                    <div class="title"><span class="keyword">def</span> <span class="title">__nonzero__</span><span class="args">(<span class="block"><span class="argname">self</span></span>):</span></div>
+                    <div class="doc">
+                      <div class="rst-root">
+                        <div class="rst-document">
+<p>Returns <cite>True</cite> if there are no known error conditions that would impede an
+action, otherwise <cite>False</cite>.</p>
+<p>If the connection is in a failed transaction block, this must be <cite>False</cite>.
+If the connection is closed, this must be <cite>False</cite>.</p>
+<pre class="rst-doctest-block">
+&gt;&gt;&gt; bool(con) in (True, False)
+True
+</pre>
+</div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="method">
+                    <div class="title"><span class="keyword">def</span> <span class="title">close</span><span class="args">(<span class="block"><span class="argname">self</span></span>):</span></div>
+                    <div class="doc">
+                      <div class="rst-root">
+                        <div class="rst-document">
+<p>Close the connection. Does nothing if the connection is already closed.</p>
+</div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="method">
+                    <div class="title"><span class="keyword">def</span> <span class="title">connect</span><span class="args">(<span class="block"><span class="argname">self</span></span>):</span></div>
+                    <div class="doc">
+                      <div class="rst-root">
+                        <div class="rst-document">
+<p>Establish the connection to the server. Does nothing if the connection is
+already established.</p>
+</div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="method">
+                    <div class="title"><span class="keyword">def</span> <span class="title">cquery</span><span class="args">(<span class="block"><span class="argname">self</span><span class="argsep">,</span> <span class="argname">sql</span><span class="argsep">,</span> <span class="argname">*default_args</span></span>):</span></div>
+                    <div class="doc">
+                      <div class="rst-root">
+                        <div class="rst-document">
+<p>Exactly like <cite>query</cite>, but cache the created <cite>.query</cite> object using the
+given <cite>sql</cite> as the key. If the same <cite>sql</cite> is given again, look it up and
+return the existing <cite>.query</cite> object instead of creating a new one.</p>
+</div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="method">
+                    <div class="title"><span class="keyword">def</span> <span class="title">cursor</span><span class="args">(<span class="block"><span class="argname">self</span><span class="argsep">,</span> <span class="argname">cursor_id</span></span>):</span></div>
+                    <div class="doc">
+                      <div class="rst-root">
+                        <div class="rst-document">
+<p>Create a <cite>.cursor</cite> object from the given <cite>cursor_id</cite> that was already declared
+on the server.</p>
+<p><cite>.cursor</cite> object created this way must <em>not</em> be closed when the object is garbage
+collected. Rather, the user must explicitly close it for the server
+resources to be released. This is in contrast to <cite>.cursor</cite> object that
+are created by invoking a <cite>.query</cite> object.</p>
+</div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="method">
+                    <div class="title"><span class="keyword">def</span> <span class="title">execute</span><span class="args">(<span class="block"><span class="argname">sql</span></span>):</span></div>
+                    <div class="doc">
+                      <div class="rst-root">
+                        <div class="rst-document">
+<p>Execute an arbitrary block of SQL. Always returns <cite>None</cite> and raises an
+exception on error.</p>
+</div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="method">
+                    <div class="title"><span class="keyword">def</span> <span class="title">proc</span><span class="args">(<span class="block"><span class="argname">self</span><span class="argsep">,</span> <span class="argname">proc_id</span></span>):</span></div>
+                    <div class="doc">
+                      <div class="rst-root">
+                        <div class="rst-document">
+<p>Create a reference to a stored procedure on the database. The given
+identifier can be either an Oid or a valid <tt class="rst-docutils literal"><span class="rst-pre">regprocedure</span></tt> string pointing at
+the desired function.</p>
+<p>The <cite>proc_id</cite> given can be either an <tt class="rst-docutils literal"><span class="rst-pre">Oid</span></tt>, or a <tt class="rst-docutils literal"><span class="rst-pre">regprocedure</span></tt> identifier.</p>
+<pre class="rst-doctest-block">
+&gt;&gt;&gt; p = gtx.proc('version()')
+&gt;&gt;&gt; p()
+u'PostgreSQL 8.3.0'
+</pre>
+<pre class="rst-doctest-block">
+&gt;&gt;&gt; ~gtx.query("select oid from pg_proc where proname = 'generate_series'")
+1069
+&gt;&gt;&gt; p = gtx.proc(1069)
+&gt;&gt;&gt; list(p(1,5))
+[1, 2, 3, 4, 5]
+</pre>
+</div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="method">
+                    <div class="title"><span class="keyword">def</span> <span class="title">query</span><span class="args">(<span class="block"><span class="argname">self</span><span class="argsep">,</span> <span class="argname">sql</span><span class="argsep">,</span> <span class="argname">*default_args</span></span>):</span></div>
+                    <div class="doc">
+                      <div class="rst-root">
+                        <div class="rst-document">
+<p>Create a new <cite>.query</cite> instance that provides an interface to the prepared statement.</p>
+<p>Given a single SQL statement, and optional default query arguments, create the
+prepared statement. The object returned is the interface to the
+prepared statement.</p>
+<p>The default arguments fill in the query's positional parameters.</p>
+<p>The <tt class="rst-docutils literal"><span class="rst-pre">title</span></tt> keyword argument is only used to help identify queries.
+The given value will be set to the query object's 'title' attribute.
+It is analogous to a function name.</p>
+<p>The <tt class="rst-docutils literal"><span class="rst-pre">prepare</span></tt> keyword argument tells the driver whether or not to actually
+prepare the query when it is instantiated. When <cite>False</cite>, defer preparation
+until execution or until it is explicitly ordered to prepare.</p>
+<pre class="rst-doctest-block">
+&gt;&gt;&gt; q = gtx.query("SELECT 1")
+&gt;&gt;&gt; p = q()
+&gt;&gt;&gt; p.next()
+(1,)
+</pre>
+<p>It allows default arguments to be configured:</p>
+<pre class="rst-doctest-block">
+&gt;&gt;&gt; q = gtx.query("SELECT $1::int", 1)
+&gt;&gt;&gt; q().next()
+(1,)
+</pre>
+<p>And they are overrideable:</p>
+<pre class="rst-doctest-block">
+&gt;&gt;&gt; q(2).next()
+(2,)
+</pre>
+</div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="method">
+                    <div class="title"><span class="keyword">def</span> <span class="title">reconnect</span><span class="args">(<span class="block"><span class="argname">self</span></span>):</span></div>
+                    <div class="doc">
+                      <div class="rst-root">
+                        <div class="rst-document">
+<p>Method drawing the effect of <tt class="rst-docutils literal"><span class="rst-pre">close</span></tt> then <tt class="rst-docutils literal"><span class="rst-pre">connect</span></tt>.</p>
+</div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="method">
+                    <div class="title"><span class="keyword">def</span> <span class="title">reset</span><span class="args">(<span class="block"><span class="argname">self</span></span>):</span></div>
+                    <div class="doc">
+                      <div class="rst-root">
+                        <div class="rst-document">
+<p>Reset as much connection configuration as possible.</p>
+<p>Issues a <tt class="rst-docutils literal"><span class="rst-pre">RESET</span> <span class="rst-pre">ALL</span></tt> to the database. If the database supports removing
+temporary tables created in the session, then remove them. Reapply
+initial configuration settings such as path. If inside a transaction
+block when called, reset the transaction state using the <cite>reset</cite>
+method on the connection's transaction manager, <cite>xact</cite>.</p>
+<p>The purpose behind this method is to provide a soft-reconnect method that
+reinitializes the connection into its original state. One obvious use of this
+would be in a connection pool where the connection is done being used.</p>
+</div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="method">
+                    <div class="title"><span class="keyword">def</span> <span class="title">statement</span><span class="args">(<span class="block"><span class="argname">self</span><span class="argsep">,</span> <span class="argname">statement_id</span><span class="argsep">,</span> <span class="argname">*default_args</span></span>):</span></div>
+                    <div class="doc">
+                      <div class="rst-root">
+                        <div class="rst-document">
+<p>Create a <cite>.query</cite> object that was already prepared on the server. The distinction
+between this and a regular query is that it must be explicitly closed if it is no
+longer desired, and it is instantiated using the statement identifier as
+opposed to the SQL statement itself.</p>
+<p>If no <tt class="rst-docutils literal"><span class="rst-pre">title</span></tt> keyword is given, it will default to the statement_id.</p>
+</div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="properties">
+                  <div class="head">
+                    <span class="title">properties</span>
+                  </div>
+                  <div class="property">
+                    <div class="title"><span class="keyword">property</span> <span class="title">closed</span></div>
+                    <div class="doc">
+                      <div class="rst-root">
+                        <div class="rst-document">
+<p>A property that indicates whether the connection is open. If the connection
+is not open, then accessing closed will return True. If the connection is
+open, closed with return False.</p>
+<p>Additionally, setting it to <cite>True</cite> or <cite>False</cite> can open and close the
+connection. If the value set is not <cite>True</cite> or <cite>False</cite>, a <cite>ValueError</cite> must be
+raised.</p>
+<pre class="rst-doctest-block">
+&gt;&gt;&gt; gtx.closed
+True
+</pre>
+</div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="property">
+                    <div class="title"><span class="keyword">property</span> <span class="title">version_info</span></div>
+                    <div class="doc">
+                      <div class="rst-root">
+                        <div class="rst-document">
+<p>A version tuple of the database software similar Python's <cite>sys.version_info</cite>.</p>
+<pre class="rst-doctest-block">
+&gt;&gt;&gt; gtx.version_info
+(8, 1, 3, '', 0)
+</pre>
+</div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="property">
+                    <div class="title"><span class="keyword">property</span> <span class="title">type</span></div>
+                    <div class="doc">
+                      <div class="rst-root">
+                        <div class="rst-document">
+<p><cite>type</cite> is a property providing the name of the database type. 'PostgreSQL'
+would be the usual case. However, other "kinds" of Postgres exist in the
+wild. Greenplum for example.</p>
+</div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="property">
+                    <div class="title"><span class="keyword">property</span> <span class="title">user</span></div>
+                    <div class="doc">
+                      <div class="rst-root">
+                        <div class="rst-document">
+<p>A property that provides an interface to "SELECT current_user", <tt class="rst-docutils literal"><span class="rst-pre">SET</span>
+<span class="rst-pre">ROLE</span></tt>, and <tt class="rst-docutils literal"><span class="rst-pre">RESET</span> <span class="rst-pre">ROLE</span></tt>. When the attribute is resolved, the current user will
+be given as a character string(unicode). When the attribute is set, it will
+issue a <tt class="rst-docutils literal"><span class="rst-pre">SET</span> <span class="rst-pre">ROLE</span></tt> command to the server, changing the session's user. When
+the attribute is deleted, a <tt class="rst-docutils literal"><span class="rst-pre">RESET</span> <span class="rst-pre">ROLE</span></tt> command will be issued to the
+server.</p>
+</div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="datas">
+                  <div class="head">
+                    <span class="title">class data</span>
+                  </div>
+                  <div class="data" title="postgresql.protocol.greentrunk.api.xact" id="postgresql.protocol.greentrunk.api.connection.xact"><span class="name">xact</span> = <a class="objref" href="#postgresql.protocol.greentrunk.api.xact"><pre>&lt;postgresql.protocol.greentrunk.api.xact object at 0x1147f50&gt;</pre></a></div>
+                  <div class="data" title="postgresql.protocol.greentrunk.api.settings" id="postgresql.protocol.greentrunk.api.connection.settings"><span class="name">settings</span> = <a class="objref" href="#postgresql.protocol.greentrunk.api.settings"><pre>&lt;postgresql.protocol.greentrunk.api.settings object at 0x1147f70&gt;</pre></a></div>
+                </div>
+              </div>
+            </div>
+            <div class="class" id="postgresql.protocol.greentrunk.api.cursor">
+              <div class="title"><span class="keyword">class</span> <span class="title">cursor</span>(<a class="super" title="__builtin__.object" href="//__builtin__.object">object</a>):</div>
+              <div class="doc">
+                <div class="rst-root">
+                  <div class="rst-document">
+<p>A <cite>cursor</cite> object is an interface to a sequence of tuples(rows). A result set.
+Cursors publish a file-like interface for reading tuples from the database.</p>
+<p><cite>cursor</cite> objects are created by invoking <cite>query</cite> objects or by calling
+<cite>connection.cursor</cite> with the declared cursor's name.</p>
+</div>
+                </div>
+              </div>
+              <div class="content">
+                <div class="methods">
+                  <div class="head">
+                    <span class="title">methods</span>
+                  </div>
+                  <div class="method">
+                    <div class="title"><span class="keyword">def</span> <span class="title">__getitem__</span><span class="args">(<span class="block"><span class="argname">self</span><span class="argsep">,</span> <span class="argname">idx</span></span>):</span></div>
+                    <div class="doc">
+                      <div class="rst-root">
+                        <div class="rst-document">
+<p>Get the rows at the given absolute position.</p>
+</div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="method">
+                    <div class="title"><span class="keyword">def</span> <span class="title">__next__</span><span class="args">(<span class="block"><span class="argname">self</span></span>):</span></div>
+                    <div class="doc">
+                      <div class="rst-root">
+                        <div class="rst-document">
+<p>Get the next tuple in the cursor. Advances the position by one.</p>
+</div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="method">
+                    <div class="title"><span class="keyword">def</span> <span class="title">close</span><span class="args">(<span class="block"><span class="argname">self</span></span>):</span></div>
+                    <div class="doc">
+                      <div class="rst-root">
+                        <div class="rst-document">
+<p>Close the cursor to release its resources.</p>
+</div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="method">
+                    <div class="title"><span class="keyword">def</span> <span class="title">next</span><span class="args">(<span class="block"><span class="argname">self</span></span>):</span></div>
+                    <div class="doc">
+                      <div class="rst-root">
+                        <div class="rst-document">
+<p>Get the next tuple in the cursor. Advances the position by one.</p>
+</div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="method">
+                    <div class="title"><span class="keyword">def</span> <span class="title">read</span><span class="args">(<span class="block"><span class="argname">self</span><span class="argsep">,</span> <span class="argname">quantity = <a class="objref" href="//__builtin__.int"><pre>-1</pre></a></span></span>):</span></div>
+                    <div class="doc">
+                      <div class="rst-root">
+                        <div class="rst-document">
+<p>Read the specified number of tuples and return them in a list.
+This advances the cursor's position.</p>
+</div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="method">
+                    <div class="title"><span class="keyword">def</span> <span class="title">scroll</span><span class="args">(<span class="block"><span class="argname">self</span><span class="argsep">,</span> <span class="argname">rows</span></span>):</span></div>
+                    <div class="doc">
+                      <div class="rst-root">
+                        <div class="rst-document">
+<p>Set the cursor's position relative to the current position.
+Negative numbers can be used to scroll backwards.</p>
+<p>This is a convenient interface to <cite>seek</cite> with a relative whence(<tt class="rst-docutils literal"><span class="rst-pre">1</span></tt>).</p>
+</div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="method">
+                    <div class="title"><span class="keyword">def</span> <span class="title">seek</span><span class="args">(<span class="block"><span class="argname">self</span><span class="argsep">,</span> <span class="argname">offset</span><span class="argsep">,</span> <span class="argname">whence = <a class="objref" href="//__builtin__.int"><pre>0</pre></a></span></span>):</span></div>
+                    <div class="doc">
+                      <div class="rst-root">
+                        <div class="rst-document">
+<p>Set the cursor's position to the given offset with respect to the
+whence parameter.</p>
+<p>Whence values:</p>
+<blockquote>
+<dl class="rst-docutils">
+<dt><tt class="rst-docutils literal"><span class="rst-pre">0</span></tt></dt>
+<dd>Absolute.</dd>
+<dt><tt class="rst-docutils literal"><span class="rst-pre">1</span></tt></dt>
+<dd>Relative.</dd>
+<dt><tt class="rst-docutils literal"><span class="rst-pre">2</span></tt></dt>
+<dd>Absolute from end.</dd>
+</dl>
+</blockquote>
+</div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="class" id="postgresql.protocol.greentrunk.api.proc">
+              <div class="title"><span class="keyword">class</span> <span class="title">proc</span>(<a class="super" title="__builtin__.object" href="//__builtin__.object">object</a>):</div>
+              <div class="doc">
+                <div class="rst-root">
+                  <div class="rst-document">
+<p>A <cite>proc</cite> object is an interface to a stored procedure. A <cite>proc</cite> object is
+created by <cite>connection.proc</cite>.</p>
+</div>
+                </div>
+              </div>
+              <div class="content">
+                <div class="methods">
+                  <div class="head">
+                    <span class="title">methods</span>
+                  </div>
+                  <div class="method">
+                    <div class="title"><span class="keyword">def</span> <span class="title">__call__</span><span class="args">(<span class="block"><span class="argname">self</span><span class="argsep">,</span> <span class="argname">*args</span></span>):</span></div>
+                    <div class="doc">
+                      <div class="rst-root">
+                        <div class="rst-document">
+<p>Execute the procedure with the given arguments. If keyword arguments are
+passed they must be mapped to the argument whose name matches the key. If
+any positional arguments are given, they must fill in any gaps created by
+the filled keyword arguments. If too few or too many arguments are given,
+a TypeError must be raised. If a keyword argument is passed where the
+procedure does not have a corresponding argument name, then, likewise, a
+TypeError must be raised.</p>
+</div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="class" id="postgresql.protocol.greentrunk.api.query">
+              <div class="title"><span class="keyword">class</span> <span class="title">query</span>(<a class="super" title="__builtin__.object" href="//__builtin__.object">object</a>):</div>
+              <div class="doc">
+                <div class="rst-root">
+                  <div class="rst-document">
+<p>A <cite>query</cite> object is an interface to a prepared statement. <cite>query</cite> objects are
+normally created by invoking <cite>connection.query</cite>.</p>
+</div>
+                </div>
+              </div>
+              <div class="content">
+                <div class="methods">
+                  <div class="head">
+                    <span class="title">methods</span>
+                  </div>
+                  <div class="method">
+                    <div class="title"><span class="keyword">def</span> <span class="title">__call__</span><span class="args">(<span class="block"><span class="argname">self</span><span class="argsep">,</span> <span class="argname">*args</span></span>):</span></div>
+                    <div class="doc">
+                      <div class="rst-root">
+                        <div class="rst-document">
+<p>Execute the prepared statement with the given arguments as parameters. If
+the query returns rows, a cursor object should be returned, otherwise a
+resulthandle object.</p>
+<p>Usage:</p>
+<pre class="rst-doctest-block">
+&gt;&gt;&gt; q=gtx.query("SELECT table_name FROM information_schema.tables WHERE
+... table_schema = $1")
+&gt;&gt;&gt; q('public')
+&lt;cursor object&gt;
+</pre>
+</div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="method">
+                    <div class="title"><span class="keyword">def</span> <span class="title">__del__</span><span class="args">(<span class="block"><span class="argname">self</span></span>):</span></div>
+                    <div class="doc">
+                      <div class="rst-root">
+                        <div class="rst-document">
+<p>Close the prepared statement on the server as the only reference to its
+existence is gone. This occurs <em>iff</em> the query was prepared by the client.</p>
+</div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="method">
+                    <div class="title"><span class="keyword">def</span> <span class="title">__invert__</span><span class="args">(<span class="block"><span class="argname">self</span></span>):</span></div>
+                    <div class="doc">
+                      <div class="rst-root">
+                        <div class="rst-document">
+<p>Shorthand for a call to the first() method without any arguments.
+Useful for resolving static queries. Example usage:</p>
+<pre class="rst-doctest-block">
+&gt;&gt;&gt; ~gtx.query("INSERT INTO ttable VALUES ('value')")
+1
+&gt;&gt;&gt; ~gtx.query("SELECT 'somestring'")
+'somestring'
+</pre>
+</div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="method">
+                    <div class="title"><span class="keyword">def</span> <span class="title">close</span><span class="args">(<span class="block"><span class="argname">self</span></span>):</span></div>
+                    <div class="doc">
+                      <div class="rst-root">
+                        <div class="rst-document">
+<p>Close the prepraed statement releasing resources associated with it.</p>
+</div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="method">
+                    <div class="title"><span class="keyword">def</span> <span class="title">first</span><span class="args">(<span class="block"><span class="argname">self</span><span class="argsep">,</span> <span class="argname">*args</span></span>):</span></div>
+                    <div class="doc">
+                      <div class="rst-root">
+                        <div class="rst-document">
+<p>Execute the prepared statement with the given arguments as parameters. If
+the query returns rows with multiple columns, return the first row. If the
+query returns rows with a single column, return the first column in the
+first row. If the query does not return rows at all, return the count or
+<cite>None</cite> if no count exists in the completion message. Usage:</p>
+<pre class="rst-doctest-block">
+&gt;&gt;&gt; gtx.query("SELECT * FROM ttable WHERE key = $1").first("somekey")
+('somekey', 'somevalue')
+</pre>
+</div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="method">
+                    <div class="title"><span class="keyword">def</span> <span class="title">load</span><span class="args">(<span class="block"><span class="argname">self</span><span class="argsep">,</span> <span class="argname">iterable</span></span>):</span></div>
+                    <div class="doc">
+                      <div class="rst-root">
+                        <div class="rst-document">
+<p>Given an iterable, <cite>iterable</cite>, feed the produced parameters to the query.
+This is a bulk-loading interface for parameterized queries.</p>
+<p>Effectively, it is equivalent to:</p>
+<pre class="rst-doctest-block">
+&gt;&gt;&gt; q = gtx.query(sql)
+&gt;&gt;&gt; for i in iterable:
+...  q(*i)
+</pre>
+<p>Its purpose is to allow the implementation to take advantage of the
+knowledge that a series of parameters are to be loaded.</p>
+</div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="method">
+                    <div class="title"><span class="keyword">def</span> <span class="title">prepare</span><span class="args">(<span class="block"><span class="argname">self</span></span>):</span></div>
+                    <div class="doc">
+                      <div class="rst-root">
+                        <div class="rst-document">
+<p>Prepare the already instantiated query for use. This method would only be
+used if the query were closed at some point.</p>
+</div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="method">
+                    <div class="title"><span class="keyword">def</span> <span class="title">reprepare</span><span class="args">(<span class="block"><span class="argname">self</span></span>):</span></div>
+                    <div class="doc">
+                      <div class="rst-root">
+                        <div class="rst-document">
+<p>Shorthand for <tt class="rst-docutils literal"><span class="rst-pre">close</span></tt> then <tt class="rst-docutils literal"><span class="rst-pre">prepare</span></tt>.</p>
+</div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="class" id="postgresql.protocol.greentrunk.api.settings">
+              <div class="title"><span class="keyword">class</span> <span class="title">settings</span>(<a class="super" title="__builtin__.object" href="//__builtin__.object">object</a>):</div>
+              <div class="doc">
+                <div class="rst-root">
+                  <div class="rst-document">
+<p>A mapping interface to the session's settings. This dictionary-like object
+provides a direct interface to <tt class="rst-docutils literal"><span class="rst-pre">SHOW</span></tt> or <tt class="rst-docutils literal"><span class="rst-pre">SET</span></tt> commands. Identifiers and
+values need not be quoted specially as the implementation must do that work
+for the user.</p>
+</div>
+                </div>
+              </div>
+              <div class="content">
+                <div class="methods">
+                  <div class="head">
+                    <span class="title">methods</span>
+                  </div>
+                  <div class="method">
+                    <div class="title"><span class="keyword">def</span> <span class="title">__call__</span><span class="args">(<span class="block"><span class="argname">self</span></span>):</span></div>
+                    <div class="doc">
+                      <div class="rst-root">
+                        <div class="rst-document">
+<p>Configure settings for the next established context and return the
+settings object. This is normally used in conjunction with a
+with-statement:</p>
+<pre class="rst-doctest-block">
+&gt;&gt;&gt; with gtx.settings(search_path = 'local,public'):
+...
+</pre>
+<p>When called, the settings' object will configure itself to use the given
+settings for the duration of the block, when the block exits, the previous
+settings will be restored.</p>
+<p>If a configuration has already been stored when invoked, the old
+configuration will be overwritten. Users are expected to set the
+configuration immediately.</p>
+</div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="method">
+                    <div class="title"><span class="keyword">def</span> <span class="title">__enter__</span><span class="args">(<span class="block"><span class="argname">self</span></span>):</span></div>
+                    <div class="doc">
+                      <div class="rst-root">
+                        <div class="rst-document">
+<p>Set the settings configured using the __call__ method.</p>
+<p>If nothing has been configured, do nothing.</p>
+</div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="method">
+                    <div class="title"><span class="keyword">def</span> <span class="title">__exit__</span><span class="args">(<span class="block"><span class="argname">self</span><span class="argsep">,</span> <span class="argname">exc</span><span class="argsep">,</span> <span class="argname">val</span><span class="argsep">,</span> <span class="argname">tb</span></span>):</span></div>
+                    <div class="doc">
+                      <div class="rst-root">
+                        <div class="rst-document">
+<p>Immediately restore the settings if the connection is not in an error
+state. Otherwise, make the restoration pending until the state is
+corrected.</p>
+</div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="method">
+                    <div class="title"><span class="keyword">def</span> <span class="title">__getitem__</span><span class="args">(<span class="block"><span class="argname">self</span><span class="argsep">,</span> <span class="argname">key</span></span>):</span></div>
+                    <div class="doc">
+                      <div class="rst-root">
+                        <div class="rst-document">
+<p>Return the setting corresponding to the given key. The result should be
+consistent with what the <tt class="rst-docutils literal"><span class="rst-pre">SHOW</span></tt> command returns. If the key does not
+exist, raise a KeyError.</p>
+</div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="method">
+                    <div class="title"><span class="keyword">def</span> <span class="title">__setitem__</span><span class="args">(<span class="block"><span class="argname">self</span><span class="argsep">,</span> <span class="argname">key</span><span class="argsep">,</span> <span class="argname">value</span></span>):</span></div>
+                    <div class="doc">
+                      <div class="rst-root">
+                        <div class="rst-document">
+<p>Set the setting with the given key to the given value. The action should
+be consistent with the effect of the <tt class="rst-docutils literal"><span class="rst-pre">SET</span></tt> command.</p>
+</div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="method">
+                    <div class="title"><span class="keyword">def</span> <span class="title">get</span><span class="args">(<span class="block"><span class="argname">self</span><span class="argsep">,</span> <span class="argname">key</span><span class="argsep">,</span> <span class="argname">default = <a class="objref" href="//__builtin__.NoneType"><pre>None</pre></a></span></span>):</span></div>
+                    <div class="doc">
+                      <div class="rst-root">
+                        <div class="rst-document">
+<p>Get the setting with the corresponding key. If the setting does not exist,
+return the <cite>default</cite>.</p>
+</div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="method">
+                    <div class="title"><span class="keyword">def</span> <span class="title">getset</span><span class="args">(<span class="block"><span class="argname">self</span><span class="argsep">,</span> <span class="argname">keys</span></span>):</span></div>
+                    <div class="doc">
+                      <div class="rst-root">
+                        <div class="rst-document">
+<p>Return a dictionary containing the key-value pairs of the requested
+settings. If <em>any</em> of the keys do not exist, a <cite>KeyError</cite> must be raised
+with the set of keys that did not exist.</p>
+</div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="method">
+                    <div class="title"><span class="keyword">def</span> <span class="title">items</span><span class="args">(<span class="block"><span class="argname">self</span></span>):</span></div>
+                    <div class="doc">
+                      <div class="rst-root">
+                        <div class="rst-document">
+<p>Return an iterator to all of the setting value pairs.</p>
+</div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="method">
+                    <div class="title"><span class="keyword">def</span> <span class="title">iteritems</span><span class="args">(<span class="block"><span class="argname">self</span></span>):</span></div>
+                    <div class="doc">
+                      <div class="rst-root">
+                        <div class="rst-document">
+<p>Return an iterator to all of the setting value pairs.
+This method is provided for compatibility with dictionary objects.</p>
+</div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="method">
+                    <div class="title"><span class="keyword">def</span> <span class="title">iterkeys</span><span class="args">(<span class="block"><span class="argname">self</span></span>):</span></div>
+                    <div class="doc">
+                      <div class="rst-root">
+                        <div class="rst-document">
+<p>Return an iterator to all of the settings' keys.
+This method is provided for compatibility with dictionary objects.</p>
+</div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="method">
+                    <div class="title"><span class="keyword">def</span> <span class="title">itervalues</span><span class="args">(<span class="block"><span class="argname">self</span></span>):</span></div>
+                    <div class="doc">
+                      <div class="rst-root">
+                        <div class="rst-document">
+<p>Return an iterator to all of the settings' values.
+This method is provided for compatibility with dictionary objects.</p>
+</div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="method">
+                    <div class="title"><span class="keyword">def</span> <span class="title">keys</span><span class="args">(<span class="block"><span class="argname">self</span></span>):</span></div>
+                    <div class="doc">
+                      <div class="rst-root">
+                        <div class="rst-document">
+<p>Return an iterator to all of the settings' keys.</p>
+</div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="method">
+                    <div class="title"><span class="keyword">def</span> <span class="title">subscribe</span><span class="args">(<span class="block"><span class="argname">self</span><span class="argsep">,</span> <span class="argname">key</span><span class="argsep">,</span> <span class="argname">callback</span></span>):</span></div>
+                    <div class="doc">
+                      <div class="rst-root">
+                        <div class="rst-document">
+<p>Subscribe to changes of the setting using the callback. When the setting
+is changed, the callback will be invoked with the connection, the key,
+and the new value. If the old value is locally cached, its value will
+still be available for inspection, but there is no guarantee.
+If <cite>None</cite> is passed as the key, the callback will be called whenever any
+setting is remotely changed.</p>
+<pre class="rst-doctest-block">
+&gt;&gt;&gt; def watch(connection, key, newval):
+...
+&gt;&gt;&gt; gtx.settings.subscribe('TimeZone', watch)
+</pre>
+</div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="method">
+                    <div class="title"><span class="keyword">def</span> <span class="title">unsubscribe</span><span class="args">(<span class="block"><span class="argname">self</span><span class="argsep">,</span> <span class="argname">key</span><span class="argsep">,</span> <span class="argname">callback</span></span>):</span></div>
+                    <div class="doc">
+                      <div class="rst-root">
+                        <div class="rst-document">
+<p>Stop listening for changes to a setting. The setting name(<cite>key</cite>), and the
+callback used to subscribe must be given again for successful termination
+of the subscription.</p>
+<pre class="rst-doctest-block">
+&gt;&gt;&gt; gtx.settings.unsubscribe('TimeZone', watch)
+</pre>
+</div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="method">
+                    <div class="title"><span class="keyword">def</span> <span class="title">update</span><span class="args">(<span class="block"><span class="argname">self</span><span class="argsep">,</span> <span class="argname">mapping</span></span>):</span></div>
+                    <div class="doc">
+                      <div class="rst-root">
+                        <div class="rst-document">
+<p>For each key-value pair, incur the effect of the <cite>__setitem__</cite> method.</p>
+</div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="method">
+                    <div class="title"><span class="keyword">def</span> <span class="title">values</span><span class="args">(<span class="block"><span class="argname">self</span></span>):</span></div>
+                    <div class="doc">
+                      <div class="rst-root">
+                        <div class="rst-document">
+<p>Return an iterator to all of the settings' values.</p>
+</div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="properties">
+                  <div class="head">
+                    <span class="title">properties</span>
+                  </div>
+                  <div class="property">
+                    <div class="title"><span class="keyword">property</span> <span class="title">path</span></div>
+                    <div class="doc">
+                      <div class="rst-root">
+                        <div class="rst-document">
+<p>An interface to a structured <tt class="rst-docutils literal"><span class="rst-pre">search_path</span></tt> setting:</p>
+<pre class="rst-doctest-block">
+&gt;&gt;&gt; gtx.settings.path
+['public', '$user']
+</pre>
+<p>It may also be used to set the path:</p>
+<pre class="rst-doctest-block">
+&gt;&gt;&gt; gtx.settings.path = ('public', 'tools')
+</pre>
+</div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="class" id="postgresql.protocol.greentrunk.api.xact">
+              <div class="title"><span class="keyword">class</span> <span class="title">xact</span>(<a class="super" title="__builtin__.object" href="//__builtin__.object">object</a>):</div>
+              <div class="doc">
+                <div class="rst-root">
+                  <div class="rst-document">
+<p>A xact object is the connection's transaction manager. It is already
+instantiated for every connection. It keeps the state of the transaction and
+provides methods for managing the state thereof.</p>
+<p>Normal usage would merely entail the use of the with-statement:</p>
+<pre class="rst-literal-block">
+with gtx.xact:
+...
+</pre>
+<p>Or, in cases where two-phase commit is desired:</p>
+<pre class="rst-literal-block">
+with gtx.xact('gid'):
+...
+</pre>
+</div>
+                </div>
+              </div>
+              <div class="content">
+                <div class="methods">
+                  <div class="head">
+                    <span class="title">methods</span>
+                  </div>
+                  <div class="method">
+                    <div class="title"><span class="keyword">def</span> <span class="title">__call__</span><span class="args">(<span class="block"><span class="argname">self</span><span class="argsep">,</span> <span class="argname">gid = <a class="objref" href="//__builtin__.NoneType"><pre>None</pre></a></span><span class="argsep">,</span> <span class="argname">isolation = <a class="objref" href="//__builtin__.NoneType"><pre>None</pre></a></span><span class="argsep">,</span> <span class="argname">readonly = <a class="objref" href="//__builtin__.NoneType"><pre>None</pre></a></span></span>):</span></div>
+                    <div class="doc">
+                      <div class="rst-root">
+                        <div class="rst-document">
+<p>Initialize the transaction using parameters and return self to support a
+convenient with-statement syntax.</p>
+<p>The configuration only applies to transaction blocks as savepoints have no
+parameters to be configured.</p>
+<p>If the <cite>gid</cite>, the first keyword parameter, is configured, the transaction
+manager will issue a <tt class="rst-docutils literal"><span class="rst-pre">PREPARE</span> <span class="rst-pre">TRANSACTION</span></tt> with the specified identifier
+instead of a <tt class="rst-docutils literal"><span class="rst-pre">COMMIT</span></tt>.</p>
+<p>If <cite>isolation</cite> is specified, the <tt class="rst-docutils literal"><span class="rst-pre">START</span> <span class="rst-pre">TRANSACTION</span></tt> will include it as
+the <tt class="rst-docutils literal"><span class="rst-pre">ISOLATION</span> <span class="rst-pre">LEVEL</span></tt>. This must be a character string.</p>
+<p>If the <cite>readonly</cite> parameter is specified, the transaction block will be
+started in the <tt class="rst-docutils literal"><span class="rst-pre">READ</span> <span class="rst-pre">ONLY</span></tt> mode if True, and <tt class="rst-docutils literal"><span class="rst-pre">READ</span> <span class="rst-pre">WRITE</span></tt> mode if False.
+If <cite>None</cite>, neither <tt class="rst-docutils literal"><span class="rst-pre">READ</span> <span class="rst-pre">ONLY</span></tt> or <tt class="rst-docutils literal"><span class="rst-pre">READ</span> <span class="rst-pre">WRITE</span></tt> will be specified.</p>
+<p>Read-only transaction:</p>
+<pre class="rst-literal-block">
+&gt;&gt;&gt; with gtx.xact(readonly = True):
+...
+</pre>
+<p>Read committed isolation:</p>
+<pre class="rst-literal-block">
+&gt;&gt;&gt; with gtx.xact(isolation = 'READ COMMITTED'):
+...
+</pre>
+<p>Database configured defaults apply to all <cite>xact</cite> operations.</p>
+</div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="method">
+                    <div class="title"><span class="keyword">def</span> <span class="title">__context__</span><span class="args">(<span class="block"><span class="argname">self</span></span>):</span></div>
+                    <div class="doc">
+                      <div class="rst-root">
+                        <div class="rst-document">
+<p>Return self</p>
+</div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="method">
+                    <div class="title"><span class="keyword">def</span> <span class="title">__enter__</span><span class="args">(<span class="block"><span class="argname">self</span></span>):</span></div>
+                    <div class="doc">
+                      <div class="rst-root">
+                        <div class="rst-document">
+<p>Start a transaction block. If a transaction block has already been
+started, set a savepoint.
+<tt class="rst-docutils literal"><span class="rst-pre">start</span></tt>, <tt class="rst-docutils literal"><span class="rst-pre">begin</span></tt>, and <tt class="rst-docutils literal"><span class="rst-pre">__enter__</span></tt> are synonyms.</p>
+</div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="method">
+                    <div class="title"><span class="keyword">def</span> <span class="title">__exit__</span><span class="args">(<span class="block"><span class="argname">self</span><span class="argsep">,</span> <span class="argname">typ</span><span class="argsep">,</span> <span class="argname">obj</span><span class="argsep">,</span> <span class="argname">tb</span></span>):</span></div>
+                    <div class="doc">
+                      <div class="rst-root">
+                        <div class="rst-document">
+<p>Commit the transaction, or abort if the given exception is not <cite>None</cite>. If
+the transaction level is greater than one, then the savepoint
+corresponding to the current level will be released or rolled back in
+cases of an exception.</p>
+<p>If an exception was raised, then the return value must indicate the need
+to further raise the exception, unless the exception is an
+<cite>postgresql.exceptions.AbortTransaction</cite>. In which case, the transaction
+will be rolled back accordingly, but the no exception will be raised.</p>
+</div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="method">
+                    <div class="title"><span class="keyword">def</span> <span class="title">abort</span><span class="args">(<span class="block"><span class="argname">self</span></span>):</span></div>
+                    <div class="doc">
+                      <div class="rst-root">
+                        <div class="rst-document">
+<p>Abort the current transaction or rollback to the last started savepoint.
+<cite>rollback</cite> and <cite>abort</cite> are synonyms.</p>
+</div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="method">
+                    <div class="title"><span class="keyword">def</span> <span class="title">begin</span><span class="args">(<span class="block"><span class="argname">self</span></span>):</span></div>
+                    <div class="doc">
+                      <div class="rst-root">
+                        <div class="rst-document">
+<p>Start a transaction block. If a transaction block has already been
+started, set a savepoint.
+<tt class="rst-docutils literal"><span class="rst-pre">start</span></tt>, <tt class="rst-docutils literal"><span class="rst-pre">begin</span></tt>, and <tt class="rst-docutils literal"><span class="rst-pre">__enter__</span></tt> are synonyms.</p>
+</div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="method">
+                    <div class="title"><span class="keyword">def</span> <span class="title">checkpoint</span><span class="args">(<span class="block"><span class="argname">self</span></span>):</span></div>
+                    <div class="doc">
+                      <div class="rst-root">
+                        <div class="rst-document">
+<p>Commit and start a transaction block or savepoint. Not to be confused with
+the effect of the CHECKPOINT command.</p>
+</div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="method">
+                    <div class="title"><span class="keyword">def</span> <span class="title">commit</span><span class="args">(<span class="block"><span class="argname">self</span></span>):</span></div>
+                    <div class="doc">
+                      <div class="rst-root">
+                        <div class="rst-document">
+<p>Commit the transaction block, release a savepoint, or prepare the
+transaction for commit. If the number of running transactions is greater
+than one, then the corresponding savepoint is released. If no savepoints
+are set and the transaction is configured with a 'gid', then the
+transaction is prepared instead of committed, otherwise the transaction is
+simply committed.</p>
+</div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="method">
+                    <div class="title"><span class="keyword">def</span> <span class="title">commit_prepared</span><span class="args">(<span class="block"><span class="argname">self</span><span class="argsep">,</span> <span class="argname">gid</span></span>):</span></div>
+                    <div class="doc">
+                      <div class="rst-root">
+                        <div class="rst-document">
+<p>Commit the prepared transaction with the given <cite>gid</cite>.</p>
+</div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="method">
+                    <div class="title"><span class="keyword">def</span> <span class="title">restart</span><span class="args">(<span class="block"><span class="argname">self</span></span>):</span></div>
+                    <div class="doc">
+                      <div class="rst-root">
+                        <div class="rst-document">
+<p>Abort and start the transaction or savepoint.</p>
+</div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="method">
+                    <div class="title"><span class="keyword">def</span> <span class="title">rollback</span><span class="args">(<span class="block"><span class="argname">self</span></span>):</span></div>
+                    <div class="doc">
+                      <div class="rst-root">
+                        <div class="rst-document">
+<p>Abort the current transaction or rollback to the last started savepoint.
+<cite>rollback</cite> and <cite>abort</cite> are synonyms.</p>
+</div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="method">
+                    <div class="title"><span class="keyword">def</span> <span class="title">rollback_prepared</span><span class="args">(<span class="block"><span class="argname">self</span><span class="argsep">,</span> <span class="argname">*gids</span></span>):</span></div>
+                    <div class="doc">
+                      <div class="rst-root">
+                        <div class="rst-document">
+<p>Rollback the prepared transaction with the given <cite>gid</cite>.</p>
+</div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="method">
+                    <div class="title"><span class="keyword">def</span> <span class="title">start</span><span class="args">(<span class="block"><span class="argname">self</span></span>):</span></div>
+                    <div class="doc">
+                      <div class="rst-root">
+                        <div class="rst-document">
+<p>Start a transaction block. If a transaction block has already been
+started, set a savepoint.
+<tt class="rst-docutils literal"><span class="rst-pre">start</span></tt>, <tt class="rst-docutils literal"><span class="rst-pre">begin</span></tt>, and <tt class="rst-docutils literal"><span class="rst-pre">__enter__</span></tt> are synonyms.</p>
+</div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="properties">
+                  <div class="head">
+                    <span class="title">properties</span>
+                  </div>
+                  <div class="property">
+                    <div class="title"><span class="keyword">property</span> <span class="title">prepared</span></div>
+                    <div class="doc">
+                      <div class="rst-root">
+                        <div class="rst-document">
+<p>A sequence of available prepared transactions for the current user on the
+current database. This is intended to be more relavent for the current
+context than selecting the contents of <tt class="rst-docutils literal"><span class="rst-pre">pg_prepared_xacts</span></tt>. So, the view
+<em>must</em> be limited to those of the current database, and those which the
+user can commit.</p>
+</div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="property">
+                    <div class="title"><span class="keyword">property</span> <span class="title">failed</span></div>
+                    <div class="doc">
+                      <div class="rst-root">
+                        <div class="rst-document">
+<p>bool instance stating if the current transaction has failed due to an error. <cite>None</cite> if not in a transaction block.</p>
+</div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="property">
+                    <div class="title"><span class="keyword">property</span> <span class="title">closed</span></div>
+                    <div class="doc">
+                      <div class="rst-root">
+                        <div class="rst-document">
+<p><cite>bool</cite> stating if there is an open transaction block.</p>
+</div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="datas">
+            <div class="head">
+              <span class="title">data</span>
+            </div>
+            <div class="data" title="__builtin__.str" id="postgresql.protocol.greentrunk.api.__docformat__"><span class="name">__docformat__</span> = <a class="objref" href="//__builtin__.str"><pre>'reStructuredText'</pre></a></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

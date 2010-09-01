@@ -1,0 +1,18 @@
+This project manages the website and release process of pg-python. It
+attempts to simplify the process by providing the necessary instructions
+and supporting scripts for a successful release.
+
+Scripts and function:
+
+	build
+		constructs the site in ./root (does *not* clean).
+	install
+		rsyncs ./root to pgfoundry. publishes the build.
+	clean
+		remove the ./root directory.
+	be-new
+		collects the new source snapshots for the backend (pg-python).
+	fe-new
+		collects the new source snapshots for the frontend (py-postgresql).
+
+To add a release, see the backend/README and frontend/README.

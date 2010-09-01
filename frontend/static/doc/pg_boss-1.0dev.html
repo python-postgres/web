@@ -1,0 +1,469 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>pg_boss-1.0dev</title>
+    <link rel="stylesheet" type="text/css" href="xhtml.css" />
+  </head>
+  <body>
+    <h2 class="title"><span class="keyword">project</span> pg_boss 1.0dev</h2>
+    <div class="content">
+      <div class="description">Create, configure, and control PostgreSQL clusters in Python</div>
+      <div id="long_description" class="doc">
+        <div class="rst-root">
+          <div class="rst-document">
+<p>The boss project provides functionality for managing PostgreSQL database
+clusters. Initialization, configuration, and execution are covered by three
+seperate modules in the package.</p>
+<p>The 'init' module provides a Python interface to database cluster initialization,
+initdb. It provides the means to do so with many options.</p>
+<p>The 'config' module provides a Python interface to a cluster's configuration,
+postgresql.conf. It provides a basic mechanism to parse setting lines in the
+files and a relatively intelligent mechanism for applying configuration
+alterations.</p>
+<p>The 'hba' module provides a Python interface to a cluster's HBA file,
+pg_hba.conf. It provides basic methods for parsing, and altering of HBA lines.</p>
+<p>The 'control' module provides a Python interface to controlling the Postgres
+process, via pg_ctl.</p>
+</div>
+        </div>
+      </div>
+      <br />
+      <div class="package" id="postgresql.backend.boss">
+        <h3 class="title"><span class="keyword">package</span> postgresql.backend.boss</h3>
+        <div class="doc">
+          <pre>Backend management interfaces</pre>
+        </div>
+      </div>
+      <br />
+      <div class="module" id="postgresql.backend.boss.control">
+        <h3 class="title"><span class="keyword">module</span> postgresql.backend.boss.control</h3>
+        <div class="content">
+          <div class="imports">
+            <div class="head">
+              <span class="title">imports</span>
+            </div>
+            <div class="import"><span class="keyword">import</span> <a class="import" href="//os"><span class="path">os</span></a></div>
+            <div class="import"><span class="keyword">import</span> <a class="import" href="//signal"><span class="path">signal</span></a></div>
+            <div class="import"><span class="keyword">import</span> <a class="import" href="//subprocess"><span class="path">subprocess</span> as <span class="name">sp</span></a></div>
+            <div class="import"><span class="keyword">import</span> <a class="import" href="//sys"><span class="path">sys</span></a></div>
+            <div class="import"><span class="keyword">import</span> <a class="import" href="//warnings"><span class="path">warnings</span></a></div>
+          </div>
+          <div class="classes">
+            <div class="head">
+              <span class="title">classes</span>
+            </div>
+            <div class="class" id="postgresql.backend.boss.control.ControlError">
+              <div class="title"><span class="keyword">class</span> <span class="title">ControlError</span>(<a class="super" title="exceptions.Exception" href="//exceptions.Exception">Exception</a>):</div>
+              <div class="content"></div>
+            </div>
+            <div class="class" id="postgresql.backend.boss.control.ControlWarning">
+              <div class="title"><span class="keyword">class</span> <span class="title">ControlWarning</span>(<a class="super" title="exceptions.UserWarning" href="//exceptions.UserWarning">UserWarning</a>):</div>
+              <div class="content"></div>
+            </div>
+            <div class="class" id="postgresql.backend.boss.control.Controller">
+              <div class="title"><span class="keyword">class</span> <span class="title">Controller</span>(<a class="super" title="__builtin__.object" href="//__builtin__.object">object</a>):</div>
+              <div class="doc">
+                <pre>Abstract Controller</pre>
+              </div>
+              <div class="content"></div>
+            </div>
+            <div class="class" id="postgresql.backend.boss.control.pg_ctl">
+              <div class="title"><span class="keyword">class</span> <span class="title">pg_ctl</span>(<a class="super" title="postgresql.backend.boss.control.Controller" href="#postgresql.backend.boss.control.Controller">Controller</a>):</div>
+              <div class="doc">
+                <pre>Python interface to a pg_ctl command relative to a data directory</pre>
+              </div>
+              <div class="content">
+                <div class="methods">
+                  <div class="head">
+                    <span class="title">methods</span>
+                  </div>
+                  <div class="method">
+                    <div class="title"><span class="keyword">def</span> <span class="title">__init__</span><span class="args">(<span class="block"><span class="argname">self</span><span class="argsep">,</span> <span class="argname">location</span><span class="argsep">,</span> <span class="argname">pg_ctl_path = <a class="objref" href="//__builtin__.str"><pre>'pg_ctl'</pre></a></span></span>):</span></div>
+                    <div class="doc">
+                      <pre>Takes the data directory path and the pg_ctl command's path,</pre>
+                    </div>
+                  </div>
+                  <div class="method">
+                    <div class="title"><span class="keyword">def</span> <span class="title">__repr__</span><span class="args">(<span class="block"><span class="argname">self</span></span>):</span></div>
+                  </div>
+                  <div class="method">
+                    <div class="title"><span class="keyword">def</span> <span class="title">reload</span><span class="args">(<span class="block"><span class="argname">self</span></span>):</span></div>
+                    <div class="doc">
+                      <pre>Reload the cluster--graceful restart.</pre>
+                    </div>
+                  </div>
+                  <div class="method">
+                    <div class="title"><span class="keyword">def</span> <span class="title">restart</span><span class="args">(<span class="block"><br /><span class="indent"></span><span class="argname">self</span><span class="argsep">,</span><br /><span class="indent"></span><span class="argname">postmaster = <a class="objref" href="//__builtin__.NoneType"><pre>None</pre></a></span><span class="argsep">,</span><br /><span class="indent"></span><span class="argname">options = <a class="objref" href="//__builtin__.NoneType"><pre>None</pre></a></span><span class="argsep">,</span><br /><span class="indent"></span><span class="argname">mode = <a class="objref" href="//__builtin__.str"><pre>'smart'</pre></a></span><span class="argsep">,</span><br /><span class="indent"></span><span class="argname">nowait = <a class="objref" href="//__builtin__.bool"><pre>False</pre></a></span><span class="argsep">,</span><br /><span class="indent"></span><span class="argname">logfile = <a class="objref" href="//__builtin__.NoneType"><pre>None</pre></a></span><br /></span>):</span></div>
+                    <div class="doc">
+                      <pre>Restart the cluster</pre>
+                    </div>
+                  </div>
+                  <div class="method">
+                    <div class="title"><span class="keyword">def</span> <span class="title">running</span><span class="args">(<span class="block"><span class="argname">self</span></span>):</span></div>
+                    <div class="doc">
+                      <pre>Check whether the cluster is running.</pre>
+                    </div>
+                  </div>
+                  <div class="method">
+                    <div class="title"><span class="keyword">def</span> <span class="title">start</span><span class="args">(<span class="block"><br /><span class="indent"></span><span class="argname">self</span><span class="argsep">,</span><br /><span class="indent"></span><span class="argname">postmaster = <a class="objref" href="//__builtin__.NoneType"><pre>None</pre></a></span><span class="argsep">,</span><br /><span class="indent"></span><span class="argname">options = <a class="objref" href="//__builtin__.NoneType"><pre>None</pre></a></span><span class="argsep">,</span><br /><span class="indent"></span><span class="argname">nowait = <a class="objref" href="//__builtin__.bool"><pre>False</pre></a></span><span class="argsep">,</span><br /><span class="indent"></span><span class="argname">logfile = <a class="objref" href="//__builtin__.NoneType"><pre>None</pre></a></span><br /></span>):</span></div>
+                    <div class="doc">
+                      <pre>Start the cluster with the given parameters.</pre>
+                    </div>
+                  </div>
+                  <div class="method">
+                    <div class="title"><span class="keyword">def</span> <span class="title">stop</span><span class="args">(<span class="block"><span class="argname">self</span><span class="argsep">,</span> <span class="argname">mode = <a class="objref" href="//__builtin__.str"><pre>'smart'</pre></a></span><span class="argsep">,</span> <span class="argname">nowait = <a class="objref" href="//__builtin__.bool"><pre>False</pre></a></span></span>):</span></div>
+                    <div class="doc">
+                      <pre>Stop the running cluster</pre>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="datas">
+            <div class="head">
+              <span class="title">data</span>
+            </div>
+            <div class="data" title="__builtin__.type" id="postgresql.backend.boss.control.Control"><span class="name">Control</span> = <a class="objref" href="//__builtin__.type"><pre>&lt;class 'postgresql.backend.boss.control.pg_ctl'&gt;</pre></a></div>
+          </div>
+        </div>
+      </div>
+      <br />
+      <div class="module" id="postgresql.backend.boss.cluster">
+        <h3 class="title"><span class="keyword">module</span> postgresql.backend.boss.cluster</h3>
+        <div class="doc">
+          <pre>PostgreSQL cluster management interfaces</pre>
+        </div>
+        <div class="content">
+          <div class="imports">
+            <div class="head">
+              <span class="title">imports</span>
+            </div>
+            <div class="import"><span class="keyword">import</span> <a class="import" href="//os"><span class="path">os</span></a></div>
+            <div class="import"><span class="keyword">import</span> <a class="import" href="#postgresql.backend.boss.config"><span class="path">postgresql.backend.boss.config</span> as <span class="name">pgsql_conf</span></a></div>
+          </div>
+          <div class="classes">
+            <div class="head">
+              <span class="title">classes</span>
+            </div>
+            <div class="class" id="postgresql.backend.boss.cluster.Cluster">
+              <div class="title"><span class="keyword">class</span> <span class="title">Cluster</span>(<a class="super" title="__builtin__.object" href="//__builtin__.object">object</a>):</div>
+              <div class="doc">
+                <pre>Cluster management class</pre>
+              </div>
+              <div class="content">
+                <div class="class_methods">
+                  <div class="head">
+                    <span class="title">class methods</span>
+                  </div>
+                  <div class="method">
+                    <div class="title"><span class="keyword">def</span> <span class="title">create</span><span class="args">(<span class="block"><span class="argname">subtype</span><span class="argsep">,</span> <span class="argname">cluster_path</span><span class="argsep">,</span> <span class="argname">pg_config_dict</span></span>):</span></div>
+                    <div class="doc">
+                      <pre>Create a cluster at the given cluster path with the given pg_config</pre>
+                    </div>
+                  </div>
+                </div>
+                <div class="methods">
+                  <div class="head">
+                    <span class="title">methods</span>
+                  </div>
+                  <div class="method">
+                    <div class="title"><span class="keyword">def</span> <span class="title">__init__</span><span class="args">(<span class="block"><span class="argname">self</span><span class="argsep">,</span> <span class="argname">cluster_path</span><span class="argsep">,</span> <span class="argname">pg_config_dict</span></span>):</span></div>
+                  </div>
+                  <div class="method">
+                    <div class="title"><span class="keyword">def</span> <span class="title">__repr__</span><span class="args">(<span class="block"><span class="argname">self</span></span>):</span></div>
+                  </div>
+                  <div class="method">
+                    <div class="title"><span class="keyword">def</span> <span class="title">drop</span><span class="args">(<span class="block"><span class="argname">self</span></span>):</span></div>
+                    <div class="doc">
+                      <pre>Stop the cluster and delete it from the filesystem</pre>
+                    </div>
+                  </div>
+                  <div class="method">
+                    <div class="title"><span class="keyword">def</span> <span class="title">get_parameters</span><span class="args">(<span class="block"><span class="argname">self</span><span class="argsep">,</span> <span class="argname">keys</span></span>):</span></div>
+                    <div class="doc">
+                      <pre>Get all the settings requested in the list of keys
+
+Returns a dictionary of those keys with the values stored in the
+configuration file.</pre>
+                    </div>
+                  </div>
+                  <div class="method">
+                    <div class="title"><span class="keyword">def</span> <span class="title">select_parameters</span><span class="args">(<span class="block"><span class="argname">self</span><span class="argsep">,</span> <span class="argname">selector</span></span>):</span></div>
+                    <div class="doc">
+                      <pre>Get all the settings that the given selector chooses.
+
+Returns a dictionary of those keys</pre>
+                    </div>
+                  </div>
+                  <div class="method">
+                    <div class="title"><span class="keyword">def</span> <span class="title">set_parameters</span><span class="args">(<span class="block"><span class="argname">self</span><span class="argsep">,</span> <span class="argname">keyvals</span></span>):</span></div>
+                    <div class="doc">
+                      <pre>Given a dictionary of settings, apply them to the cluster's
+postgresql.conf.</pre>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="datas">
+            <div class="head">
+              <span class="title">data</span>
+            </div>
+            <div class="data" title="__builtin__.str" id="postgresql.backend.boss.cluster.DEFAULT_CONFIG_FILENAME"><span class="name">DEFAULT_CONFIG_FILENAME</span> = <a class="objref" href="//__builtin__.str"><pre>'postgresql.conf'</pre></a></div>
+            <div class="data" title="__builtin__.str" id="postgresql.backend.boss.cluster.DEFAULT_HBA_FILENAME"><span class="name">DEFAULT_HBA_FILENAME</span> = <a class="objref" href="//__builtin__.str"><pre>'pg_hba.conf'</pre></a></div>
+            <div class="data" title="__builtin__.type" id="postgresql.backend.boss.cluster.pg_control"><span class="name">pg_control</span> = <a class="objref" href="#postgresql.backend.boss.control.pg_ctl"><pre>postgresql.backend.boss.control.pg_ctl</pre></a></div>
+            <div class="data" title="__builtin__.type" id="postgresql.backend.boss.cluster.pg_init"><span class="name">pg_init</span> = <a class="objref" href="#postgresql.backend.boss.init.initdb"><pre>postgresql.backend.boss.init.initdb</pre></a></div>
+          </div>
+        </div>
+      </div>
+      <br />
+      <div class="module" id="postgresql.backend.boss.init">
+        <h3 class="title"><span class="keyword">module</span> postgresql.backend.boss.init</h3>
+        <div class="doc">
+          <pre>PostgreSQL catalog cluster initialization interfaces</pre>
+        </div>
+        <div class="content">
+          <div class="imports">
+            <div class="head">
+              <span class="title">imports</span>
+            </div>
+            <div class="import"><span class="keyword">import</span> <a class="import" href="//os"><span class="path">os</span></a></div>
+            <div class="import"><span class="keyword">import</span> <a class="import" href="//signal"><span class="path">signal</span></a></div>
+            <div class="import"><span class="keyword">import</span> <a class="import" href="//subprocess"><span class="path">subprocess</span> as <span class="name">sp</span></a></div>
+            <div class="import"><span class="keyword">import</span> <a class="import" href="//sys"><span class="path">sys</span></a></div>
+          </div>
+          <div class="classes">
+            <div class="head">
+              <span class="title">classes</span>
+            </div>
+            <div class="class" id="postgresql.backend.boss.init.InitializorError">
+              <div class="title"><span class="keyword">class</span> <span class="title">InitializorError</span>(<a class="super" title="exceptions.Exception" href="//exceptions.Exception">Exception</a>):</div>
+              <div class="content"></div>
+            </div>
+            <div class="class" id="postgresql.backend.boss.init.Initializor">
+              <div class="title"><span class="keyword">class</span> <span class="title">Initializor</span>(<a class="super" title="__builtin__.object" href="//__builtin__.object">object</a>):</div>
+              <div class="doc">
+                <pre>Base initializor</pre>
+              </div>
+              <div class="content">
+                <div class="methods">
+                  <div class="head">
+                    <span class="title">methods</span>
+                  </div>
+                  <div class="method">
+                    <div class="title"><span class="keyword">def</span> <span class="title">__init__</span><span class="args">(<span class="block"><span class="argname">self</span><span class="argsep">,</span> <span class="argname">path = <a class="objref" href="//__builtin__.str"><pre>'initdb'</pre></a></span></span>):</span></div>
+                  </div>
+                  <div class="method">
+                    <div class="title"><span class="keyword">def</span> <span class="title">__repr__</span><span class="args">(<span class="block"><span class="argname">self</span></span>):</span></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="class" id="postgresql.backend.boss.init.initdb">
+              <div class="title"><span class="keyword">class</span> <span class="title">initdb</span>(<a class="super" title="postgresql.backend.boss.init.Initializor" href="#postgresql.backend.boss.init.Initializor">Initializor</a>):</div>
+              <div class="doc">
+                <pre>initdb based initializor</pre>
+              </div>
+              <div class="content">
+                <div class="methods">
+                  <div class="head">
+                    <span class="title">methods</span>
+                  </div>
+                  <div class="method">
+                    <div class="title"><span class="keyword">def</span> <span class="title">__call__</span><span class="args">(<span class="block"><span class="argname">self</span><span class="argsep">,</span> <span class="argname">datadir</span></span>):</span></div>
+                  </div>
+                  <div class="method">
+                    <div class="title"><span class="keyword">def</span> <span class="title">sources</span><span class="args">(<span class="block"><span class="argname">self</span><span class="argsep">,</span> <span class="argname">datadir = <a class="objref" href="//__builtin__.NoneType"><pre>None</pre></a></span></span>):</span></div>
+                  </div>
+                </div>
+                <div class="datas">
+                  <div class="head">
+                    <span class="title">class data</span>
+                  </div>
+                  <div class="data" title="__builtin__.dict" id="postgresql.backend.boss.init.initdb._options"><span class="name">_options</span> = <a class="objref" href="//__builtin__.dict"><pre>{'superusername': '-U', 'verbose': '-d', 'encoding': '-E', 'locale': '--locale', 'monetary': '--lc-monetary', 'numeric': '--lc-numeric', 'sources': '-L', 'authentication': '-A', 'ctype': '--lc-ctype', 'collate': '--lc-collate', 'superuserpass': '--pwfile', 'time': '--lc-time'}</pre></a></div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="datas">
+            <div class="head">
+              <span class="title">data</span>
+            </div>
+            <div class="data" title="__builtin__.type" id="postgresql.backend.boss.init.Initialize"><span class="name">Initialize</span> = <a class="objref" href="#postgresql.backend.boss.init.initdb"><pre>postgresql.backend.boss.init.initdb</pre></a></div>
+          </div>
+        </div>
+      </div>
+      <br />
+      <div class="module" id="postgresql.backend.boss.config">
+        <h3 class="title"><span class="keyword">module</span> postgresql.backend.boss.config</h3>
+        <div class="doc">
+          <pre>PostgreSQL configuration file parser and editor functions.</pre>
+        </div>
+        <div class="content">
+          <div class="imports">
+            <div class="head">
+              <span class="title">imports</span>
+            </div>
+            <div class="import"><span class="keyword">import</span> <a class="import" href="//os"><span class="path">os</span></a></div>
+            <div class="import"><span class="keyword">import</span> <a class="import" href="//sys"><span class="path">sys</span></a></div>
+          </div>
+          <div class="functions">
+            <div class="head">
+              <span class="title">functions</span>
+            </div>
+            <div class="function">
+              <div class="title"><span class="keyword">def</span> <span class="title">parse_line</span><span class="args">(<span class="block"><span class="argname">line</span><span class="argsep">,</span> <span class="argname">equality = <a class="objref" href="//__builtin__.str"><pre>'='</pre></a></span><span class="argsep">,</span> <span class="argname">comment = <a class="objref" href="//__builtin__.unicode"><pre>u'#'</pre></a></span><span class="argsep">,</span> <span class="argname">quote = <a class="objref" href="//__builtin__.unicode"><pre>u"'"</pre></a></span></span>):</span></div>
+            </div>
+            <div class="function">
+              <div class="title"><span class="keyword">def</span> <span class="title">write_config</span><span class="args">(<span class="block"><span class="argname">map</span><span class="argsep">,</span> <span class="argname">writer</span><span class="argsep">,</span> <span class="argname">keys = <a class="objref" href="//__builtin__.NoneType"><pre>None</pre></a></span></span>):</span></div>
+              <div class="doc">
+                <pre>A configuration writer that will trample &amp; merely write the settings</pre>
+              </div>
+            </div>
+            <div class="function">
+              <div class="title"><span class="keyword">def</span> <span class="title">alter_config</span><span class="args">(<span class="block"><span class="argname">map</span><span class="argsep">,</span> <span class="argname">fo</span><span class="argsep">,</span> <span class="argname">keys = <a class="objref" href="//__builtin__.NoneType"><pre>None</pre></a></span></span>):</span></div>
+              <div class="doc">
+                <pre>Alters a configuration file without trampling on the existing structure</pre>
+              </div>
+            </div>
+            <div class="function">
+              <div class="title"><span class="keyword">def</span> <span class="title">read_config</span><span class="args">(<span class="block"><span class="argname">iter</span><span class="argsep">,</span> <span class="argname">d = <a class="objref" href="//__builtin__.NoneType"><pre>None</pre></a></span><span class="argsep">,</span> <span class="argname">selector = <a class="objref" href="//__builtin__.NoneType"><pre>None</pre></a></span></span>):</span></div>
+            </div>
+          </div>
+          <div class="datas">
+            <div class="head">
+              <span class="title">data</span>
+            </div>
+            <div class="data" title="__builtin__.unicode" id="postgresql.backend.boss.config.comment"><span class="name">comment</span> = <a class="objref" href="//__builtin__.unicode"><pre>u'#'</pre></a></div>
+            <div class="data" title="__builtin__.unicode" id="postgresql.backend.boss.config.quote"><span class="name">quote</span> = <a class="objref" href="//__builtin__.unicode"><pre>u"'"</pre></a></div>
+          </div>
+        </div>
+      </div>
+      <br />
+      <div class="module" id="postgresql.backend.boss.hba">
+        <h3 class="title"><span class="keyword">module</span> postgresql.backend.boss.hba</h3>
+        <div class="doc">
+          <pre>PostgreSQL Host Based Authentication manipulation utilities.</pre>
+        </div>
+        <div class="content">
+          <div class="imports">
+            <div class="head">
+              <span class="title">imports</span>
+            </div>
+            <div class="import"><span class="keyword">import</span> <a class="import" href="//os"><span class="path">os</span></a></div>
+            <div class="import"><span class="keyword">import</span> <a class="import" href="//sys"><span class="path">sys</span></a></div>
+          </div>
+          <div class="classes">
+            <div class="head">
+              <span class="title">classes</span>
+            </div>
+            <div class="class" id="postgresql.backend.boss.hba.Sequence">
+              <div class="title"><span class="keyword">class</span> <span class="title">Sequence</span>(<a class="super" title="__builtin__.object" href="//__builtin__.object">object</a>):</div>
+              <div class="doc">
+                <pre>A sequence manipulation interface for managing PostgreSQL's HBA</pre>
+              </div>
+              <div class="content">
+                <div class="methods">
+                  <div class="head">
+                    <span class="title">methods</span>
+                  </div>
+                  <div class="method">
+                    <div class="title"><span class="keyword">def</span> <span class="title">__init__</span><span class="args">(<span class="block"><span class="argname">self</span><span class="argsep">,</span> <span class="argname">iterable</span></span>):</span></div>
+                    <div class="doc">
+                      <pre>Take a HBA line producing iterable to manipulate</pre>
+                    </div>
+                  </div>
+                  <div class="method">
+                    <div class="title"><span class="keyword">def</span> <span class="title">__delitem__</span><span class="args">(<span class="block"><span class="argname">self</span><span class="argsep">,</span> <span class="argname">index</span></span>):</span></div>
+                  </div>
+                  <div class="method">
+                    <div class="title"><span class="keyword">def</span> <span class="title">__getitem__</span><span class="args">(<span class="block"><span class="argname">self</span><span class="argsep">,</span> <span class="argname">index</span></span>):</span></div>
+                  </div>
+                  <div class="method">
+                    <div class="title"><span class="keyword">def</span> <span class="title">__len__</span><span class="args">(<span class="block"><span class="argname">self</span></span>):</span></div>
+                  </div>
+                  <div class="method">
+                    <div class="title"><span class="keyword">def</span> <span class="title">__setitem__</span><span class="args">(<span class="block"><span class="argname">self</span><span class="argsep">,</span> <span class="argname">index</span><span class="argsep">,</span> <span class="argname">val</span></span>):</span></div>
+                  </div>
+                  <div class="method">
+                    <div class="title"><span class="keyword">def</span> <span class="title">_correct_indexes_past</span><span class="args">(<span class="block"><span class="argname">self</span><span class="argsep">,</span> <span class="argname">index</span><span class="argsep">,</span> <span class="argname">correction</span></span>):</span></div>
+                    <div class="doc">
+                      <pre>Correct the line numbers in the laws</pre>
+                    </div>
+                  </div>
+                  <div class="method">
+                    <div class="title"><span class="keyword">def</span> <span class="title">_format_like</span><span class="args">(<span class="block"><span class="argname">self</span><span class="argsep">,</span> <span class="argname">fields</span><span class="argsep">,</span> <span class="argname">line</span><span class="argsep">,</span> <span class="argname">pl</span></span>):</span></div>
+                  </div>
+                  <div class="method">
+                    <div class="title"><span class="keyword">def</span> <span class="title">append</span><span class="args">(<span class="block"><span class="argname">self</span><span class="argsep">,</span> <span class="argname">entry</span></span>):</span></div>
+                  </div>
+                  <div class="method">
+                    <div class="title"><span class="keyword">def</span> <span class="title">find</span><span class="args">(<span class="block"><span class="argname">self</span><span class="argsep">,</span> <span class="argname">fields</span></span>):</span></div>
+                  </div>
+                  <div class="method">
+                    <div class="title"><span class="keyword">def</span> <span class="title">index</span><span class="args">(<span class="block"><span class="argname">self</span><span class="argsep">,</span> <span class="argname">fields</span></span>):</span></div>
+                  </div>
+                  <div class="method">
+                    <div class="title"><span class="keyword">def</span> <span class="title">insert</span><span class="args">(<span class="block"><span class="argname">self</span><span class="argsep">,</span> <span class="argname">index</span><span class="argsep">,</span> <span class="argname">entry</span><span class="argsep">,</span> <span class="argname">position = <a class="objref" href="//__builtin__.int"><pre>0</pre></a></span></span>):</span></div>
+                    <div class="doc">
+                      <pre>Insert a new entry at the given index using the specified position</pre>
+                    </div>
+                  </div>
+                  <div class="method">
+                    <div class="title"><span class="keyword">def</span> <span class="title">insert_after</span><span class="args">(<span class="block"><span class="argname">self</span><span class="argsep">,</span> <span class="argname">fields</span><span class="argsep">,</span> <span class="argname">entry</span></span>):</span></div>
+                  </div>
+                  <div class="method">
+                    <div class="title"><span class="keyword">def</span> <span class="title">insert_before</span><span class="args">(<span class="block"><span class="argname">self</span><span class="argsep">,</span> <span class="argname">fields</span><span class="argsep">,</span> <span class="argname">entry</span></span>):</span></div>
+                  </div>
+                  <div class="method">
+                    <div class="title"><span class="keyword">def</span> <span class="title">pop</span><span class="args">(<span class="block"><span class="argname">self</span><span class="argsep">,</span> <span class="argname">index = <a class="objref" href="//__builtin__.int"><pre>0</pre></a></span></span>):</span></div>
+                  </div>
+                  <div class="method">
+                    <div class="title"><span class="keyword">def</span> <span class="title">writeto</span><span class="args">(<span class="block"><span class="argname">self</span><span class="argsep">,</span> <span class="argname">writer</span></span>):</span></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="functions">
+            <div class="head">
+              <span class="title">functions</span>
+            </div>
+            <div class="function">
+              <div class="title"><span class="keyword">def</span> <span class="title">parse_line</span><span class="args">(<span class="block"><span class="argname">line</span><span class="argsep">,</span> <span class="argname">separator = <a class="objref" href="//__builtin__.unicode"><pre>u' \t'</pre></a></span><span class="argsep">,</span> <span class="argname">comment = <a class="objref" href="//__builtin__.unicode"><pre>u'#'</pre></a></span></span>):</span></div>
+              <div class="doc">
+                <pre>parse a line from a pg_hba.conf file</pre>
+              </div>
+            </div>
+            <div class="function">
+              <div class="title"><span class="keyword">def</span> <span class="title">write_config</span><span class="args">(<span class="block"><span class="argname">seq</span><span class="argsep">,</span> <span class="argname">writer</span></span>):</span></div>
+              <div class="doc">
+                <pre>A configuration writer that will trample &amp; merely write the settings</pre>
+              </div>
+            </div>
+            <div class="function">
+              <div class="title"><span class="keyword">def</span> <span class="title">read_config</span><span class="args">(<span class="block"><span class="argname">iter</span><span class="argsep">,</span> <span class="argname">s = <a class="objref" href="//__builtin__.NoneType"><pre>None</pre></a></span><span class="argsep">,</span> <span class="argname">selector = <a class="objref" href="//__builtin__.NoneType"><pre>None</pre></a></span></span>):</span></div>
+              <div class="doc">
+                <pre>Read and split all uncommented entries in the given iterator</pre>
+              </div>
+            </div>
+            <div class="function">
+              <div class="title"><span class="keyword">def</span> <span class="title">main</span><span class="args">(<span class="block"><span class="argname">args</span></span>):</span></div>
+            </div>
+          </div>
+          <div class="datas">
+            <div class="head">
+              <span class="title">data</span>
+            </div>
+            <div class="data" title="__builtin__.unicode" id="postgresql.backend.boss.hba.comment"><span class="name">comment</span> = <a class="objref" href="//__builtin__.unicode"><pre>u'#'</pre></a></div>
+            <div class="data" title="__builtin__.unicode" id="postgresql.backend.boss.hba.separator"><span class="name">separator</span> = <a class="objref" href="//__builtin__.unicode"><pre>u' \t'</pre></a></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

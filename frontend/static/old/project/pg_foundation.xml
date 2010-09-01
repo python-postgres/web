@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="ISO-8859-1"?><!DOCTYPE document PUBLIC "-//APACHE//DTD Documentation V1.3//EN" "document-v13.dtd">
+<document>
+ <header>
+  <title>pg_foundation</title>
+  <subtitle>Programming basics for using PostgreSQL</subtitle>
+  <abstract>
+   This project provides tools for various aspects of PostgreSQL. Python types
+   for standard PostgreSQL types, a quoted section safe string splitter, exceptions
+   hierarchy, IRI parser, standard optparse options, and more.
+  </abstract>
+ </header>
+ <body>
+  <table>
+   <tr>
+    <th colspan="1" rowspan="1">Version</th>
+    <th colspan="1" rowspan="1">Download</th>
+    <th colspan="1" rowspan="1">Documentation</th>
+    <th colspan="1" rowspan="1">Description</th>
+   </tr>
+   <tr>
+    <td colspan="1" rowspan="1">1.0</td>
+    <td colspan="1" rowspan="1"><link href="/files/pg_foundation-1.0.tar.gz">Source.tgz</link></td>
+    <td colspan="1" rowspan="1"><link href="/doc/pg_foundation-1.0.html">HTML</link></td>
+    <td colspan="1" rowspan="1">Latest Stable</td>
+   </tr>
+  </table>
+  <section>
+   <title>Features</title>
+   <ul>
+    <li>Exception hierarchy</li>
+    <li>PostgreSQL type implementations</li>
+    <li>pq IRI parser</li>
+    <li>Standard PostgreSQL optparse options</li>
+    <li>.pgpass parser</li>
+    <li>Version parser</li>
+    <li>pg_config information extractor</li>
+    <li>bytea codec</li>
+    <li>pg_service.conf parser</li>
+   </ul>
+  </section>
+  <section>
+   <title>SCM</title>
+   <p>
+    <code>cvs -d :pserver:anonymous:@cvs.pgfoundry.org:/cvsroot/python co
+    lo</code>
+   </p>
+   <p>
+    <link href="http://cvs.pgfoundry.org/cgi-bin/cvsweb.cgi/python/lo">Web
+    Interface</link>
+   </p>
+  </section>
+ </body>
+</document><!--
+ ! vim: ts=1:sw=1:et:
+ !-->

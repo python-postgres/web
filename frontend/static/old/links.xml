@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="ISO-8859-1"?><!DOCTYPE document PUBLIC "-//APACHE//DTD Documentation V1.3//EN" "document-v13.dtd">
+<document> 
+ <header> 
+  <title>Links</title> 
+ </header> 
+ <body> 
+  <p>
+   Links to other PostgreSQL/Python related projects.
+  </p>
+  <ul>
+   <li><link href="http://python.org">Python</link> - The Language.</li>
+   <li><link href="http://postgresql.org">PostgreSQL</link> - The ORDBMS.</li>
+  </ul>
+  <section>
+   <title>Frontends</title>
+   <ul>
+    <li><link href="http://www.pygresql.org">PyGreSQL</link> - DB-API2 libpq binding.</li>
+    <li><link href="http://pypgsql.sourceforge.net">PyPgSQL</link> - DB-API2 libpq binding. (MIT)</li>
+    <li><link href="http://initd.org/projects/psycopg1">psycopg</link> - DB-API2 libpq binding. (GPL)</li>
+   </ul>
+  </section>
+ </body>
+</document><!--
+ ! vim: ts=1:sw=1:et:
+ !-->

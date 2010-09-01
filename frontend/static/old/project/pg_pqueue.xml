@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="ISO-8859-1"?><!DOCTYPE document PUBLIC "-//APACHE//DTD Documentation V1.3//EN" "document-v13.dtd">
+<document>
+ <header>
+  <title>pg_pqueue</title>
+  <abstract>PQ 3.0 protocol foundations for writing a driver</abstract>
+ </header>
+ <body>
+  <table>
+   <tr>
+    <th colspan="1" rowspan="1">Version</th>
+    <th colspan="1" rowspan="1">Download</th>
+    <th colspan="1" rowspan="1">Documentation</th>
+    <th colspan="1" rowspan="1">Description</th>
+   </tr>
+   <tr>
+    <td colspan="1" rowspan="1">1.0.1</td>
+    <td colspan="1" rowspan="1"><link href="/files/pg_pqueue-1.0.1.tar.gz">Source.tgz</link></td>
+    <td colspan="1" rowspan="1"><link href="/doc/pg_pqueue-1.0.html">HTML</link></td>
+    <td colspan="1" rowspan="1">Latest Stable</td>
+   </tr>
+  </table>
+  <section>
+   <title>Features</title>
+   <ul>
+    <li/>
+   </ul>
+  </section>
+  <section>
+   <title>SCM</title>
+   <p>
+    <code>cvs -d :pserver:anonymous:@cvs.pgfoundry.org:/cvsroot/python co
+    pq</code>
+   </p>
+   <p>
+    <link href="http://cvs.pgfoundry.org/cgi-bin/cvsweb.cgi/python/pq">Web
+    Interface</link>
+   </p>
+  </section>
+ </body>
+</document><!--
+ ! vim: ts=1:sw=1:et:
+ !-->

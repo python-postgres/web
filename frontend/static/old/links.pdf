@@ -1,0 +1,222 @@
+%PDF-1.3
+%клмн
+4 0 obj
+<< /Type /Info
+/Producer (FOP 0.20.5) >>
+endobj
+5 0 obj
+<< /Length 335 /Filter [ /ASCII85Decode /FlateDecode ]
+ >>
+stream
+Gau`MYti1j&Dd:"2l8sGB?-%gOWlh/(*mh6!3).t65#FeWII_17bHf-YU/%J^A"5Uh9N=N4pN6n^fHEl<AK/pEM.Suf_Shr$1l#arIh*8iRE=8.sM)A5D(i_"al##=s;4M$c9Wl2/WS5U&8!C<Uj@<mGutMngWL=c,WD#6H)ge$Qi0F`LlDq:TO4WcoB5f5na3;H/ffa^Ed?!nSr3p=(lnn*@HhMJIDu3'FG$L'mjIQ5:l?Z+$q3Z<6;5O+k3a@;(^@;]Dap_lJiS#NHbCR'T\A!;X=-41"FmFr]D452G"A6].4PXS#2$.&/^V`NGeN7#E8)"!.9i\@/~>
+endstream
+endobj
+6 0 obj
+<< /Type /Page
+/Parent 1 0 R
+/MediaBox [ 0 0 612 792 ]
+/Resources 3 0 R
+/Contents 5 0 R
+/Annots 7 0 R
+>>
+endobj
+7 0 obj
+[
+8 0 R
+]
+endobj
+8 0 obj
+<< /Type /Annot
+/Subtype /Link
+/Rect [ 102.0 559.666 158.0 547.666 ]
+/C [ 0 0 0 ]
+/Border [ 0 0 0 ]
+/A 9 0 R
+/H /I
+>>
+endobj
+10 0 obj
+<< /Length 768 /Filter [ /ASCII85Decode /FlateDecode ]
+ >>
+stream
+GatUq968f@&BF8='KX)37?[?70f0?'%[fAo\'P3[`R#7PZ/'Tup0Ha76jAC>$j2.5qtTKd>&0W22tmANL'^K/!eSjN+p&jD+p'YO(m]iMj;koBVOQpR2+/Z9p5]E#mf)DBg6?Imk>e(=B(e'pM0JVRceP;DC_sK^3C?[+5L!tLi?A&KP&I"Kp3I4VKH*LneM:c2ZiONti$6nO&M1F7&OOeW'MtOY(^Bio&`o+<kh`TKG:aO*Me9e(0`K;4b>tL=(Xck0R!2N@%9b>I5fuN"dISEiN@/N%(=P^<ra)D_49\3Z\s*97OG8@O=A%CRY+i_!-.u,Y4+<-AN7t:<`$l>VTC9d\1WMc^a<M[XNj&e#PD`ldIp_>@D6d/a#UY8o,\TOoAl9gj"%Eu$T[KKE6brOsX1n1,`:o%q9$dNJVh?=_Mi/K""FsCY:DARXGD9ne[$RIdG?-)hHc2D2T"EUK]CG)CIULI*h(4Hp[p3gVeL!r8*ac_uAf!em&p"FL85(Gt$s,^q)7##1V^Ii3rMH7Zr\#UhANk?d8ERgrOPh-J/qapnQrutQ22YpW\-`kii9dt2CA4/5ktt!I/a0jNKJ\O`*[HIsjut$+#S*Q&U*6Bb3k1[i8)D[i6t%Cqkp?5U#K-H$LA,b4a;X=T73(H_9ch3AGqVtp>9t.*0M`]8/PW=7Jq<[CBS$uI*)t?5d?hMuQ()l$gMGS]QO2qXN"@^q+72`jH;jI&BPVAN9P:lkDV`/FW4]O;9_l`1Yf$&C4+Xi%~>
+endstream
+endobj
+11 0 obj
+<< /Type /Page
+/Parent 1 0 R
+/MediaBox [ 0 0 612 792 ]
+/Resources 3 0 R
+/Contents 10 0 R
+/Annots 12 0 R
+>>
+endobj
+12 0 obj
+[
+13 0 R
+14 0 R
+15 0 R
+16 0 R
+17 0 R
+]
+endobj
+13 0 obj
+<< /Type /Annot
+/Subtype /Link
+/Rect [ 108.0 643.6 142.008 631.6 ]
+/C [ 0 0 0 ]
+/Border [ 0 0 0 ]
+/A << /URI (http://python.org)
+/S /URI >>
+/H /I
+>>
+endobj
+14 0 obj
+<< /Type /Annot
+/Subtype /Link
+/Rect [ 108.0 630.4 166.668 618.4 ]
+/C [ 0 0 0 ]
+/Border [ 0 0 0 ]
+/A << /URI (http://postgresql.org)
+/S /URI >>
+/H /I
+>>
+endobj
+15 0 obj
+<< /Type /Annot
+/Subtype /Link
+/Rect [ 108.0 569.066 161.328 557.066 ]
+/C [ 0 0 0 ]
+/Border [ 0 0 0 ]
+/A << /URI (http://www.pygresql.org)
+/S /URI >>
+/H /I
+>>
+endobj
+16 0 obj
+<< /Type /Annot
+/Subtype /Link
+/Rect [ 108.0 555.866 156.012 543.866 ]
+/C [ 0 0 0 ]
+/Border [ 0 0 0 ]
+/A << /URI (http://pypgsql.sourceforge.net)
+/S /URI >>
+/H /I
+>>
+endobj
+17 0 obj
+<< /Type /Annot
+/Subtype /Link
+/Rect [ 108.0 542.666 147.996 530.666 ]
+/C [ 0 0 0 ]
+/Border [ 0 0 0 ]
+/A << /URI (http://initd.org/projects/psycopg1)
+/S /URI >>
+/H /I
+>>
+endobj
+19 0 obj
+<<
+ /Title (\376\377\0\61\0\40\0\106\0\162\0\157\0\156\0\164\0\145\0\156\0\144\0\163)
+ /Parent 18 0 R
+ /A 9 0 R
+>> endobj
+20 0 obj
+<< /Type /Font
+/Subtype /Type1
+/Name /F3
+/BaseFont /Helvetica-Bold
+/Encoding /WinAnsiEncoding >>
+endobj
+21 0 obj
+<< /Type /Font
+/Subtype /Type1
+/Name /F5
+/BaseFont /Times-Roman
+/Encoding /WinAnsiEncoding >>
+endobj
+22 0 obj
+<< /Type /Font
+/Subtype /Type1
+/Name /F1
+/BaseFont /Helvetica
+/Encoding /WinAnsiEncoding >>
+endobj
+23 0 obj
+<< /Type /Font
+/Subtype /Type1
+/Name /F2
+/BaseFont /Helvetica-Oblique
+/Encoding /WinAnsiEncoding >>
+endobj
+24 0 obj
+<< /Type /Font
+/Subtype /Type1
+/Name /F7
+/BaseFont /Times-Bold
+/Encoding /WinAnsiEncoding >>
+endobj
+1 0 obj
+<< /Type /Pages
+/Count 2
+/Kids [6 0 R 11 0 R ] >>
+endobj
+2 0 obj
+<< /Type /Catalog
+/Pages 1 0 R
+ /Outlines 18 0 R
+ /PageMode /UseOutlines
+ >>
+endobj
+3 0 obj
+<< 
+/Font << /F3 20 0 R /F5 21 0 R /F1 22 0 R /F2 23 0 R /F7 24 0 R >> 
+/ProcSet [ /PDF /ImageC /Text ] >> 
+endobj
+9 0 obj
+<<
+/S /GoTo
+/D [11 0 R /XYZ 85.0 605.4 null]
+>>
+endobj
+18 0 obj
+<<
+ /First 19 0 R
+ /Last 19 0 R
+>> endobj
+xref
+0 25
+0000000000 65535 f 
+0000003377 00000 n 
+0000003442 00000 n 
+0000003534 00000 n 
+0000000015 00000 n 
+0000000071 00000 n 
+0000000497 00000 n 
+0000000617 00000 n 
+0000000642 00000 n 
+0000003657 00000 n 
+0000000775 00000 n 
+0000001635 00000 n 
+0000001758 00000 n 
+0000001813 00000 n 
+0000001978 00000 n 
+0000002147 00000 n 
+0000002322 00000 n 
+0000002504 00000 n 
+0000003720 00000 n 
+0000002690 00000 n 
+0000002821 00000 n 
+0000002934 00000 n 
+0000003044 00000 n 
+0000003152 00000 n 
+0000003268 00000 n 
+trailer
+<<
+/Size 25
+/Root 2 0 R
+/Info 4 0 R
+>>
+startxref
+3771
+%%EOF

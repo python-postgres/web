@@ -1,0 +1,179 @@
+
+
+/* ==================== aural ============================ */
+
+@media aural {
+  h1, h2, h3, h4, h5, h6 { voice-family: paul, male; stress: 20; richness: 90 }
+  h1 { pitch: x-low; pitch-range: 90 }
+  h2 { pitch: x-low; pitch-range: 80 }
+  h3 { pitch: low; pitch-range: 70 }
+  h4 { pitch: medium; pitch-range: 60 }
+  h5 { pitch: medium; pitch-range: 50 }
+  h6 { pitch: medium; pitch-range: 40 }
+  li, dt, dd { pitch: medium; richness: 60 }
+  dt { stress: 80 }
+  pre, code, tt { pitch: medium; pitch-range: 0; stress: 0; richness: 80 }
+  em { pitch: medium; pitch-range: 60; stress: 60; richness: 50 }
+  strong { pitch: medium; pitch-range: 60; stress: 90; richness: 90 }
+  dfn { pitch: high; pitch-range: 60; stress: 60 }
+  s, strike { richness: 0 }
+  i { pitch: medium; pitch-range: 60; stress: 60; richness: 50 }
+  b { pitch: medium; pitch-range: 60; stress: 90; richness: 90 }
+  u { richness: 0 }
+  
+  :link { voice-family: harry, male }
+  :visited { voice-family: betty, female }
+  :active { voice-family: betty, female; pitch-range: 80; pitch: x-high }
+}
+  
+a.external  {
+  padding: 0 20px 0px 0px;
+	display:inline;
+  background-repeat: no-repeat;
+	background-position: center right;
+	background-image: url(images/external-link.gif);
+}
+  
+.heading { background-color: #11bb22;} 
+
+.boxed { background-color: #000000;} 
+.underlined_5 	{border-bottom: solid 5px #000000;}
+.underlined_10 	{border-bottom: solid 10px #000000;}
+table caption { 
+background-color: #000000; 
+color: #ffffff;
+}
+
+#menu           { border-color: #000000;}
+#menu .menupagetitle  { border-color: #000000;}
+#menu .menupageitemgroup  { border-color: #000000;}
+
+#top          { background-color: #ffffff;}  
+ 
+#footer       { background-color: #fefefe;} 
+
+#publishedStrip { 
+color: #000000;
+background: #eeeeff; 
+}
+
+#main .breadtrail {
+background: #4c6c8f; 
+color: #000000;
+}
+#main .breadtrail a:link {  color: #000000;  }
+#main .breadtrail a:visited { color: #000000; }
+#main .breadtrail a:hover { color: #6587ff; }
+#top .breadtrail {
+background: #4c6c8f; 
+color: #000000;
+}
+#top .breadtrail a:link {  color: #000000;  }
+#top .breadtrail a:visited { color: #000000; }
+#top .breadtrail a:hover { color: #6587ff; }    
+
+#menu h1 {
+color: #000000;
+background-color: #ffffff;
+}   
+
+#menu      { background-color: #4c6c8f;} 
+#menu  {  color: #000000;} 
+#menu a:link {  color: #000000;} 
+#menu a:visited {  color: #000000;} 
+#menu a:hover {  
+background-color: #4c6c8f;
+color: #000000;} 
+ 
+#top .searchbox { 
+background-color: #4c6c8f ;
+color: #000000; 
+} 
+ 
+#tabs li      { background-color: #6c8caf ;} 
+#tabs li a:link {  color: #000000;  }
+#tabs li a:visited { color: #000000; }
+#tabs li a:hover { color: #000000; }
+
+#publishedStrip { 
+color: #000000;
+background: #4c6c8f; 
+}
+ 
+#top .header .current { background-color: #4c6c8f;} 
+#top .header .current a:link {  color: #000000;  }
+#top .header .current a:visited { color: #000000; }
+#top .header .current a:hover { color: #000000; }
+
+#level2tabs a.selected      { background-color: #000000 ;} 
+#level2tabs a:link {  color: #000000;  }
+#level2tabs a:visited { color: #000000; }
+#level2tabs a:hover { color: #000000; }
+
+#level2tabs { background-color: #000000;}
+#level2tabs a.unselected:link {  color: #000000;  }
+#level2tabs a.unselected:visited { color: #000000; }
+#level2tabs a.unselected:hover { color: #000000; }
+    
+#feedback {
+color: #ffffff;
+background: #4c6c8f;
+text-align: center;
+}
+#feedback #feedbackto {
+color: #ffffff;
+}   
+
+#menu .menupagetitle  { background-color: #cfdced;
+  color: #000000;}
+ 
+#menu .menupageitemgroup     { 
+background-color: #cfdced;
+}
+#menu .menupageitem {
+color: #000000;
+} 
+#menu .menupageitem a:link {  color: #0000ff;} 
+#menu .menupageitem a:visited {  color: #009999;} 
+#menu .menupageitem a:hover {  
+background-color: #cfdced;
+color: #6587ff;
+}
+
+body{ 
+background-color: #ffffff;
+color: #000000;
+} 
+a:link { color:darkblue} 
+a:visited { color:#4c6c8f} 
+a:hover { color:#6587ff} 
+
+ 
+.ForrestTable      { background-color: #222222;} 
+ 
+.ForrestTable td   { background-color: #ffffff;} 
+ 
+.highlight        { background-color: #ffff00;} 
+ 
+.fixme        { border-color: #cc6600;} 
+ 
+.note         { border-color: #006699;} 
+ 
+.warning         { border-color: #990000;} 
+ 
+.code         { border-color: #003366;} 
+/* extra-css */
+#credit a { margin: 5px; margin-bottom: 0; }
+#credit { padding-top: 6px; }
+div.searchbox form *
+ { border-width: 1px; border-style: solid; }
+div.searchbox form input {
+ padding: 1px; border-width: 1px; border-color: #3a5a7e;
+ background-color: #8caccf;
+ color: #000000;
+}
+#top div.breadtrail { display: none; }
+#top div.header { background-image: none; }
+#content { max-width: 8.5in; }
+h4 { font-weight: bold; }
+ 

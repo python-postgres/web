@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="ISO-8859-1"?><!DOCTYPE document PUBLIC "-//APACHE//DTD Documentation V1.3//EN" "document-v13.dtd">
+<document>
+ <header>
+  <title>pg/python introduction</title>
+  <meta name="description">The pg/python Project Home Page</meta>
+  <meta name="keywords">postgres, postgresql, python, python interface,
+  procedural language, pgpy, pypg, plpy, plpython, pl/python, backend,
+  frontend, db-api, db-api 2.0, postgresql bindings, postgrespy, pg/python,
+  postgresql client</meta>
+ </header>
+ <body>
+  <p>pg/python is an open source project working toward the improvement of 
+  <link href="ext:py">Python</link>interfaces to 
+  <link href="ext:pg">PostgreSQL</link>.</p>
+  <section>
+   <title>Driver Overview</title>
+   <p>
+    To install the driver, you should probably just use setuptools' easy_install:
+    <code>$ easy_install pg_proboscis</code>. If that is not an option, you can
+    download the source packages in the <link href="files/">Download
+    Index</link>(You'll need one of each. :). A unified
+    package may come eventually, if demand for such is expressed.
+   </p>
+   <p>
+    If you are just using the DB-API 2.0 interface, the module's path is
+    <code>postgresql.interface.proboscis.dbapi2</code>.
+   </p>
+   <p>
+    For documentation on connecting with GreenTrunk:
+     <link href="doc/pg_proboscis-1.0.html">Connecting</link>.
+    For documentation on using the GreenTrunk connection:
+     <link href="doc/pg_greentrunk-1.0.html">Connection API</link>(Also accessible via
+     the pg_greentrunk command.).
+   </p>
+  </section>
+  <section>
+   <title>Projects</title>
+   <dl>
+    <dt><b>Programmer's Client/Driver</b></dt>
+    <dd><link href="project/pg_proboscis.html">pg_proboscis</link> -
+    Provides a DB-API 2.0 and GreenTrunk interface to PostgreSQL.</dd>
+    <dt><b>Procedural Language</b></dt>
+    <dd><link href="project/pg_teop.html">pg_teop</link> -
+    In development.</dd>
+    <dt><b>Remote Backend Console</b></dt>
+    <dd><link href="project/pg_slythe.html">pg_slythe</link> -
+    In development.</dd>
+    <dt><b>PostgreSQL Cluster Management</b></dt>
+    <dd><link href="project/pg_boss.html">pg_boss</link> -
+    Create, configure, and control PostgreSQL clusters from Python.</dd>
+   </dl>
+  </section>
+ </body>
+</document><!--
+ ! vim: ts=1:sw=1:et:
+ !-->

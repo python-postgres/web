@@ -1,0 +1,4 @@
+#!/bin/sh
+SRC=root/
+DST=pgfoundry.org:/home/pgfoundry.org/groups/python/htdocs
+rsync --delete-after -vzr "$SRC" "$DST"

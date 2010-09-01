@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="ISO-8859-1"?><!DOCTYPE document PUBLIC "-//APACHE//DTD Documentation V1.3//EN" "document-v13.dtd">
+<document>
+ <header>
+  <title>pg_boss</title>
+  <subtitle>Backend control &amp; configuration management</subtitle>
+  <abstract>This project creates Python interfaces to the
+  <literal>pg_ctl</literal> and <literal>initdb</literal>
+  processes. It also defines functions for altering the PostgreSQL
+  configuration file in a non-destructive and a non-repetitive
+  manner(ie *not* `echo setting=value &gt;&gt;postgresql.conf`).</abstract>
+ </header>
+ <body>
+  <table>
+   <tr>
+    <th colspan="1" rowspan="1">Version</th>
+    <th colspan="1" rowspan="1">Download</th>
+    <th colspan="1" rowspan="1">Documentation</th>
+    <th colspan="1" rowspan="1">Description</th>
+   </tr>
+   <tr>
+    <td colspan="1" rowspan="1">1.0dev</td>
+    <td colspan="1" rowspan="1"><link href="/files/pg_boss-1.0dev.tar.gz">Source.tgz</link></td>
+    <td colspan="1" rowspan="1"><link href="/doc/pg_boss-1.0dev.html">HTML</link></td>
+    <td colspan="1" rowspan="1">Latest</td>
+   </tr>
+  </table>
+  <section>
+   <title>Features</title>
+   <ul>
+    <li>Non-destructive, non-repetitive configuration management</li>
+    <li>pg_ctl interface</li>
+    <li>initdb interface</li>
+    <li>postgresql.conf configuration management</li>
+    <li>pg_hba.conf configuration management</li>
+    <li>pg_hba console script for modifying an hba file</li>
+    <li>pg_dotconf console script for modifying a configuration file</li>
+   </ul>
+  </section>
+  <section>
+   <title>SCM</title>
+   <p>
+    <code>cvs -d :pserver:anonymous:@cvs.pgfoundry.org:/cvsroot/python co
+    ctl</code>
+   </p>
+   <p>
+    <link href="http://cvs.pgfoundry.org/cgi-bin/cvsweb.cgi/python/ctl">Web
+    Interface</link>
+   </p>
+  </section>
+ </body>
+</document><!--
+ ! vim: ts=1:sw=1:et:
+ !-->
