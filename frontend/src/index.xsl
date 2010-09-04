@@ -218,6 +218,7 @@
 ↑ X(5): b'X\x00\x00\x00\x04'</pre></div>
     <div id="retabs"></div>
     <div id="backend_link"><a href="backend/">Backend / Procedural Language</a></div>
+    <div id="ticker"><iframe src="ticker.html"/></div>
     <div id="reveals">
      <div>
       <img class="ricon" src="downarrow.png" />
@@ -591,7 +592,6 @@ env CC=gcc-4.0 python3 ./setup.py</pre>
        </tr>
       </table>
      </div>
-     <div id="ticker" style="position: absolute"><iframe src="ticker.html"/></div>
     </div>
    </body>
   </html>

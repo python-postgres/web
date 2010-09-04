@@ -149,7 +149,7 @@
    </head>
    <body>
     <div id="retabs"></div>
-    <div id="frontend_link"><a href="/">Frontend</a></div>
+    <div id="frontend_link"><a href="..">Frontend</a></div>
     <div id="reveals">
      <div>
       <img class="ricon" src="downarrow.png" />

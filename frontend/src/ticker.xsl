@@ -12,7 +12,8 @@
  xmlns:int="this:local"
  extension-element-prefixes="exsl date">
 <xsl:output method="html" encoding="utf-8"/>
- <xsl:param name="prefix" select="'http://python.projects.postgresql.org/'"/>
+ <!--<xsl:param name="prefix" select="'http://python.projects.postgresql.org/'"/>-->
+ <xsl:param name="prefix" select="'./'"/>
  <xsl:param name="commits_ri" select="concat($prefix, 'commitlog.atom')"/>
  <xsl:param name="mail_ri" select="concat($prefix, 'mail.xml')"/>
 
@@ -57,7 +58,7 @@
   <xsl:for-each select="exsl:node-set($sorted_items)/int:items/*">
    <xsl:variable name="prev" select="position()-1"/>
    <xsl:if test="$prev = 0 or @type != 'thread' or ../int:item[$prev+1]/int:title != ../int:item[$prev]/int:title">
-    <a href="{int:link}">
+    <a target="_NEW_WINDOW" href="{int:link}">
     <div class="item">
      <img class="icon">
       <xsl:attribute name="src">
@@ -66,7 +67,7 @@
          <xsl:text>gears.png</xsl:text>
         </xsl:when>
         <xsl:when test="@type = 'thread'">
-         <xsl:text>star.png</xsl:text>
+         <xsl:text>mail.png</xsl:text>
         </xsl:when>
        </xsl:choose>
       </xsl:attribute>

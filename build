@@ -13,6 +13,7 @@ cp -r ./frontend/static/* root/ || exit
 
 xsltproc frontend/src/index.xsl frontend/src/index.xml >root/index.html || exit
 cp -r frontend/src/lib root/ || exit
+cp frontend/src/ticker.xsl root/ || exit
 cp frontend/src/*.css root/ || exit
 cp frontend/src/*.png root/ || exit
 cp frontend/src/license.txt root/ || exit

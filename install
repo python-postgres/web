@@ -1,4 +1,4 @@
 #!/bin/sh
 SRC=root/
 DST=pgfoundry.org:/home/pgfoundry.org/groups/python/htdocs
-rsync --delete-after -vzr "$SRC" "$DST"
+rsync --delete-after --exclude=ticker.html --exclude=commitlog.atom --exclude=mail.xml -vzr "$SRC" "$DST"
