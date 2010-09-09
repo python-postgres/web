@@ -49,7 +49,7 @@
     <title><xsl:value-of select="$project"/></title>
     <meta http-equiv="Content-Style-Type" content="text/css"/>
     <meta name="keywords"
-     content="programming,database,driver,interface,pgsql,pg,py,SQL,Python,python3,py-postgresql,Postgres,PostgreSQL"/>
+     content="programming,database,driver,interface,pgsql,pg,py,SQL,Python,python3,py-postgresql,Postgres,postgres,PostgreSQL,postgresql,postgre,Postgre"/>
     <meta name="description" content="Python 3 interface (driver) for PostgreSQL"/>
     <link rel="icon" type="image/png" href="py.png"/>
     <link rel="stylesheet" type="text/css" href="main.css"/>
