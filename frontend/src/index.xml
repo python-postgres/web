@@ -15,6 +15,18 @@
 <published name="py-postgresql">
 
  <branch version="1.0" id="v1.0">
+  <release date="2010-09-18" version="1.0.2" id="v1.0.2">
+   <platform>
+    <file type="zip" id="py-postgresql-1.0.2.zip"/>
+    <file type="tar/gz" id="py-postgresql-1.0.2.tar.gz"/>
+    <file type="tar/bz2" id="py-postgresql-1.0.2.tar.bz2"/>
+   </platform>
+   <platform id="win32">
+    <platform id="cpython3.1">
+     <file type="msi" id="py-postgresql-1.0.2.win32-py3.1.msi"/>
+    </platform>
+   </platform>
+  </release>
 
   <release date="2010-04-24" version="1.0.1" id="v1.0.1">
    <platform>
