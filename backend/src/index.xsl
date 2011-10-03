@@ -575,8 +575,8 @@ Primary Developers:
              <td>Set Returning Functions</td>
              <td>
               Supports both VPC and Materialization.
-              Optimized Postgres.Cursor returns can help keep Python interpreter
-              overhead out of the equation.
+              Optimized Postgres.Cursor returns helps to eliminate Python interpreter
+              overhead.
              </td>
             </tr>
             <tr>
