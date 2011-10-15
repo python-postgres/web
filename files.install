@@ -1,0 +1,5 @@
+#!/bin/sh
+# like install, but just the files. useful for the pre-release process.
+alias sync='rsync --delete-after --exclude=ticker.html --exclude=backend_commitlog.atom --exclude=commitlog.atom --exclude=mail.xml -vzr'
+sync root/files/ pgfoundry.org:/home/pgfoundry.org/groups/python/htdocs/files
+sync root/backend/files/ pgfoundry.org:/home/pgfoundry.org/groups/python/htdocs/backend/files
