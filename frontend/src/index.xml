@@ -15,6 +15,23 @@
 <published name="py-postgresql">
 
  <branch version="1.0" id="v1.0">
+  <release date="2011-09-24" version="1.0.3" id="v1.0.3">
+   <platform>
+    <file type="zip" id="py-postgresql-1.0.3.zip"/>
+    <file type="tar/gz" id="py-postgresql-1.0.3.tar.gz"/>
+    <file type="tar/bz2" id="py-postgresql-1.0.3.tar.bz2"/>
+    <file type="tar/xz" id="py-postgresql-1.0.3.tar.xz"/>
+   </platform>
+   <platform id="win32">
+    <platform id="cpython3.2">
+     <file type="msi" id="py-postgresql-1.0.3.win32-py3.2.msi"/>
+    </platform>
+    <platform id="cpython3.1">
+     <file type="msi" id="py-postgresql-1.0.3.win32-py3.1.msi"/>
+    </platform>
+   </platform>
+  </release>
+
   <release date="2010-09-18" version="1.0.2" id="v1.0.2">
    <platform>
     <file type="zip" id="py-postgresql-1.0.2.zip"/>
@@ -57,7 +74,7 @@
 
  </branch>
 
- <branch version="0.9" id="v0.9" documentation="false">
+ <branch hidden="true" version="0.9" id="v0.9" documentation="false">
 
   <release date="2010-01-01" version="0.9.3" id="v0.9.3">
    <errata>datetime infinity values not recognized</errata>
