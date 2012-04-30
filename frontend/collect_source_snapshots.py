@@ -19,7 +19,7 @@ from functools import partial
 
 # base directory
 project = 'py-postgresql'
-script_dir = os.path.dirname(__file__)
+script_dir = os.path.realpath(os.path.dirname(__file__))
 os.chdir(script_dir)
 files_dir = os.path.join(script_dir, 'static', 'files')
 files = partial(os.path.join, files_dir)

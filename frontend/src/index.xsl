@@ -438,16 +438,15 @@ datetime.datetime(2009, 5, 12, 20, 23, 30, 351411)
         Copy of the latest authors file:
 <pre>
 <![CDATA[
-Primary Developers:
- James William Pye <x@jwp.name>
-
 Contributors:
+ James William Pye [faults are mostly mine] <x@jwp.io>
  Elvis Pranskevichus
  William Grzybowski [subjective paramstyle]
+ Barry Grussling [inet/cidr support]
+ Matthew Grant [inet/cidr support]
 
 Support by Donation:
  AppCove Network
-
 
 Further Credits
 ===============

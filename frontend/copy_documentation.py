@@ -6,8 +6,7 @@ import zipfile
 import xml.etree.ElementTree as etree
 
 project = 'py-postgresql'
-script_dir = os.path.dirname(__file__)
-os.chdir(script_dir)
+os.chdir(os.path.realpath(os.path.dirname(__file__)))
 files = os.path.join('static', 'files')
 
 def open_branch(version):
@@ -22,6 +21,7 @@ def extract(dst, zf):
 	for x in zf.filelist:
 		path = x.filename.split('/')[1:]
 		rpath = os.path.join(dst, *path)
+		print(x.filename)
 		if x.filename.endswith('/'):
 			os.mkdir(rpath)
 		else:
@@ -40,8 +40,9 @@ def rmrf(path, rm = os.remove, rmdir = os.rmdir, join = os.path.join):
 def publish_branch(target, version, d = 'tmpd'):
 	if os.path.exists(d):
 		rmrf(d)
-	extract(d, open_branch(version))
-	os.rename(os.path.join(d, 'postgresql', 'documentation', 'html'), target)
+	os.mkdir(d)
+	open_branch(version).extractall(d)
+	os.rename(os.path.join(d, project + '-' + version, 'postgresql', 'documentation', 'html'), target)
 	rmrf(d)
 
 if os.path.exists('docs'):

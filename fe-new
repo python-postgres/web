@@ -1,2 +1,2 @@
 #!/bin/sh
-cd src/frontend && python3 collect_source_snapshots.py
+cd frontend && python3 collect_source_snapshots.py

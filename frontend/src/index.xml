@@ -15,7 +15,23 @@
 <published name="py-postgresql">
 
  <branch version="1.0" id="v1.0">
+  <release date="2012-03-01" version="1.0.4" id="v1.0.4">
+   <platform>
+    <file type="tar/xz" id="py-postgresql-1.0.4.tar.xz"/>
+    <file type="zip" id="py-postgresql-1.0.4.zip"/>
+   </platform>
+   <platform id="win32">
+    <platform id="cpython3.2">
+     <file type="msi" id="py-postgresql-1.0.4.win32-py3.2.msi"/>
+    </platform>
+    <platform id="cpython3.1">
+     <file type="msi" id="py-postgresql-1.0.4.win32-py3.1.msi"/>
+    </platform>
+   </platform>
+  </release>
+
   <release date="2011-09-24" version="1.0.3" id="v1.0.3">
+   <errata>Can emit superfluous ERRORs regarding CURSOR existence.</errata>
    <platform>
     <file type="zip" id="py-postgresql-1.0.3.zip"/>
     <file type="tar/gz" id="py-postgresql-1.0.3.tar.gz"/>
