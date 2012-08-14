@@ -1,0 +1,225 @@
+<!--
+ ! Establish example.
+ !-->
+<example name="Normal Functions">
+<section title="Functions are Modules, so there needs to be an entry point. Define main">
+<![CDATA[
+CREATE OR REPLACE FUNCTION
+hello(world text) RETURNS text LANGUAGE python AS
+$$
+import Postgres
+
+template = "Hello, {0}!"
+
+@pytypes
+def main(*args):
+    tail = args[0]
+    if tail is None:
+        tail = 'World'
+    return template.format(tail)
+$$;
+
+SELECT hello(NULL);
+--     hello     
+-----------------
+-- Hello, World!
+--(1 row)
+
+SELECT hello('Bunnies');
+--      hello      
+-------------------
+-- Hello, Bunnies!
+--(1 row)
+]]></section>
+</example>
+<example name="Set Returning Function">
+<section title="Python Iterators provide a wonderful">
+Set Returning Functions are supported via iterators:
+<![CDATA[
+CREATE OR REPLACE FUNCTION
+only_a_few_of() RETURNS SETOF text LANGUAGE python AS
+$$
+import Postgres
+
+my_favorite_things = [
+    'raindrops on roses',
+    'whiskers on kittens',
+    'bright copper kettles',
+    'warm woolen mittens',
+    'brown paper packages tied up with strings',
+]
+
+def main(*args):
+    # no args, actually..
+    # And, we could just return the list, but
+    # for the purpose of illustration, we'll use
+    # a generator.
+    #
+    for x in only_a_few_of:
+        yield x
+$$;
+
+SELECT * FROM only_a_few_of();
+--            only_a_few_of             
+---------------------------------------------
+-- raindrops on roses
+-- whiskers on kittens
+-- bright copper kettles
+-- warm woolen mittens
+-- brown paper packages tied up with strings
+--(5 rows)
+]]>
+</section>
+</example>
+
+<example name="Triggers">
+<section title="Trigger Functions have multiple entry points"><![CDATA[
+CREATE OR REPLACE FUNCTION
+tell_me() RETURNS TRIGGER LANGUAGE python AS
+$$
+import Postgres
+
+def before_insert(td, new):
+    Postgres.NOTICE('inserted: ' + str(new))
+
+def before_update(td, old, new):
+    Postgres.NOTICE('updated ' + str(old) + ' to ' + str(new))
+
+def before_delete(td, old):
+    Postgres.NOTICE('deleted: ' + str(old))
+$$;
+
+CREATE TABLE paranoia (i int, t text);
+CREATE TRIGGER watching_it BEFORE INSERT OR UPDATE OR DELETE
+ ON paranoia FOR EACH ROW
+ EXECUTE PROCEDURE tell_me();
+
+INSERT INTO paranoia VALUES (0, 'ucme');
+--NOTICE:  inserted: (0,ucme)
+--INSERT 0 1
+
+UPDATE paranoia SET i = 15;
+--NOTICE:  updated (0,ucme) to (15,ucme)
+--UPDATE 1
+
+DELETE FROM paranoia;
+--NOTICE:  deleted: (15,ucme)
+--DELETE 1
+]]></section>
+</example>
+
+<example name="Full Tracebacks">
+<section title="pg-python takes care when reporting errors">
+<![CDATA[
+CREATE OR REPLACE FUNCTION
+it_blows_up() RETURNS VOID LANGUAGE python AS
+$$
+
+def one():
+    raise OverflowError("there's water everywhere")
+
+def two():
+    return one()
+
+def three():
+    return two()
+
+# enters here:
+def main():
+    three()
+$$;
+
+SELECT it_blows_up();
+-- ERROR:  function's "main" raised a Python exception
+-- CONTEXT:  [exception from Python]
+-- Traceback (most recent call last):
+--    File "public.it_blows_up()", line 13, in main
+--     three()
+--    File "public.it_blows_up()", line 10, in three
+--     return two()
+--    File "public.it_blows_up()", line 7, in two
+--     return one()
+--    File "public.it_blows_up()", line 4, in one
+--     raise OverflowError("there's water everywhere")
+--  OverflowError: there's water everywhere
+--
+-- [public.it_blows_up()]
+]]>
+</section>
+</example>
+
+<example title="Composite Types">
+<section title="Composites are supported as a sequence and a mapping:">
+<![CDATA[
+BEGIN;
+CREATE TYPE foo AS (i int, t text);
+
+CREATE OR REPLACE FUNCTION
+fields_as_string(x foo) RETURNS TEXT LANGUAGE python AS
+$$
+template = """
+i = {0!s}
+t = {1!s}
+0 = {2!s}
+1 = {3!s}
+"""
+
+def main(x):
+    return template.format(
+        x['i'], x['t'], x[0], x[1],
+    )
+$$;
+
+SELECT fields_as_string(ROW(-1,'kittens with mittens!')::foo);
+--     fields_as_string      
+-----------------------------
+--                          +
+-- i = -1                   +
+-- t = kittens with mittens!+
+-- 0 = -1                   +
+-- 1 = kittens with mittens!+
+-- 
+--(1 row)
+
+SELECT fields_as_string(ROW(57,NULL)::foo);
+-- fields_as_string 
+--------------------
+--                 +
+-- i = 57          +
+-- t = None        +
+-- 0 = 57          +
+-- 1 = None        +
+-- 
+--(1 row)
+ABORT;
+]]>
+</section>
+</example>
+
+<example title="Interrupts">
+<section title="pg-python won't leave you hanging">
+<![CDATA[
+postgres=# CREATE OR REPLACE FUNCTION infinite_loop() RETURNS text LANGUAGE python AS
+postgres-# $$
+postgres$# def main():
+postgres$#  while 1:
+postgres$#   pass
+postgres$#  return 'never happens'
+postgres$# $$;
+CREATE FUNCTION
+postgres=# SELECT infinite_loop();
+^CCancel request sent
+ERROR:  canceling statement due to user request
+CONTEXT:  [exception from Python]
+Traceback (most recent call last):
+   File "__python__.infinite_loop()", line 4, in main
+    pass
+ Postgres.Exception
+
+[__python__.infinite_loop()]
+]]>
+</section>
+</example>
+<!--
+ ! vim: sw=1:et:ts=1:
+ !-->

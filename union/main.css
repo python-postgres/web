@@ -1,0 +1,352 @@
+a {
+ text-decoration: none;
+ font-variant: small-caps;
+ letter-spacing: 1px;
+ color: gray;
+}
+
+a:visited {
+ /*color: #bbbb11;*/
+ color: gray;
+}
+
+a:hover {
+ /*text-decoration: underline;*/
+ color: black;
+ text-shadow: 1px 1px 3px white, -1px -1px 3px white, 0px 0px 3px white;
+}
+
+img {
+ border-width: 0;
+}
+
+html {
+ background-color: black;
+}
+
+div#offscreen {
+ display: none;
+ user-select: none;
+ -moz-user-select: none;
+ -khtml-user-select: none;
+ z-index: -1;
+ border-width: 0px;
+ top: 100%;
+ left: 100%;
+ scroll: none;
+ white-space: nowrap;
+ overflow: hidden;
+}
+
+div#undertabs {
+ user-select: none;
+ -moz-user-select: none;
+ -khtml-user-select: none;
+ position: fixed;
+ z-index: -1;
+ border-color: darkgray;
+ border-width: 1px;
+ border-style: solid;
+ background-color: #404040;
+ top: 16px;
+ left: -134px;
+ width: 122px;
+ height: 100%;
+ font-style: monospace;
+ font-size: small;
+ color: lightgray;
+ padding-left: 10px;
+ padding-right: 4px;
+ scroll: none;
+ white-space: nowrap;
+ overflow: hidden;
+}
+
+table#layout {
+	width: 100%;
+	border-width: 0;
+	margin: 0;
+	padding: 0;
+	border-spacing: 5px;
+}
+
+table#layout tr {
+	width: 100%;
+	border-width: 0;
+	margin: 0;
+	padding: 0;
+}
+
+table#layout tr td {
+	width: 50%;
+	border-width: 2px;
+	margin: 0;
+	padding: 0;
+	text-align: center;
+	font-size: 10em;
+	font-family: monospace;
+}
+
+table#layout tr td div {
+	border: 0;
+}
+
+div.pointer {
+	line-height: 80%;
+}
+
+div.pane {
+	border-width: 0;
+	margin: 0;
+	padding: 0;
+}
+
+div#python {
+	/*background-color: rgba(100,160,256,0.6);*/
+	border: 0;
+}
+
+div#postgres {
+	/*background-color: rgba(256,256,30,0.2);*/
+	border: 0;
+}
+
+img.logo {
+ width: 1.2in;
+ height: 1.2in;
+ -webkit-user-select: none;
+ -ms-user-select: none;
+ -o-user-select: none;
+ -moz-user-select: none;
+ -webkit-transition: all 0.5s ease-in-out;
+ -moz-transition: all 0.5s ease-in-out;
+ -o-transition: all 0.5s ease-in-out;
+ -ms-transition: all 0.5s ease-in-out;
+}
+
+div.postgres img.logo {
+ width: 1.2in;
+ height: 1.2in;
+}
+
+img.logo:hover {
+ -moz-transform: rotate(360deg);
+ -webkit-transform: rotate(360deg);
+ -webkit-transition-duration: 3s, 2s;
+}
+
+div#body {
+ background-color: #222222;
+ color: lightgray;
+ border-style: solid;
+ border-width: 1px;
+ border-color: darkgray;
+}
+
+div#header {
+ position: fixed;
+ top: 1em; right: 1em;
+ color: #eeeeee;
+ font-weight: bold;
+ font-size: small;
+}
+
+div#backend {
+	background: black;
+}
+
+div#frontend {
+	background: rgba(234,234,234,1);
+}
+
+div#middle {
+	background: rgb(234,234,234);
+	background: -moz-linear-gradient(top,  rgba(234,234,234,1) 2%, rgba(0,0,0,1) 100%);
+	background: -webkit-gradient(linear, left top, left bottom, color-stop(2%,rgba(234,234,234,1)), color-stop(100%,rgba(0,0,0,1)));
+	background: -webkit-linear-gradient(top,  rgba(234,234,234,1) 2%,rgba(0,0,0,1) 100%);
+	background: -o-linear-gradient(top,  rgba(234,234,234,1) 2%,rgba(0,0,0,1) 100%);
+	background: -ms-linear-gradient(top,  rgba(234,234,234,1) 2%,rgba(0,0,0,1) 100%);
+	background: linear-gradient(to bottom,  rgba(234,234,234,1) 2%,rgba(0,0,0,1) 100%);
+	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#eaeaea', endColorstr='#000000',GradientType=0 ); /* IE6-9 */
+}
+
+div#content {
+ padding: 1em;
+ position: relative;
+}
+
+div#footer {
+ margin-top: 6px;
+ border-width: 0;
+ width: 100%;
+ position: absolute;
+ bottom: 0;
+}
+div#footer table {
+ padding: 0;
+ margin: 0;
+ border-width: 0;
+ border-spacing: 4px;
+}
+div#footer table tr {
+ padding: 0;
+ margin: 0;
+ font-size: small;
+}
+div#footer table tr td {
+ background-color: #222222;
+ border-style: solid;
+ border-width: 1px;
+ border-color: darkgray;
+ text-align: center;
+ width: 12.6%; /* :( */
+ padding-top: 2px;
+ padding-bottom: 2px;
+ text-size: small;
+}
+
+img#postgresql {
+	width: 1in;
+	height: 1in;
+}
+img#python {
+	width: 3in;
+	height: 1in;
+}
+
+b {
+	color: #cccc11;
+}
+
+div#project_description {
+	background-color: darkyellow;
+	border-style: ridge;
+	border-color: gray;
+	border-width: 0px;
+	padding: 4px;
+	margin-top: 1.5em;
+	margin-bottom: 2.5em;
+	font-size: small;
+	text-align: center;
+}
+
+pre#example {
+	background-color: lightgray;
+	border-style: ridge;
+	border-color: black;
+	border-width: 1px;
+	padding: 4px;
+}
+
+div.actions {
+ width: 2.5in;
+ font-size: 32pt;
+ text-align: bottom;
+ user-select: none;
+ -moz-user-select: none;
+ -khtml-user-select: none;
+}
+
+a div.actions {
+ padding-top: 6px;
+ padding-bottom: 4px;
+ color: black;
+ font-variant: normal;
+ text-shadow: 0px 0px 3px yellow;
+ margin-left: -24px; padding-left: 24px;
+ padding-top: 16px; margin-bottom: 16px;
+ border-width: 0px; border-top-width: 1px; border-color: yellow; border-style: solid;
+}
+
+a div.actions:hover {
+ text-decoration: none;
+ text-shadow: 0px -2px 2px yellow, 0px 0px 3px yellow
+}
+
+div.actions img {
+	width: .5in;
+	height: .5in;
+ margin-top: -28px;
+ margin-right: 6px;
+ float: right;
+}
+
+div.actions_sep {
+ display: none;
+	margin-top: -1em;
+	border-width: 0px;
+	color: rgba(0,0,0,0);
+	background-image: -moz-radial-gradient(center 45deg, ellipse farthest-side, gray 0%, rgba(0,0,0,0) 100%);
+	margin-left: auto;
+	margin-right: auto;
+	padding-top: 2px;
+	padding-bottom: 2px;
+	font-size: small;
+	width: 6px;
+}
+
+div#features_frame {
+	border-width: 0px;
+}
+
+table#layout {
+ height: 1in;
+ width: 100%;
+ height: 100%;
+ border-width: 0px;
+ padding: 0;
+ margin: 0;
+}
+
+table#features {
+ font-size: small;
+ margin-top: 2px;
+ padding: 3px;
+}
+table#features tr td {
+	padding-bottom: 0.5em;
+}
+table#features tr td:first-child {
+	white-space: nowrap;
+	vertical-align: top;
+	font-weight: bold;
+}
+table#features tr td:last-child {
+	padding-left: 12px;
+}
+
+td.Fident {
+ font-variant: small-caps;
+}
+
+td.Rident {
+ font-weight: bold;
+ font-size: small;
+ text-align: center;
+ vertical-align: middle;
+ border-width: 1px;
+ border-style: solid;
+ border-color: lightgray;
+ border-left-width: 0px;
+}
+td.Rspec {
+ padding-left: 0.5em;
+}
+
+table.release_files tr td.Rfiles {
+ padding-left: 0.5em;
+ padding-bottom: 2px;
+}
+#rereleases a {
+ margin-right: 4px;
+}
+#rereleases table {
+ border-width: 1px;
+ border-style: solid;
+ border-color: lightgray;
+ border-right-width: 0px;
+ padding: 2px;
+ padding-left: 0px;
+ margin-top: 2px;
+ margin-bottom: 2px;
+}

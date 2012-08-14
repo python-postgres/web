@@ -1,0 +1,24 @@
+<features>
+<feature title="Functions are Modules">
+Function code is managed using modules.
+Take advantage of an initialization section.
+</feature>
+<feature title="Type Interfaces">
+Parameters given to functions are "Postgres data objects" with
+interfaces that suite the actual data type.
+</feature>
+<feature title="Full Tracebacks">
+Never wonder where the exception came from again.
+</feature>
+<feature title="Set Returning Functions">
+Supports both VPC and Materialization.
+Optimized Postgres.Cursor returns helps to eliminate Python interpreter
+overhead.
+</feature>
+<feature title="Direct Function Calls">
+pg-python can work directly with functions.
+</feature>
+<feature title="Subtransactions">
+Recover from database errors using the "xact()" context manager.
+</feature>
+</features>

@@ -1,0 +1,240 @@
+<!--
+ ! The format is fairly free-form.
+ !
+ ! Each release has a set of distribution files categorized by their
+ ! respective platform. A "platform" can be container of platforms(See id="win32").
+ !
+ ! To make a release, just copy and paste the first "release" tag in a branch and
+ ! update the file references.
+ !
+ ! The first release in a branch is significant; it serves as the documentation
+ ! release.
+ !
+ ! See the "index.xsl" file for details on how this file is processed.
+ !-->
+<published name="py-postgresql">
+
+ <branch version="1.0" id="v1.0">
+  <release date="2012-03-01" version="1.0.4" id="v1.0.4">
+   <platform>
+    <file type="tar/xz" id="py-postgresql-1.0.4.tar.xz"/>
+    <file type="zip" id="py-postgresql-1.0.4.zip"/>
+   </platform>
+   <platform id="win32">
+    <platform id="cpython3.2">
+     <file type="msi" id="py-postgresql-1.0.4.win32-py3.2.msi"/>
+    </platform>
+    <platform id="cpython3.1">
+     <file type="msi" id="py-postgresql-1.0.4.win32-py3.1.msi"/>
+    </platform>
+   </platform>
+  </release>
+
+  <release date="2011-09-24" version="1.0.3" id="v1.0.3">
+   <errata>Can emit superfluous ERRORs regarding CURSOR existence.</errata>
+   <platform>
+    <file type="zip" id="py-postgresql-1.0.3.zip"/>
+    <file type="tar/gz" id="py-postgresql-1.0.3.tar.gz"/>
+    <file type="tar/bz2" id="py-postgresql-1.0.3.tar.bz2"/>
+    <file type="tar/xz" id="py-postgresql-1.0.3.tar.xz"/>
+   </platform>
+   <platform id="win32">
+    <platform id="cpython3.2">
+     <file type="msi" id="py-postgresql-1.0.3.win32-py3.2.msi"/>
+    </platform>
+    <platform id="cpython3.1">
+     <file type="msi" id="py-postgresql-1.0.3.win32-py3.1.msi"/>
+    </platform>
+   </platform>
+  </release>
+
+  <release date="2010-09-18" version="1.0.2" id="v1.0.2">
+   <platform>
+    <file type="zip" id="py-postgresql-1.0.2.zip"/>
+    <file type="tar/gz" id="py-postgresql-1.0.2.tar.gz"/>
+    <file type="tar/bz2" id="py-postgresql-1.0.2.tar.bz2"/>
+   </platform>
+   <platform id="win32">
+    <platform id="cpython3.1">
+     <file type="msi" id="py-postgresql-1.0.2.win32-py3.1.msi"/>
+    </platform>
+   </platform>
+  </release>
+
+  <release date="2010-04-24" version="1.0.1" id="v1.0.1">
+   <platform>
+    <file type="zip" id="py-postgresql-1.0.1.zip"/>
+    <file type="tar/gz" id="py-postgresql-1.0.1.tar.gz"/>
+    <file type="tar/bz2" id="py-postgresql-1.0.1.tar.bz2"/>
+   </platform>
+   <platform id="win32">
+    <platform id="cpython3.1">
+     <file type="msi" id="py-postgresql-1.0.1.win32-py3.1.msi"/>
+    </platform>
+   </platform>
+  </release>
+
+  <release date="2010-03-20" version="1.0.0" id="v1.0.0">
+   <errata>Receiving an Array with NULLs will cause an exception</errata>
+   <platform>
+    <file type="zip" id="py-postgresql-1.0.0.zip"/>
+    <file type="tar/gz" id="py-postgresql-1.0.0.tar.gz"/>
+    <file type="tar/bz2" id="py-postgresql-1.0.0.tar.bz2"/>
+   </platform>
+   <platform id="win32">
+    <platform id="cpython3.1">
+     <file type="msi" id="py-postgresql-1.0.0.win32-py3.1.msi"/>
+    </platform>
+   </platform>
+  </release>
+
+ </branch>
+
+ <branch hidden="true" version="0.9" id="v0.9" documentation="false">
+
+  <release date="2010-01-01" version="0.9.3" id="v0.9.3">
+   <errata>datetime infinity values not recognized</errata>
+   <platform>
+    <file type="zip" id="py-postgresql-0.9.3.zip"/>
+    <file type="tar/gz" id="py-postgresql-0.9.3.tar.gz"/>
+    <file type="tar/bz2" id="py-postgresql-0.9.3.tar.bz2"/>
+   </platform>
+   <platform id="win32">
+    <platform id="cpython3.1">
+     <file type="py-installer-exe" id="py-postgresql-0.9.3.win32-py3.1.exe"/>
+     <file type="msi" id="py-postgresql-0.9.3.win32-py3.1.msi"/>
+    </platform>
+   </platform>
+  </release>
+
+  <release hidden="true" date="2009-12-14" version="0.9.2" id="v0.9.2">
+   <errata>Broken SAVEPOINT interface</errata>
+   <platform>
+    <file type="zip" id="py-postgresql-0.9.2.zip"/>
+    <file type="tar/gz" id="py-postgresql-0.9.2.tar.gz"/>
+    <file type="tar/bz2" id="py-postgresql-0.9.2.tar.bz2"/>
+   </platform>
+   <platform id="win32">
+    <platform id="cpython3.1">
+     <file type="py-installer-exe" id="py-postgresql-0.9.2.win32-py3.1.exe"/>
+     <file type="msi" id="py-postgresql-0.9.2.win32-py3.1.msi"/>
+    </platform>
+   </platform>
+  </release>
+
+  <release hidden="true" date="2009-08-12" version="0.9.1" id="v0.9.1">
+   <errata>Broken SAVEPOINT interface</errata>
+   <platform>
+    <file type="zip" id="py-postgresql-0.9.1.zip"/>
+    <file type="tar/gz" id="py-postgresql-0.9.1.tar.gz"/>
+    <file type="tar/bz2" id="py-postgresql-0.9.1.tar.bz2"/>
+   </platform>
+   <platform id="win32">
+    <platform id="cpython3.1">
+     <file type="py-installer-exe" id="py-postgresql-0.9.1.win32-py3.1.exe"/>
+     <file type="msi" id="py-postgresql-0.9.1.win32-py3.1.msi"/>
+    </platform>
+   </platform>
+  </release>
+
+  <release hidden="true" date="2009-06-13" version="0.9.0" id="v0.9.0">
+   <errata>Misaligned reads in C extensions</errata>
+   <platform>
+    <file type="zip" id="py-postgresql-0.9.0.zip"/>
+    <file type="tar/gz" id="py-postgresql-0.9.0.tar.gz"/>
+    <file type="tar/bz2" id="py-postgresql-0.9.0.tar.bz2"/>
+   </platform>
+   <platform id="win32">
+    <platform id="cpython3.1">
+     <file type="py-installer-exe" id="py-postgresql-0.9.0.win32-py3.1.exe"/>
+     <file type="msi" id="py-postgresql-0.9.0.win32-py3.1.msi"/>
+    </platform>
+    <platform id="cpython3.0">
+     <file type="py-installer-exe" id="py-postgresql-0.9.0.win32-py3.0.exe"/>
+     <file type="msi" id="py-postgresql-0.9.0.win32-py3.0.msi"/>
+    </platform>
+   </platform>
+  </release>
+ </branch>
+
+ <branch hidden="true" state="unsupported" version="0.8" id="v0.8" documentation="false">
+  <release date="2009-06-13" version="0.8.2" id="v0.8.2">
+   <errata>Misaligned reads in C extensions</errata>
+   <platform>
+    <file type="zip" id="py-postgresql-0.8.2.zip"/>
+    <file type="tar/gz" id="py-postgresql-0.8.2.tar.gz"/>
+    <file type="tar/bz2" id="py-postgresql-0.8.2.tar.bz2"/>
+   </platform>
+   <platform id="win32">
+    <platform id="cpython3.0">
+     <file type="py-installer-exe" id="py-postgresql-0.8.2.win32-py3.0.exe"/>
+     <file type="msi" id="py-postgresql-0.8.2.win32-py3.0.msi"/>
+    </platform>
+   </platform>
+  </release>
+
+  <release date="2009-04-30" version="0.8.1" id="v0.8.1">
+   <errata>Broken row-counts in DB-API</errata>
+   <platform>
+    <file type="zip" id="py-postgresql-0.8.1.zip"/>
+    <file type="tar/gz" id="py-postgresql-0.8.1.tar.gz"/>
+    <file type="tar/bz2" id="py-postgresql-0.8.1.tar.bz2"/>
+   </platform>
+   <platform id="win32">
+    <platform id="cpython3.0">
+     <file type="py-installer-exe" id="py-postgresql-0.8.1.win32-py3.0.exe"/>
+     <file type="msi" id="py-postgresql-0.8.1.win32-py3.0.msi"/>
+    </platform>
+   </platform>
+  </release>
+
+  <release date="2009-04-03" version="0.8.0" id="v0.8.0">
+   <errata>Leaks Memory</errata>
+   <platform>
+    <file type="zip" id="py-postgresql-0.8.0.zip"/>
+    <file type="tar/gz" id="py-postgresql-0.8.0.tar.gz"/>
+    <file type="tar/bz2" id="py-postgresql-0.8.0.tar.bz2"/>
+   </platform>
+   <platform id="win32">
+    <platform id="cpython3.0">
+     <file type="py-installer-exe" id="py-postgresql-0.8.0.win32-py3.0.exe"/>
+     <file type="msi" id="py-postgresql-0.8.0.win32-py3.0.msi"/>
+    </platform>
+   </platform>
+  </release>
+ </branch>
+ <credits>
+<![CDATA[
+Contributors:
+ James William Pye [meaculpa] <x@jwp.io>
+ Elvis Pranskevichus [huge bug fixes and features]
+ William Grzybowski [subjective paramstyle]
+ Barry Grussling [inet/cidr support]
+ Matthew Grant [inet/cidr support]
+
+Support by Donation:
+ AppCove Network
+
+Further Credits
+===============
+
+When licenses match, people win. Code is occasionally imported from other
+projects to enhance py-postgresql and to allow users to enjoy dependency free
+installation.
+
+
+DB-API 2.0 Test Case
+--------------------
+
+postgresql/test/test_dbapi20.py:
+ Stuart Bishop <zen@shangri-la.dropbear.id.au>
+
+
+fcrypt
+------
+
+postgresql/resolved/crypt.py:
+ Carey Evans <careye@spamcop.net>
+]]>
+ </credits>
+</published>

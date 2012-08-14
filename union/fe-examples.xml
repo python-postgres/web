@@ -1,0 +1,77 @@
+<!--
+ ! Establish example.
+ !-->
+<example name="Connect">
+<section title="PG-API">
+>>> import postgresql
+>>> db = postgresql.open(user = 'usename', database = 'datname', port = 5432)
+</section>
+<section title="PSF's DB-API 2.0">
+>>> import postgresql.driver.dbapi20 as dbapi
+>>> db = dbapi.connect(user = 'usename', database = 'datname', port = 5432, password = 'secret')
+</section>
+</example>
+
+<example name="COPY">
+<section title="COPY Data to...Yourself">
+>>> send = src.prepare("COPY a_table TO STDOUT")
+>>> recv = dst.prepare("COPY a_table FROM STDIN")
+>>> recv.load_chunks(send.chunks())
+</section>
+</example>
+
+<example name="Syntax Errors">
+<section title="Descriptive Error Messages Reduce Debugging Time">
+<![CDATA[
+>>> prepare('select 1\nfrom 1d')
+Traceback (most recent call last):
+  File "<console>", line 1, in <module>
+  File "postgresql/driver/pq3.py", line 1718, in prepare
+    ps._fini()
+  File "postgresql/driver/pq3.py", line 857, in _fini
+    self.database._pq_complete()
+  File "postgresql/driver/pq3.py", line 1973, in _pq_complete
+    self._raise_pq_error(x)
+  File "postgresql/driver/pq3.py", line 1999, in _raise_pq_error
+    raise err
+postgresql.exceptions.SyntaxError: syntax error at or near "1"
+  CODE: 42601
+  LOCATION: File 'scan.l', line 807, in base_yyerror from SERVER
+  POSITION: 15
+STATEMENT: [parsing]
+  LINE:
+    from 1d
+         ^ [line 2, character 6]
+  statement_id: py:0x10fbc08
+  string:
+    select 1
+    from 1d
+CONNECTION: [idle]
+  client_address: ::1
+  client_port: 52915
+  version:
+    PostgreSQL 8.3.6 on i386-apple-darwin, compiled by GCC i686-apple-darwin8-gcc-4.0.1 (GCC) 4.0.1 (Apple Computer, Inc. build 5370)
+CONNECTOR: [Host] pq://jwp:***@localhost:5432
+  category: None
+DRIVER: postgresql.driver.pq3.Driver
+]]>
+</section>
+</example>
+
+<example name="Record Types">
+<section title="We puts rows in your rows so you can iterate while you iterate.">
+>>> db.execute('CREATE TYPE ctyp AS (i int, t text, ts timestamp);')
+>>> r = db.prepare("select (901, 'string', now())::ctyp").first()
+>>> str(r)
+"(901, 'string', datetime.datetime(2009, 5, 12, 20, 23, 30, 351411))"
+>>> r[0]
+901
+>>> r['i']
+901
+>>> r['ts']
+datetime.datetime(2009, 5, 12, 20, 23, 30, 351411)
+</section>
+</example>
+<!--
+ ! vim: sw=1:et:ts=1:
+ !-->
