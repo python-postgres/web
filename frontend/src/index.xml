@@ -14,193 +14,33 @@
  !-->
 <published name="py-postgresql">
 
+ <branch version="1.1" id="v1.1">
+  <release date="2012-10-01" version="1.1.0" id="v1.1.0"/>
+ </branch>
+
  <branch version="1.0" id="v1.0">
-  <release date="2012-03-01" version="1.0.4" id="v1.0.4">
-   <platform>
-    <file type="tar/xz" id="py-postgresql-1.0.4.tar.xz"/>
-    <file type="zip" id="py-postgresql-1.0.4.zip"/>
-   </platform>
-   <platform id="win32">
-    <platform id="cpython3.2">
-     <file type="msi" id="py-postgresql-1.0.4.win32-py3.2.msi"/>
-    </platform>
-    <platform id="cpython3.1">
-     <file type="msi" id="py-postgresql-1.0.4.win32-py3.1.msi"/>
-    </platform>
-   </platform>
-  </release>
+  <release errata="Win32 Broken; Does not support Python 3.3."
+	date="2012-03-01" version="1.0.4" id="v1.0.4"/>
 
-  <release date="2011-09-24" version="1.0.3" id="v1.0.3">
-   <errata>Can emit superfluous ERRORs regarding CURSOR existence.</errata>
-   <platform>
-    <file type="zip" id="py-postgresql-1.0.3.zip"/>
-    <file type="tar/gz" id="py-postgresql-1.0.3.tar.gz"/>
-    <file type="tar/bz2" id="py-postgresql-1.0.3.tar.bz2"/>
-    <file type="tar/xz" id="py-postgresql-1.0.3.tar.xz"/>
-   </platform>
-   <platform id="win32">
-    <platform id="cpython3.2">
-     <file type="msi" id="py-postgresql-1.0.3.win32-py3.2.msi"/>
-    </platform>
-    <platform id="cpython3.1">
-     <file type="msi" id="py-postgresql-1.0.3.win32-py3.1.msi"/>
-    </platform>
-   </platform>
-  </release>
+  <release errata="Can emit superfluous ERRORs regarding CURSOR existence"
+	date="2011-09-24" version="1.0.3" id="v1.0.3"/>
 
-  <release date="2010-09-18" version="1.0.2" id="v1.0.2">
-   <platform>
-    <file type="zip" id="py-postgresql-1.0.2.zip"/>
-    <file type="tar/gz" id="py-postgresql-1.0.2.tar.gz"/>
-    <file type="tar/bz2" id="py-postgresql-1.0.2.tar.bz2"/>
-   </platform>
-   <platform id="win32">
-    <platform id="cpython3.1">
-     <file type="msi" id="py-postgresql-1.0.2.win32-py3.1.msi"/>
-    </platform>
-   </platform>
-  </release>
-
-  <release date="2010-04-24" version="1.0.1" id="v1.0.1">
-   <platform>
-    <file type="zip" id="py-postgresql-1.0.1.zip"/>
-    <file type="tar/gz" id="py-postgresql-1.0.1.tar.gz"/>
-    <file type="tar/bz2" id="py-postgresql-1.0.1.tar.bz2"/>
-   </platform>
-   <platform id="win32">
-    <platform id="cpython3.1">
-     <file type="msi" id="py-postgresql-1.0.1.win32-py3.1.msi"/>
-    </platform>
-   </platform>
-  </release>
-
-  <release date="2010-03-20" version="1.0.0" id="v1.0.0">
-   <errata>Receiving an Array with NULLs will cause an exception</errata>
-   <platform>
-    <file type="zip" id="py-postgresql-1.0.0.zip"/>
-    <file type="tar/gz" id="py-postgresql-1.0.0.tar.gz"/>
-    <file type="tar/bz2" id="py-postgresql-1.0.0.tar.bz2"/>
-   </platform>
-   <platform id="win32">
-    <platform id="cpython3.1">
-     <file type="msi" id="py-postgresql-1.0.0.win32-py3.1.msi"/>
-    </platform>
-   </platform>
-  </release>
-
+  <release hidden="true" date="2010-09-18" version="1.0.2" id="v1.0.2"/>
+  <release hidden="true" date="2010-04-24" version="1.0.1" id="v1.0.1"/>
+  <release errata="Receiving an Array with NULLs will cause an exception"
+	hidden="true" date="2010-03-20" version="1.0.0" id="v1.0.0"/>
  </branch>
 
  <branch hidden="true" version="0.9" id="v0.9" documentation="false">
-
-  <release date="2010-01-01" version="0.9.3" id="v0.9.3">
-   <errata>datetime infinity values not recognized</errata>
-   <platform>
-    <file type="zip" id="py-postgresql-0.9.3.zip"/>
-    <file type="tar/gz" id="py-postgresql-0.9.3.tar.gz"/>
-    <file type="tar/bz2" id="py-postgresql-0.9.3.tar.bz2"/>
-   </platform>
-   <platform id="win32">
-    <platform id="cpython3.1">
-     <file type="py-installer-exe" id="py-postgresql-0.9.3.win32-py3.1.exe"/>
-     <file type="msi" id="py-postgresql-0.9.3.win32-py3.1.msi"/>
-    </platform>
-   </platform>
-  </release>
-
-  <release hidden="true" date="2009-12-14" version="0.9.2" id="v0.9.2">
-   <errata>Broken SAVEPOINT interface</errata>
-   <platform>
-    <file type="zip" id="py-postgresql-0.9.2.zip"/>
-    <file type="tar/gz" id="py-postgresql-0.9.2.tar.gz"/>
-    <file type="tar/bz2" id="py-postgresql-0.9.2.tar.bz2"/>
-   </platform>
-   <platform id="win32">
-    <platform id="cpython3.1">
-     <file type="py-installer-exe" id="py-postgresql-0.9.2.win32-py3.1.exe"/>
-     <file type="msi" id="py-postgresql-0.9.2.win32-py3.1.msi"/>
-    </platform>
-   </platform>
-  </release>
-
-  <release hidden="true" date="2009-08-12" version="0.9.1" id="v0.9.1">
-   <errata>Broken SAVEPOINT interface</errata>
-   <platform>
-    <file type="zip" id="py-postgresql-0.9.1.zip"/>
-    <file type="tar/gz" id="py-postgresql-0.9.1.tar.gz"/>
-    <file type="tar/bz2" id="py-postgresql-0.9.1.tar.bz2"/>
-   </platform>
-   <platform id="win32">
-    <platform id="cpython3.1">
-     <file type="py-installer-exe" id="py-postgresql-0.9.1.win32-py3.1.exe"/>
-     <file type="msi" id="py-postgresql-0.9.1.win32-py3.1.msi"/>
-    </platform>
-   </platform>
-  </release>
-
-  <release hidden="true" date="2009-06-13" version="0.9.0" id="v0.9.0">
-   <errata>Misaligned reads in C extensions</errata>
-   <platform>
-    <file type="zip" id="py-postgresql-0.9.0.zip"/>
-    <file type="tar/gz" id="py-postgresql-0.9.0.tar.gz"/>
-    <file type="tar/bz2" id="py-postgresql-0.9.0.tar.bz2"/>
-   </platform>
-   <platform id="win32">
-    <platform id="cpython3.1">
-     <file type="py-installer-exe" id="py-postgresql-0.9.0.win32-py3.1.exe"/>
-     <file type="msi" id="py-postgresql-0.9.0.win32-py3.1.msi"/>
-    </platform>
-    <platform id="cpython3.0">
-     <file type="py-installer-exe" id="py-postgresql-0.9.0.win32-py3.0.exe"/>
-     <file type="msi" id="py-postgresql-0.9.0.win32-py3.0.msi"/>
-    </platform>
-   </platform>
-  </release>
+  <release errata="datetime infinity values not recognized" date="2010-01-01" version="0.9.3" id="v0.9.3"/>
+  <release errata="Broken SAVEPOINT interface" hidden="true" date="2009-12-14" version="0.9.2" id="v0.9.2"/>
+  <release errata="Broken SAVEPOINT interface" hidden="true" date="2009-08-12" version="0.9.1" id="v0.9.1"/>
+  <release errata="Misaligned reads in C extensions" hidden="true" date="2009-06-13" version="0.9.0" id="v0.9.0"/>
  </branch>
 
  <branch hidden="true" state="unsupported" version="0.8" id="v0.8" documentation="false">
-  <release date="2009-06-13" version="0.8.2" id="v0.8.2">
-   <errata>Misaligned reads in C extensions</errata>
-   <platform>
-    <file type="zip" id="py-postgresql-0.8.2.zip"/>
-    <file type="tar/gz" id="py-postgresql-0.8.2.tar.gz"/>
-    <file type="tar/bz2" id="py-postgresql-0.8.2.tar.bz2"/>
-   </platform>
-   <platform id="win32">
-    <platform id="cpython3.0">
-     <file type="py-installer-exe" id="py-postgresql-0.8.2.win32-py3.0.exe"/>
-     <file type="msi" id="py-postgresql-0.8.2.win32-py3.0.msi"/>
-    </platform>
-   </platform>
-  </release>
-
-  <release date="2009-04-30" version="0.8.1" id="v0.8.1">
-   <errata>Broken row-counts in DB-API</errata>
-   <platform>
-    <file type="zip" id="py-postgresql-0.8.1.zip"/>
-    <file type="tar/gz" id="py-postgresql-0.8.1.tar.gz"/>
-    <file type="tar/bz2" id="py-postgresql-0.8.1.tar.bz2"/>
-   </platform>
-   <platform id="win32">
-    <platform id="cpython3.0">
-     <file type="py-installer-exe" id="py-postgresql-0.8.1.win32-py3.0.exe"/>
-     <file type="msi" id="py-postgresql-0.8.1.win32-py3.0.msi"/>
-    </platform>
-   </platform>
-  </release>
-
-  <release date="2009-04-03" version="0.8.0" id="v0.8.0">
-   <errata>Leaks Memory</errata>
-   <platform>
-    <file type="zip" id="py-postgresql-0.8.0.zip"/>
-    <file type="tar/gz" id="py-postgresql-0.8.0.tar.gz"/>
-    <file type="tar/bz2" id="py-postgresql-0.8.0.tar.bz2"/>
-   </platform>
-   <platform id="win32">
-    <platform id="cpython3.0">
-     <file type="py-installer-exe" id="py-postgresql-0.8.0.win32-py3.0.exe"/>
-     <file type="msi" id="py-postgresql-0.8.0.win32-py3.0.msi"/>
-    </platform>
-   </platform>
-  </release>
+  <release errata="Misaligned reads in C extensions" date="2009-06-13" version="0.8.2" id="v0.8.2"/>
+  <release errata="Broken row-counts in DB-API" date="2009-04-30" version="0.8.1" id="v0.8.1"/>
+  <release errata="Leaks Memory" date="2009-04-03" version="0.8.0" id="v0.8.0"/>
  </branch>
 </published>

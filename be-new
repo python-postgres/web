@@ -1,2 +1,0 @@
-#!/bin/sh
-cd backend && python3 collect_source_snapshots.py

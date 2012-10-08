@@ -6,33 +6,10 @@
  doctype-public="-//W3C//DTD HTML 4.01//EN"
  doctype-system="http://www.w3.org/TR/html4/strict.dtd"/>
 
- <xsl:template match="file">
-  <a title="{@id}" href="files/{@id}"><xsl:value-of select="@type"/>,</a>
- </xsl:template>
-
- <xsl:template match="platform">
-  <table>
-   <tr>
-    <td>
-     <xsl:choose>
-      <xsl:when test="platform">
-       <xsl:attribute name="class"><xsl:value-of select="'Rident'"/></xsl:attribute>
-      </xsl:when>
-      <xsl:otherwise>
-       <xsl:attribute name="class"><xsl:value-of select="'Fident'"/></xsl:attribute>
-      </xsl:otherwise>
-     </xsl:choose>
-     <xsl:if test="not(@id)"><xsl:value-of select="'source'"/></xsl:if>
-     <xsl:value-of select="@id"/>:
-    </td>
-    <td>
-     <xsl:apply-templates/>
-    </td>
-   </tr>
-  </table>
- </xsl:template>
-
  <xsl:template match="/">
+
+  <xsl:variable name="zipball" select="'http://github.com/python-postgres/fe/zipball'"/>
+
   <xsl:variable name="project" select="/published/@name"/>
   <!-- latest release *must* be the last element -->
   <xsl:variable name="default_main_version"
@@ -134,7 +111,7 @@
        e = $(ele)
        next = e[0].next_tab
        if (next != null){
-        nextmove = function () {movein(next)} 
+        nextmove = function () {movein(next)}
        }
        else
         nextmove = function () {;}
@@ -220,6 +197,7 @@
     <div id="backend_link"><a href="backend/">Backend / Procedural Language</a></div>
     <div id="ticker"><iframe src="ticker.html"/></div>
     <div id="reveals">
+
      <div>
       <img class="ricon" src="downarrow.png" />
       <div class="rtitle">Releases</div>
@@ -245,16 +223,14 @@
                <table id="R{@id}" class="release_files">
                 <tr>
                  <td class="Rident">
-                  <xsl:if test="errata">
-                   <img title="{errata/text()}" src="warning.png"/>
+                  <xsl:if test="@errata">
+                   <img title="{@errata}" src="warning.png"/>
                    <div/>
                   </xsl:if>
                   <xsl:value-of select="@id"/>
                  </td>
                  <td class="Rfiles">
-                  <div>
-                   <xsl:apply-templates select="*[local-name()!='errata']"/>
-                  </div>
+                  <a href="{$zipball}/{@id}"><div class="zip">Zip File</div></a>
                  </td>
                 </tr>
                </table>
@@ -268,6 +244,7 @@
        </div>
       </div>
      </div>
+
      <div>
       <img class="ricon" src="docicon.png" />
       <div class="rtitle">Documentation</div>
@@ -482,14 +459,6 @@ postgresql/resolved/crypt.py:
       <xsl:if test="$default_date">
        released on <xsl:value-of select="$default_date"/>
       </xsl:if>
-      <div>
-       win32:
-        <a href="files/{$project}-{$default_version}.win32-py3.1.msi">MSI Installer</a>
-      </div>
-      <div>
-       <pre>mac10.6 builds may require:
-env CC=gcc-4.0 python3 ./setup.py</pre>
-      </div>
      </div>
      <div id="content">
       <table style="height: 1in; width: 100%; border-width: 0px; padding: 0; margin: 0">
@@ -553,8 +522,8 @@ env CC=gcc-4.0 python3 ./setup.py</pre>
          </div>
         </td>
        <td style="padding-left: 1em; vertical-align: top;">
-        <a title="See the 'Releases' tab for more formats."
-         id="download" alt="Download" href="files/{$project}-{$default_version}.tar.gz">
+        <a title="See the 'Releases' tab for past releases."
+         id="download" alt="Download" href="{$zipball}/v{$default_version}">
          <div style="position: relative" class="actions">
           <img class="actions" src="download.png"/>
          </div>
@@ -581,12 +550,12 @@ env CC=gcc-4.0 python3 ./setup.py</pre>
       <table style="width: 100%">
        <tr>
         <td><a href="license.txt">License: BSD</a></td>
-        <td><a href="http://github.com/jwp/py-postgresql/issues">Bug Tracker</a></td>
+        <td><a href="http://github.com/python-postgres/fe/issues">Bug Tracker</a></td>
         <td><a href="http://pgfoundry.org/projects/python">Project Page</a></td>
         <td><a href="http://pypi.python.org/pypi/py-postgresql">PyPI</a></td>
-        <td><a href="http://wiki.github.com/jwp/py-postgresql">Wiki</a></td>
+        <td><a href="http://wiki.github.com/python-postgres/fe">Wiki</a></td>
         <td><a href="http://lists.pgfoundry.org/mailman/listinfo/python-general">Mailing List</a></td>
-        <td><a href="https://github.com/jwp/py-postgresql/tree">SCM</a></td>
+        <td><a href="https://github.com/python-postgres/fe/tree">SCM</a></td>
         <td><a href="old">Old Site</a></td>
        </tr>
       </table>

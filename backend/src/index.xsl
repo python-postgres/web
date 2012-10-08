@@ -34,6 +34,7 @@
  </xsl:template>
 
  <xsl:template match="/">
+  <xsl:variable name="zipball" select="'http://github.com/python-postgres/be/zipball'"/>
   <xsl:variable name="project" select="/published/@name"/>
   <!-- latest release *must* be the last element -->
   <xsl:variable name="default_main_version"
@@ -135,7 +136,7 @@
        e = $(ele)
        next = e[0].next_tab
        if (next != null){
-        nextmove = function () {movein(next)} 
+        nextmove = function () {movein(next)}
        }
        else
         nextmove = function () {;}
@@ -180,9 +181,7 @@
                   <xsl:value-of select="@id"/>
                  </td>
                  <td class="Rfiles">
-                  <div>
-                   <xsl:apply-templates select="*[local-name()!='errata']"/>
-                  </div>
+                  <a href="{$zipball}/@id"><div></div></a>
                  </td>
                 </tr>
                </table>
@@ -509,7 +508,7 @@ Traceback (most recent call last):
 <pre>
 <![CDATA[
 Primary Developers:
- James William Pye <x@jwp.name>
+ James William Pye <x@jwp.io>
 ]]>
 </pre>
         </div>
@@ -616,11 +615,11 @@ Primary Developers:
       <table style="width: 100%">
        <tr>
         <td><a href="license.txt">License: BSD</a></td>
-        <td><a href="http://github.com/jwp/pg-python/issues">Bug Tracker</a></td>
+        <td><a href="http://github.com/python-postgres/be/issues">Bug Tracker</a></td>
         <td><a href="http://pgfoundry.org/projects/python">Project Page</a></td>
-        <td><a href="http://wiki.github.com/jwp/pg-python">Wiki</a></td>
+        <td><a href="http://wiki.github.com/python-postgres/be">Wiki</a></td>
         <td><a href="http://lists.pgfoundry.org/mailman/listinfo/python-general">Mailing List</a></td>
-        <td><a href="https://github.com/jwp/pg-python/tree">SCM</a></td>
+        <td><a href="https://github.com/python-postgres/be/tree">SCM</a></td>
        </tr>
       </table>
      </div>
